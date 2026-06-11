@@ -1,0 +1,17 @@
+{
+  "name": "@spatial-present/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Mini presentation compiler: validate / outline / narration-script export, plus the offline TTS narration renderer (generate-narration.py). Run against a journey module path with tsx.",
+  "exports": {
+    ".": "./src/journey-cli.ts"
+  },
+  "dependencies": {
+    "@spatial-present/core": "*",
+    "@spatial-present/schema": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.3"
+  }
+}

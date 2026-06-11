@@ -1,6 +1,6 @@
 # Spatial Presentation Framework Design
 
-**Status:** living design document · **Companion docs:** [proposal.md](proposal.md) (path from MVP 1 to a reusable, AI-authorable framework), [README.md](../spatial-present/README.md) (what runs today)
+**Status:** living design document · **Companion docs:** [proposal.md](proposal.md) (path from MVP 1 to a reusable, AI-authorable framework), [README.md](../examples/svd-tour/README.md) (what runs today)
 
 ## Summary
 
@@ -935,7 +935,7 @@ The first credible MVP should prove the new mental model without trying to build
 
 ### MVP 1: Runtime Prototype — shipped
 
-**Status: implemented as [`spatial-present/`](../spatial-present/README.md) ("Singular Value Decomposition — A Guided Tour").** A web runtime that loads one handcrafted world and supports:
+**Status: implemented as [`packages/` + `examples/svd-tour/`](../examples/svd-tour/README.md) ("Singular Value Decomposition — A Guided Tour").** A web runtime that loads one handcrafted world and supports:
 
 - 10 to 20 anchors.
 - Route graph navigation.
@@ -945,7 +945,9 @@ The first credible MVP should prove the new mental model without trying to build
 - One scale portal.
 - Linear fallback outline.
 
-What it proved is the architecture: the project document as single source of truth, content separated from presentation, an explicit navigable route graph, working scale portals, and schema plus graph validation surfaced through a CLI. It also carries a prototype slice of the narration design: per-beat scripts in the document, a local TTS render script with hash-based caching and provenance, and caption/auto-advance playback (a foretaste of M4's `tts-narrate` job, without word timestamps or cue marks). What it is not yet is a framework — worlds, skins, and the journey live in one app, authoring requires hand-placed coordinates and camera poses, and there is no registry, generalized asset pipeline, AI generator, or math support.
+What it proved is the architecture: the project document as single source of truth, content separated from presentation, an explicit navigable route graph, working scale portals, and schema plus graph validation surfaced through a CLI. It also carries a prototype slice of the narration design: per-beat scripts in the document, a local TTS render script with hash-based caching and provenance, and caption/auto-advance playback (a foretaste of M4's `tts-narrate` job, without word timestamps or cue marks).
+
+With M1 done, the framework and its input are separated: the runtime, skins, schema, SDK, and CLI live in `packages/` (`@spatial-present/*`), the journey document and its world scenery live in `examples/svd-tour/`, and the host app injects world components by id. What it is not yet: authoring still uses hand-placed coordinates and camera poses (M2's stations and camera intents), and there is no registry, generalized asset pipeline, AI generator, or math support.
 
 ### Milestones after MVP 1
 
@@ -953,7 +955,7 @@ Ordered roughly by leverage; see [proposal.md](proposal.md) for the full rationa
 
 | Milestone | Delivers | Unblocks |
 | --- | --- | --- |
-| **M1 — Packagize** | split core/renderer/skins/worlds/cli; the SVD tour as an example | clean seams for everything else |
+| **M1 — Packagize** ✅ shipped | split schema/core/renderer/skins/worlds/cli into `packages/`; the SVD tour as `examples/svd-tour` | clean seams for everything else |
 | **M2 — Registries + layout solver + camera planner** | stations, named camera intents, auto-routing | **AI authoring becomes possible** (no hand coordinates) |
 | **M3 — Math primitives** | `formula` (KaTeX to texture, MathML fallback) + `chalkboard`/`etchedGlass` skins; `math-void` + `lecture-hall` worlds | static math talks hand/SDK-authored |
 | **M4 — Asset pipeline + Manim + narration** | `manim-render` job (transparent, cuepoints), `tts-narrate` job (timestamps, marks), `projection` skin, stepwise reveal | **animated math**; narrated self-running tours; generated-art caching |
@@ -1013,7 +1015,7 @@ The framework could easily produce gimmicky output. Strong template art directio
 
 ## MVP 1 Implementation Readiness
 
-MVP 1 has been implemented as [`spatial-present/`](../spatial-present/README.md). The boundaries below guided that implementation and are kept for the record; the implementation focused on the runtime prototype only, not the full authoring platform.
+MVP 1 has been implemented as [`packages/` + `examples/svd-tour/`](../examples/svd-tour/README.md). The boundaries below guided that implementation and are kept for the record; the implementation focused on the runtime prototype only, not the full authoring platform.
 
 Recommended MVP 1 boundaries:
 

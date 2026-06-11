@@ -1,0 +1,16 @@
+{
+  "name": "@spatial-present/worlds",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Procedural world components and the landmark constants their journeys reference (proto-stations until M2's layout solver).",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.6.1",
+    "@spatial-present/core": "*",
+    "react": "^19.2.6",
+    "three": "^0.184.0"
+  }
+}

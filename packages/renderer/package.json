@@ -1,0 +1,20 @@
+{
+  "name": "@spatial-present/renderer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The runtime: PresentationApp shell, Stage, camera rig, presenter console, minimap, palette, outline, narrator. World components are injected by the host app.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@spatial-present/core": "*",
+    "@spatial-present/schema": "*",
+    "@spatial-present/skins": "*",
+    "react": "^19.2.6",
+    "three": "^0.184.0",
+    "three-stdlib": "^2.36.1"
+  }
+}

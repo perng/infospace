@@ -1,0 +1,14 @@
+{
+  "name": "@spatial-present/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "defineJourney SDK entry, route graph, runtime store.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@spatial-present/schema": "*",
+    "zustand": "^5.0.14"
+  }
+}

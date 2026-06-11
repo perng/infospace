@@ -2,9 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "spatial-present",
+      "name": "svd-tour",
       "runtimeExecutable": "sh",
-      "runtimeArgs": ["-c", "cd spatial-present && npx vite --port $PORT --strictPort"],
+      "runtimeArgs": ["-c", "cd examples/svd-tour && npx vite --port $PORT --strictPort"],
       "autoPort": true,
       "port": 5181
     }

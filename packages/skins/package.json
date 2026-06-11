@@ -1,0 +1,18 @@
+{
+  "name": "@spatial-present/skins",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Spatial skins: semantic content primitives rendered as environmental forms. The host app must serve /fonts/{cinzel-700,inter-400,inter-600}.ttf.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@spatial-present/core": "*",
+    "@spatial-present/schema": "*",
+    "react": "^19.2.6",
+    "three": "^0.184.0"
+  }
+}

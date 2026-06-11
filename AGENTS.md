@@ -1,33 +1,32 @@
 # Infospace — Spatial Presentation Framework
 
-A presentation framework that replaces slides with a guided journey through a continuous 3D world. Currently: design documents plus one runtime prototype.
+A presentation framework that replaces slides with a guided journey through a continuous 3D world. An npm workspace: framework packages (the M1 split), one example presentation, and the design documents.
 
 ## Layout
 
-- `docs/design.md` — canonical design document. `docs/proposal.md` — plan from prototype to reusable framework. Canonical docs live in `docs/` at the repo root; anything under `spatial-present/docs/` is a stale copy.
-- `spatial-present/` — MVP 1 prototype ("Singular Value Decomposition — A Guided Tour"): Vite + React 19 + TypeScript + React Three Fiber.
+- `docs/design.md` — canonical design document. `docs/proposal.md` — plan to a reusable framework (M1, packagize, is done).
+- `packages/` — the framework: `@spatial-present/schema` (zod document schema), `/core` (defineJourney, route graph, store), `/skins` (spatial skins + AnchorContent), `/renderer` (PresentationApp, Stage, camera rig, presenter UI, narrator), `/worlds` (procedural worlds + landmark constants), `/cli` (journey-cli + generate-narration.py).
+- `examples/svd-tour/` — the example journey ("Singular Value Decomposition — A Guided Tour"): document, world wiring, assets. Content lives here, never in `packages/`.
 
-## Commands (run from `spatial-present/`)
+## Commands
 
-- `npm run dev` — Vite dev server
-- `npm run build` — typecheck + production build
-- `npm run lint` — ESLint
-- `npm run validate` — validate the journey document (zod schema + route-graph integrity/reachability)
-- `npm run outline` — generate the linear markdown outline
+Root: `npm run lint` (whole workspace); `npm run dev | build | validate | outline` proxy to the example. From `examples/svd-tour/` also: `npm run narration` (scripts JSON), `npm run narration:render` (Kokoro TTS clips), `python3 scripts/generate-assets.py` (SVD media).
 
 A change is not done until `npm run build`, `npm run lint`, and `npm run validate` all pass.
 
 ## Key code
 
-- `spatial-present/src/framework/schema.ts`, `defineJourney.ts` — project document schema and authoring entry point. The document is the single source of truth; everything else is a derived view.
-- `spatial-present/src/framework/store.ts`, `routeGraph.ts`, `camera/CameraRig.tsx` — navigation state, route graph, camera planning as pose-to-pose transitions.
-- `spatial-present/src/framework/skins/` — spatial skins; content primitives stay semantic, skins own the 3D look.
-- `spatial-present/src/journey/project.ts` — the hand-authored "Singular Value Decomposition" journey.
-- `scripts/journey-cli.ts` — the validate/outline CLI.
+- `packages/schema/src/index.ts`, `packages/core/src/defineJourney.ts` — document schema and authoring entry point. The document is the single source of truth; everything else is a derived view.
+- `packages/core/src/{store,routeGraph}.ts`, `packages/renderer/src/CameraRig.tsx` — navigation state, route graph, camera planning as pose-to-pose transitions.
+- `packages/skins/src/` — spatial skins; content primitives stay semantic, skins own the 3D look.
+- `packages/renderer/src/PresentationApp.tsx` — the runtime shell; world components are injected via its `worlds` map.
+- `examples/svd-tour/src/journey/project.ts` — the hand-authored SVD journey.
+- `packages/cli/src/journey-cli.ts` — validate / outline / narration CLI; takes a journey-module path, run from the presentation's root.
 
 ## Conventions
 
 - Semantic content is the source of truth; visual/spatial/audio forms and accessibility fallbacks are derived from it, never the reverse.
 - Authoring surfaces stay positionless (named stations and camera intents, not raw coordinates) so documents remain AI-authorable.
-- The prototype is disposable: do not contort new designs to preserve prototype code.
+- Framework packages must never import journey content; per-world UI colors come from the document (`ambience.accent`), not CSS keyed to world ids.
+- Packages export TypeScript source directly (no per-package build); the example's `tsc -b` type-checks, Vite bundles, `tsx` runs the CLI.
 - Match the existing code style: TypeScript strict, zod for runtime validation, zustand for state, React Three Fiber idioms for scene code. Keep comment density low.

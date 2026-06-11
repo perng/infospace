@@ -1,6 +1,6 @@
 # Proposal: From One Presentation to a Reusable, AI-Authorable Framework
 
-**Status:** design proposal · **Audience:** maintainers and contributors · **Companion docs:** [design.md](design.md) (vision), [README.md](../spatial-present/README.md) (what runs today)
+**Status:** design proposal · **Audience:** maintainers and contributors · **Companion docs:** [design.md](design.md) (vision), [README.md](../examples/svd-tour/README.md) (what runs today)
 
 This document answers three questions:
 
@@ -12,11 +12,11 @@ This document answers three questions:
 
 ## 1. Where we are today
 
-MVP 1 (`spatial-present/`) is a **runtime** plus a **single hand-authored journey** ("Singular Value Decomposition — A Guided Tour"). The important thing it proved is the *architecture*, not the one presentation:
+MVP 1 is a **runtime** plus a **single hand-authored journey** ("Singular Value Decomposition — A Guided Tour"); since M1 landed it lives as the `@spatial-present/*` packages under `packages/` with the journey in `examples/svd-tour/`. The important thing it proved is the *architecture*, not the one presentation:
 
-- **The project document is the single source of truth.** Everything else — the 3D scene, the presenter console, search, the linear outline, the markdown handout — is a derived view of one validated data structure ([`schema.ts`](../spatial-present/src/framework/schema.ts), [`defineJourney.ts`](../spatial-present/src/framework/defineJourney.ts)).
-- **Content is separated from presentation.** A `ContentPrimitive` owns data + semantics; a `SpatialSkin` owns how it looks in 3D. The same chart can be a hologram or an accessible table ([`skins/`](../spatial-present/src/framework/skins/), [`OutlineView.tsx`](../spatial-present/src/app/OutlineView.tsx)).
-- **The route graph is explicit and navigable.** Beats are nodes; edges are `primary | branch | return | portal`. Camera moves are planned as **transitions between poses** so the presenter can interrupt and recover ([`store.ts`](../spatial-present/src/framework/store.ts), [`camera/CameraRig.tsx`](../spatial-present/src/framework/camera/CameraRig.tsx)).
+- **The project document is the single source of truth.** Everything else — the 3D scene, the presenter console, search, the linear outline, the markdown handout — is a derived view of one validated data structure ([`schema`](../packages/schema/src/index.ts), [`defineJourney.ts`](../packages/core/src/defineJourney.ts)).
+- **Content is separated from presentation.** A `ContentPrimitive` owns data + semantics; a `SpatialSkin` owns how it looks in 3D. The same chart can be a hologram or an accessible table ([`skins`](../packages/skins/src/), [`OutlineView.tsx`](../packages/renderer/src/OutlineView.tsx)).
+- **The route graph is explicit and navigable.** Beats are nodes; edges are `primary | branch | return | portal`. Camera moves are planned as **transitions between poses** so the presenter can interrupt and recover ([`store.ts`](../packages/core/src/store.ts), [`CameraRig.tsx`](../packages/renderer/src/CameraRig.tsx)).
 - **Scale portals work** as a special edge that swaps worlds behind a fade.
 - **Validation exists**: zod schema + graph integrity/reachability checks, surfaced through a CLI (`npm run validate`, `npm run outline`).
 
@@ -115,7 +115,7 @@ A completed framework accepts input at any layer. Here is the same math talk exp
 
 **Layer B — the intent spec** (AI's first draft; you edit it): the YAML above.
 
-**Layer C — the canonical document** (compiler output; rarely hand-edited but always inspectable/diffable) — the same shape as today's [`project.ts`](../spatial-present/src/journey/project.ts), extended with the new primitives (§5).
+**Layer C — the canonical document** (compiler output; rarely hand-edited but always inspectable/diffable) — the same shape as today's [`project.ts`](../examples/svd-tour/src/journey/project.ts), extended with the new primitives (§5).
 
 **Layer D — the SDK** (escape hatch for exact control):
 
@@ -147,9 +147,11 @@ Note `station(...)` instead of raw `position: [x,y,z]` — the template resolves
 
 Ordered roughly by leverage. Items marked **(math)** are also required for §5.
 
-### 4.1 Split into packages (decouple framework from content)
-Carve the current `src/framework` into publishable packages with clean seams (mirrors the repo layout in [design.md](design.md)):
-`@spatial-present/schema`, `/core` (defineJourney, route graph, store), `/renderer` (camera rig, Stage), `/skins`, `/worlds`, `/cli`. The SVD tour becomes `examples/svd-tour` consuming the packages.
+### 4.1 Split into packages (decouple framework from content) — ✅ done
+Carve the framework into publishable packages with clean seams (mirrors the repo layout in [design.md](design.md)):
+`@spatial-present/schema`, `/core` (defineJourney, route graph, store), `/renderer` (camera rig, Stage, presenter UI), `/skins`, `/worlds`, `/cli`. The SVD tour becomes `examples/svd-tour` consuming the packages.
+
+Shipped as an npm workspace: packages export TypeScript source directly (no per-package build yet — revisit when publishing); the renderer takes a `worlds` component map from the host app instead of importing scenery; per-world UI colors come from the document (`ambience.accent`); the CLI takes a journey-module path.
 
 ### 4.2 Registries + plugin API
 Three open registries so the vocabulary is extensible without editing the core:
@@ -191,7 +193,7 @@ Two new content primitives, supporting skins, and one asset job. Both keep a **s
 
 ### 5.1 The `formula` primitive (LaTeX)
 
-Add to the `ContentPrimitive` discriminated union in [`schema.ts`](../spatial-present/src/framework/schema.ts):
+Add to the `ContentPrimitive` discriminated union in [`schema`](../packages/schema/src/index.ts):
 
 ```ts
 {
@@ -268,7 +270,7 @@ Manim is a **Python, offline renderer** — it cannot run in the browser. So int
 
 | Milestone | Delivers | Unblocks |
 | --- | --- | --- |
-| **M1 — Packagize** | split core/renderer/skins/worlds/cli; the SVD tour as an example | clean seams for everything else |
+| **M1 — Packagize** ✅ shipped | split schema/core/renderer/skins/worlds/cli into `packages/`; the SVD tour as `examples/svd-tour` | clean seams for everything else |
 | **M2 — Registries + layout solver + camera planner** | stations, named camera intents, auto-routing | **AI authoring becomes possible** (no hand coordinates) |
 | **M3 — Math primitives** | `formula` (KaTeX→texture, MathML fallback) + `chalkboard`/`etchedGlass` skins; `math-void` + `lecture-hall` worlds | static math talks hand/SDK-authored |
 | **M4 — Asset pipeline + Manim** | `manim-render` job (transparent, cuepoints), `projection` skin, stepwise reveal | **animated math**; generated-art caching |

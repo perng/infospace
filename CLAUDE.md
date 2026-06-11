@@ -1,39 +1,34 @@
 # Infospace — Spatial Presentation Framework
 
-A presentation framework that replaces slides with a guided journey through a continuous 3D world. Currently: design documents plus one runtime prototype.
+A presentation framework that replaces slides with a guided journey through a continuous 3D world. An npm workspace: framework packages (the M1 split), one example presentation, and the design documents.
 
 ## Repository layout
 
 - `docs/design.md` — the canonical design document (vision, concepts, architecture, data model, roadmap).
-- `docs/proposal.md` — the plan for getting from the prototype to a reusable, AI-authorable framework (layered authoring model, stations/camera intents, registries, math/Manim support, M1–M6 milestones).
-- `spatial-present/` — MVP 1 prototype ("Singular Value Decomposition — A Guided Tour"): a Vite + React 19 + TypeScript + React Three Fiber app.
+- `docs/proposal.md` — the plan to a reusable, AI-authorable framework (layered authoring model, stations/camera intents, registries, math/Manim support, M1–M6 milestones). M1 (packagize) is done.
+- `packages/` — the framework, as workspace packages:
+  - `@spatial-present/schema` — zod project-document schema; the contract every tool shares.
+  - `@spatial-present/core` — `defineJourney` SDK entry, route graph, runtime store, seeded PRNG.
+  - `@spatial-present/skins` — spatial skins plus the `AnchorContent` renderer (content primitives stay semantic; skins own the 3D look).
+  - `@spatial-present/renderer` — `PresentationApp` shell, `Stage`, camera rig, presenter console, minimap, palette, outline view, narrator, styles.
+  - `@spatial-present/worlds` — procedural world components and the landmark constants journeys reference (proto-stations until M2).
+  - `@spatial-present/cli` — `journey-cli.ts` (validate / outline / narration-script export; takes a journey-module path) and `generate-narration.py` (offline Kokoro TTS job).
+- `examples/svd-tour/` — "Singular Value Decomposition — A Guided Tour": the journey document, world wiring, public assets, and asset-generation scripts. Content lives here, never in `packages/`.
 
-Canonical docs live in `docs/` at the repo root. Anything under `spatial-present/docs/` is a stale copy.
+## Commands
 
-## The prototype is disposable
+From the repo root: `npm run lint` (whole workspace), and `npm run dev | build | validate | outline` (proxied to the example). From `examples/svd-tour/` additionally:
 
-`spatial-present/` proved the architecture (project document as single source of truth, content/skin separation, explicit route graph, scale portals, validation). It is a prototype, not the foundation: when building the real framework, reuse its code only where reuse actually saves effort over rebuilding. Do not contort new designs to preserve prototype code.
+- `npm run narration` — print the narration scripts JSON
+- `npm run narration:render` — render narration clips (Kokoro TTS, hash-cached)
+- `python3 scripts/generate-assets.py` — regenerate the SVD media assets
 
-## Working on the prototype
-
-All commands run from `spatial-present/`:
-
-- `npm run dev` — Vite dev server
-- `npm run build` — typecheck + production build
-- `npm run lint` — ESLint
-- `npm run validate` — validate the journey document (zod schema + route-graph integrity/reachability)
-- `npm run outline` — generate the linear markdown outline
-
-Key code:
-
-- `src/framework/schema.ts`, `src/framework/defineJourney.ts` — the project document schema and authoring entry point; the document is the single source of truth, everything else is a derived view.
-- `src/framework/store.ts`, `src/framework/routeGraph.ts`, `src/framework/camera/CameraRig.tsx` — navigation state, route graph, camera planning as pose-to-pose transitions.
-- `src/framework/skins/` — spatial skins (content primitives stay semantic; skins own the 3D look).
-- `src/journey/project.ts` — the hand-authored "Singular Value Decomposition" journey.
-- `scripts/journey-cli.ts` — the validate/outline CLI.
+A change is not done until `npm run build`, `npm run lint`, and `npm run validate` all pass.
 
 ## Conventions
 
 - Design changes go in `docs/design.md`; keep it consistent with `docs/proposal.md` (the proposal is the rationale, the design doc is the spec).
 - Core invariant in all designs: semantic content is the source of truth; visual/spatial/audio forms and accessibility fallbacks are derived from it, never the reverse.
 - Authoring surfaces must stay positionless (named stations and camera intents, not raw coordinates) so documents remain AI-authorable.
+- Framework packages must never import journey content. The host app injects world components through `PresentationApp`'s `worlds` map, and per-world UI colors come from the document (`ambience.accent`), not CSS keyed to world ids.
+- Packages export TypeScript source directly (no per-package build step): the example's `tsc -b` type-checks the whole program, Vite bundles it, `tsx` runs the CLI. Revisit only when packages are actually published.

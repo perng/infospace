@@ -1,0 +1,13 @@
+{
+  "name": "@spatial-present/schema",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Project document schema — the contract shared by the SDK, runtime, CLI, and (future) editor and AI generator.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
+  }
+}

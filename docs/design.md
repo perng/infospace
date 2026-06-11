@@ -743,15 +743,14 @@ Math is a first-class content type, not a picture pasted on a wall. Two primitiv
 
 ### Static Formulas (LaTeX)
 
-The `formula` primitive holds LaTeX source plus a spoken-math fallback. Rendering options, with the default in bold:
+The `formula` primitive holds LaTeX source plus a spoken-math fallback. Rendering options, with the implemented default in bold:
 
-- **KaTeX to SVG/MSDF to textured plane.** Crisp at any zoom, lives natively in the 3D scene, works with skins and scale portals. KaTeX is fast and covers the vast majority of presentation math.
+- **MathJax (tex-svg, font cache off) to flat glyph geometry.** MathJax emits a self-contained SVG — every glyph an inline path, no font references — which `SVGLoader` converts into real `THREE.Shape` geometry. Crisp at any zoom with no texture-resolution ceiling, and each skin owns the glyph material (chalk strokes, etched glow), which a rasterized texture could not offer. The earlier draft of this section assumed "KaTeX to SVG," but KaTeX has no SVG backend — its output is HTML+CSS, which cannot be rasterized or meshed robustly; MathJax's SVG output is the practical source of glyph outlines. Loaded lazily, so journeys without formulas never download it.
 - KaTeX to a DOM overlay billboard. Perfect typography and selectable text, but it is a DOM layer that breaks occlusion and scale-portal immersion. Good as a high-contrast fallback or companion view.
-- MathJax for the long tail of LaTeX that KaTeX cannot handle.
 
-KaTeX can emit MathML; the outline view renders MathML (or the fallback text), so the equation survives into the linear, handout, and screen-reader paths — consistent with the rule that the fallback is derived, never the source.
+The outline view renders the LaTeX source plus the spoken-math fallback (MathML output can be added from the same MathJax document later), so the equation survives into the linear, handout, and screen-reader paths — consistent with the rule that the fallback is derived, never the source.
 
-Math skins: `chalkboard` (white chalk strokes on slate, subtle dust on reveal), `etchedGlass` (formula etched into a lit glass slab), `neonManifold` (glowing 3Blue1Brown-style line work on a dark void). A formula is still a formula under any of them.
+Math skins: `chalkboard` (chalk strokes on slate; formulas write themselves on glyph by glyph on reveal, and the skin also takes plain text as chalk handwriting), `etchedGlass` (formula etched into a lit glass slab, glowing), `neonManifold` (glowing 3Blue1Brown-style line work on a dark void; future). A formula is still a formula under any of them.
 
 ### Animated Math (Manim)
 
@@ -772,7 +771,7 @@ Ship templates that give AI good defaults for math talks: `math-void` (dark, glo
 
 ### Division of Labor
 
-- LaTeX in-browser (KaTeX) handles static formulas: instant, scalable, accessible, no build step.
+- LaTeX in-browser (MathJax tex-svg to glyph geometry) handles static formulas: scalable, accessible, no build step.
 - Manim offline handles animated and visual math: the full power of Manim, rendered once, cached, streamed. The framework treats the result as just another timed asset, so presenter controls, fallbacks, and exports all work unchanged.
 
 ## Voice Narration
@@ -949,7 +948,9 @@ What it proved is the architecture: the project document as single source of tru
 
 With M1 done, the framework and its input are separated: the runtime, skins, schema, SDK, and CLI live in `packages/` (`@spatial-present/*`), the journey document and its world scenery live in `examples/svd-tour/`, and the host app injects world components by id.
 
-With M2 done, authoring is positionless: world templates publish named stations (transform + content envelope) and named poses, `defineJourney` runs the compiler pipeline — layout solver (station resolution with double-booking checks), skin resolver (capability descriptors + per-kind defaults), auto-router (primary chain defaulted from beat order), camera planner (intent + envelope → pose) — and the canonical document stores both the resolved geometry and its symbolic provenance, so a template change re-flows every journey built on it. The example document now contains zero coordinates; `journey-cli validate` reports symbolic-resolution coverage and `resolve` dumps the canonical output. What it is not yet: registries are static tables rather than an open plugin API, there is no generalized asset pipeline, AI generator, or math support.
+With M2 done, authoring is positionless: world templates publish named stations (transform + content envelope) and named poses, `defineJourney` runs the compiler pipeline — layout solver (station resolution with double-booking checks), skin resolver (capability descriptors + per-kind defaults), auto-router (primary chain defaulted from beat order), camera planner (intent + envelope → pose) — and the canonical document stores both the resolved geometry and its symbolic provenance, so a template change re-flows every journey built on it. The example document now contains zero coordinates; `journey-cli validate` reports symbolic-resolution coverage and `resolve` dumps the canonical output.
+
+With M3 done, math is a first-class content type: the `formula` primitive (LaTeX source + spoken-math fallback) renders through MathJax SVG into flat glyph geometry, the `chalkboard` skin writes formulas on glyph by glyph (and takes plain text as chalk), the `etchedGlass` skin sets them glowing in a lit slab, and the `lecture-hall` and `math-void` world templates ship with stations, intents, and portal poses. `examples/math-primer` ("Euler's Identity — a short walk") proves the slice end to end. What it is not yet: registries are static tables rather than an open plugin API, and there is no generalized asset pipeline, Manim/animated math, or AI generator.
 
 ### Milestones after MVP 1
 
@@ -959,7 +960,7 @@ Ordered roughly by leverage; see [proposal.md](proposal.md) for the full rationa
 | --- | --- | --- |
 | **M1 — Packagize** ✅ shipped | split schema/core/renderer/skins/worlds/cli into `packages/`; the SVD tour as `examples/svd-tour` | clean seams for everything else |
 | **M2 — Registries + layout solver + camera planner** ✅ shipped | stations, named camera intents, auto-routing; positionless example document | **AI authoring becomes possible** (no hand coordinates) |
-| **M3 — Math primitives** | `formula` (KaTeX to texture, MathML fallback) + `chalkboard`/`etchedGlass` skins; `math-void` + `lecture-hall` worlds | static math talks hand/SDK-authored |
+| **M3 — Math primitives** ✅ shipped | `formula` (MathJax SVG to glyph geometry, spoken-math fallback) + `chalkboard`/`etchedGlass` skins; `math-void` + `lecture-hall` world templates; `examples/math-primer` | static math talks hand/SDK-authored |
 | **M4 — Asset pipeline + Manim + narration** | `manim-render` job (transparent, cuepoints), `tts-narrate` job (timestamps, marks), `projection` skin, stepwise reveal | **animated math**; narrated self-running tours; generated-art caching |
 | **M5 — AI generator** | prompt to Authoring Spec to document, grounded by registries + schema; provenance, locking, semantic diff | the "describe it and get a presentation" experience |
 | **M6 — Visual editor** | direct manipulation over the same document | the approachable third path |
@@ -1063,6 +1064,6 @@ The first prototype should be a polished museum or garden world with a nonlinear
 - WebXR should be treated as optional extension capability rather than an MVP dependency.
 - Yjs is a strong fit for collaborative editing because it provides CRDT-backed shared data types.
 - ECharts and D3-style rendering can preserve chart semantics while allowing charts to become textures, meshes, or spatial visualizations.
-- KaTeX provides fast in-browser LaTeX typesetting with MathML output for accessibility; MathJax covers the long tail of LaTeX that KaTeX cannot handle.
+- MathJax (tex-svg with the font cache off) emits self-contained glyph-path SVG that converts cleanly to 3D geometry; KaTeX, which only outputs HTML+CSS, remains an option for DOM companion views. Avoid MathJax's `AllPackages` in browsers — it drags in the `\require` loader whose node-compat shim calls `eval("require")`.
 - Manim is a Python offline renderer and must be integrated as a build-time asset job emitting transparent video and cuepoints, never as a runtime dependency.
 - TTS engines should sit behind the asset pipeline as pluggable backends (local Kokoro/Piper, cloud ElevenLabs/OpenAI/Azure); narration scripts remain the semantic source, and word timestamps or forced alignment provide the timing metadata for captions and cue-mark synchronization.

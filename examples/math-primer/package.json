@@ -1,0 +1,33 @@
+{
+  "name": "math-primer",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Example math presentation consuming the @spatial-present packages: Euler's identity, from chalk series to a glowing identity in the math void.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "validate": "tsx ../../packages/cli/src/journey-cli.ts validate src/journey/project.ts",
+    "outline": "tsx ../../packages/cli/src/journey-cli.ts outline src/journey/project.ts",
+    "resolve": "tsx ../../packages/cli/src/journey-cli.ts resolve src/journey/project.ts"
+  },
+  "dependencies": {
+    "@spatial-present/core": "*",
+    "@spatial-present/renderer": "*",
+    "@spatial-present/schema": "*",
+    "@spatial-present/worlds": "*",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.184.1",
+    "@vitejs/plugin-react": "^6.0.1",
+    "tsx": "^4.22.4",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.12"
+  }
+}

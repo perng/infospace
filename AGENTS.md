@@ -4,9 +4,10 @@ A presentation framework that replaces slides with a guided journey through a co
 
 ## Layout
 
-- `docs/design.md` — canonical design document. `docs/proposal.md` — plan to a reusable framework (M1 packagize and M2 stations/intents/auto-routing are done).
-- `packages/` — the framework: `@spatial-present/schema` (zod authored + canonical document schemas, stations, camera intents, world templates), `/core` (defineJourney compiler: solver → skin resolver → auto-router → camera planner; registries, route graph, store), `/skins` (spatial skins + AnchorContent), `/renderer` (PresentationApp, Stage, camera rig, presenter UI, narrator), `/worlds` (procedural worlds + their templates), `/cli` (journey-cli + generate-narration.py).
-- `examples/svd-tour/` — the example journey ("Singular Value Decomposition — A Guided Tour"): document, world wiring, assets. Content lives here, never in `packages/`.
+- `docs/design.md` — canonical design document. `docs/proposal.md` — plan to a reusable framework (M1 packagize, M2 stations/intents/auto-routing, M3 math primitives are done).
+- `packages/` — the framework: `@spatial-present/schema` (zod authored + canonical document schemas, stations, camera intents, world templates), `/core` (defineJourney compiler: solver → skin resolver → auto-router → camera planner; registries, route graph, store), `/skins` (spatial skins + AnchorContent + the lazy MathJax→glyph-geometry formula pipeline), `/renderer` (PresentationApp, Stage, camera rig, presenter UI, narrator), `/worlds` (procedural worlds + their templates), `/cli` (journey-cli + generate-narration.py).
+- `examples/svd-tour/` — the flagship journey ("Singular Value Decomposition — A Guided Tour"): document, world wiring, assets. Content lives here, never in `packages/`.
+- `examples/math-primer/` — the minimal math journey ("Euler's Identity"): formula primitives, chalkboard/etchedGlass, lecture-hall → math-void portal.
 
 ## Commands
 
@@ -19,7 +20,7 @@ A change is not done until `npm run build`, `npm run lint`, and `npm run validat
 - `packages/schema/src/index.ts`, `packages/core/src/defineJourney.ts` — document schemas (authored + canonical) and the compiler entry point. The document is the single source of truth; everything else is a derived view.
 - `packages/core/src/{layoutSolver,cameraPlanner,registries}.ts` — station resolution, intent → pose planning, auto-routing, skin capabilities.
 - `packages/core/src/{store,routeGraph}.ts`, `packages/renderer/src/CameraRig.tsx` — navigation state, route graph, runtime camera moves as pose-to-pose transitions.
-- `packages/skins/src/` — spatial skins; content primitives stay semantic, skins own the 3D look.
+- `packages/skins/src/` — spatial skins; content primitives stay semantic, skins own the 3D look. `formula.ts` is the LaTeX → glyph geometry pipeline (dynamic-import MathJax; never `AllPackages` — its `\require` loader breaks in browsers).
 - `packages/renderer/src/PresentationApp.tsx` — the runtime shell; world components are injected via its `worlds` map.
 - `examples/svd-tour/src/journey/project.ts` — the hand-authored SVD journey (positionless: stations + intents, zero coordinates).
 - `packages/cli/src/journey-cli.ts` — validate / outline / resolve / narration CLI; takes a journey-module path, run from the presentation's root.

@@ -160,5 +160,9 @@ function fallbackMarkdown(content: ContentPrimitive): string[] {
       return [`*Image — ${content.title ?? ""}*: ${content.alt}`];
     case "video":
       return [`*Film — ${content.title ?? ""}*: ${content.alt}`];
+    case "formula":
+      // The LaTeX is the semantic source; the spoken-math line keeps the
+      // handout accessible without a math renderer.
+      return ["```latex", content.latex, "```", "", `*Spoken:* ${content.fallbackText}`];
   }
 }

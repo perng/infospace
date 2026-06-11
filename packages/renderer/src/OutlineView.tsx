@@ -120,5 +120,16 @@ function ContentFallback({ content }: { content: ContentPrimitive }) {
           </p>
         </div>
       );
+    case "formula":
+      // The linear fallback shows the LaTeX source and the spoken-math
+      // line; the screen reader gets the latter via aria-label.
+      return (
+        <div className="outline-formula" aria-label={content.fallbackText}>
+          <code>{content.latex}</code>
+          <p>
+            <em>Spoken:</em> {content.fallbackText}
+          </p>
+        </div>
+      );
   }
 }

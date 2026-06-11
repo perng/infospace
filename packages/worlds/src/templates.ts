@@ -4,6 +4,14 @@ import {
   LENS_POS,
   RETURN_RING,
 } from "./layout";
+import {
+  BOARD_X,
+  BOARD_Y,
+  HALL_FRONT_Z,
+  VOID_CIRCLE,
+  VOID_GATE,
+  VOID_PLINTH,
+} from "./mathLayout";
 
 /**
  * The symbolic vocabulary the worlds publish: named stations (content
@@ -133,6 +141,86 @@ export const SpectralTemplate: WorldTemplate = {
       position: [0, DEEP_Y + 30, 70],
       target: [0, DEEP_Y + 4, 0],
       fov: 75,
+    },
+  },
+};
+
+/** A small evening lecture hall. Three board panels share the front wall;
+ *  the chalkboard skin brings its own slate, so the panels are stations,
+ *  not scenery. The portal dives straight into the center board. */
+export const LectureHallTemplate: WorldTemplate = {
+  id: "lecture-hall",
+  stations: {
+    "board.left": {
+      position: [BOARD_X[0], BOARD_Y, HALL_FRONT_Z + 0.3],
+      envelope: { width: 3.8, height: 2.8 },
+    },
+    "board.center": {
+      position: [BOARD_X[1], BOARD_Y, HALL_FRONT_Z + 0.3],
+      envelope: { width: 3.8, height: 2.8 },
+    },
+    "board.right": {
+      position: [BOARD_X[2], BOARD_Y, HALL_FRONT_Z + 0.3],
+      envelope: { width: 3.8, height: 2.8 },
+    },
+    "wall.west": {
+      position: [-11.7, 2.9, -6],
+      rotationY: Math.PI / 2,
+      envelope: { width: 4, height: 3 },
+    },
+  },
+  poses: {
+    /** Tight on the center board — the dive into the mathematics. */
+    "board-dive": {
+      position: [BOARD_X[1], BOARD_Y - 0.1, HALL_FRONT_Z + 2.4],
+      target: [BOARD_X[1], BOARD_Y - 0.1, HALL_FRONT_Z],
+      fov: 26,
+    },
+    /** Backing out of the center board when a portal surfaces here. */
+    "board-emerge": {
+      position: [BOARD_X[1], BOARD_Y - 0.2, HALL_FRONT_Z + 3.6],
+      target: [BOARD_X[1], BOARD_Y, HALL_FRONT_Z],
+      fov: 58,
+    },
+  },
+};
+
+/** The math void: dark weightless space where mathematics glows. */
+export const MathVoidTemplate: WorldTemplate = {
+  id: "math-void",
+  stations: {
+    "plinth.identity": {
+      position: VOID_PLINTH,
+      envelope: { width: 5.5, height: 3 },
+    },
+    "gallery.west": {
+      position: [-10, 3, -2],
+      rotationY: 0.6,
+      envelope: { width: 6, height: 3.2 },
+    },
+    "circle.overlook": {
+      position: [VOID_CIRCLE[0], VOID_CIRCLE[1] + 0.5, VOID_CIRCLE[2] + 5],
+      rotationY: -0.2,
+      envelope: { width: 8, height: 3.5 },
+    },
+    "gate.return": {
+      position: [VOID_GATE[0], VOID_GATE[1], VOID_GATE[2] - 1],
+      rotationY: Math.PI,
+      envelope: { width: 6.5, height: 3 },
+    },
+  },
+  poses: {
+    /** The plunge arrival: high above the grid, falling toward the plinth. */
+    "void-emerge": {
+      position: [0, 16, 26],
+      target: VOID_PLINTH,
+      fov: 72,
+    },
+    /** Flying into the return gate. */
+    "gate-dive": {
+      position: [VOID_GATE[0], VOID_GATE[1], VOID_GATE[2] + 0.5],
+      target: [VOID_GATE[0], VOID_GATE[1], VOID_GATE[2] + 6],
+      fov: 28,
     },
   },
 };

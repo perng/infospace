@@ -195,7 +195,7 @@ Add an optional `station`/`cameraIntent` form to the schema so Layer C can store
 
 Two new content primitives, supporting skins, and one asset job. Both keep a **semantic LaTeX source** so they stay accessible, searchable, and exportable to the outline/handout.
 
-### 5.1 The `formula` primitive (LaTeX)
+### 5.1 The `formula` primitive (LaTeX) — ✅ done (M3)
 
 Add to the `ContentPrimitive` discriminated union in [`schema`](../packages/schema/src/index.ts):
 
@@ -210,18 +210,19 @@ Add to the `ContentPrimitive` discriminated union in [`schema`](../packages/sche
 }
 ```
 
-**Rendering options** (proposed default in bold):
-- **KaTeX → SVG/MSDF → textured plane.** Crisp at any zoom, lives natively in the 3D scene, works with skins and scale portals. KaTeX is fast and covers the vast majority of presentation math.
+**Rendering** (shipped default in bold; the proposal originally assumed "KaTeX → SVG," but KaTeX has no SVG backend — see design.md):
+- **MathJax tex-svg (font cache off) → `SVGLoader` → flat glyph geometry.** Self-contained glyph paths, real `THREE.Shape` meshes: crisp at any zoom, and each skin owns the glyph material (chalk, etched glow). Dynamically imported, so journeys without formulas never download MathJax.
 - KaTeX → `drei <Html>` overlay billboard. Perfect typography + selectable text, but it's a DOM layer (breaks occlusion/scale-portal immersion). Good as a high-contrast fallback / companion view.
-- MathJax for the long tail of LaTeX KaTeX can't handle.
 
-**Accessibility:** KaTeX can emit MathML; the outline view renders MathML (or `fallbackText`), so the equation survives into the linear/handout/screen-reader paths — consistent with the framework's "fallback is derived, never the source" rule.
+**Accessibility:** the outline renders the LaTeX source plus `fallbackText` (spoken math); MathML output from the same MathJax document is a later addition — consistent with the framework's "fallback is derived, never the source" rule.
 
 **Math skins** (new `skinKind`s, registered per §4.2):
-- `chalkboard` — white chalk strokes on slate, subtle dust on reveal.
-- `etchedGlass` — formula etched into a lit glass slab (reuses the engraving idea).
-- `neonManifold` — glowing 3Blue1Brown-style line work on a dark void.
+- `chalkboard` — ✅ chalk strokes on slate; formulas write themselves on glyph by glyph, plain text renders as chalk handwriting.
+- `etchedGlass` — ✅ formula etched into a lit glass slab (reuses the engraving idea).
+- `neonManifold` — glowing 3Blue1Brown-style line work on a dark void (future).
 A formula is still a formula under any of them.
+
+Shipped with `lecture-hall` and `math-void` world templates and `examples/math-primer` ("Euler's Identity — a short walk": chalk series in the hall, a portal through the center board, the identity in etched glass beside a living unit circle).
 
 ### 5.2 Manim integration (build-time render → in-world projection)
 
@@ -276,7 +277,7 @@ Manim is a **Python, offline renderer** — it cannot run in the browser. So int
 | --- | --- | --- |
 | **M1 — Packagize** ✅ shipped | split schema/core/renderer/skins/worlds/cli into `packages/`; the SVD tour as `examples/svd-tour` | clean seams for everything else |
 | **M2 — Registries + layout solver + camera planner** ✅ shipped | stations, named camera intents, auto-routing; positionless example document | **AI authoring becomes possible** (no hand coordinates) |
-| **M3 — Math primitives** | `formula` (KaTeX→texture, MathML fallback) + `chalkboard`/`etchedGlass` skins; `math-void` + `lecture-hall` worlds | static math talks hand/SDK-authored |
+| **M3 — Math primitives** ✅ shipped | `formula` (MathJax SVG→glyph geometry, spoken fallback) + `chalkboard`/`etchedGlass` skins; `math-void` + `lecture-hall` world templates; `examples/math-primer` | static math talks hand/SDK-authored |
 | **M4 — Asset pipeline + Manim** | `manim-render` job (transparent, cuepoints), `projection` skin, stepwise reveal | **animated math**; generated-art caching |
 | **M5 — AI generator** | prompt → Authoring Spec → document, grounded by registries + schema; provenance + locking + semantic diff | the "describe it and get a presentation" experience |
 | **M6 — Visual editor** | direct manipulation over the same document | the approachable third path |

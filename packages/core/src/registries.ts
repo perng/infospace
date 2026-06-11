@@ -45,6 +45,15 @@ export const skinCapabilities: Record<SkinKind, SkinCapability> = {
     accepts: ["image", "video"],
     description: "a framed image or film on a gallery wall",
   },
+  chalkboard: {
+    accepts: ["formula", "text"],
+    description:
+      "chalk strokes on a slate board; formulas write themselves on reveal",
+  },
+  etchedGlass: {
+    accepts: ["formula"],
+    description: "a formula etched into a lit glass slab, glowing",
+  },
 };
 
 /** Default skin per content kind, used when a binding omits skinKind. */
@@ -53,6 +62,7 @@ export const defaultSkinFor: Record<ContentKind, SkinKind> = {
   chart: "hologram",
   image: "plaque",
   video: "plaque",
+  formula: "chalkboard",
 };
 
 /**

@@ -133,6 +133,7 @@ export function searchBeats(index: ProjectIndex, query: string): SearchHit[] {
         if (!c) return "";
         if (c.kind === "text") return `${c.title ?? ""} ${c.body}`;
         if (c.kind === "chart") return c.fallbackText;
+        if (c.kind === "formula") return `${c.latex} ${c.fallbackText}`;
         return c.alt;
       }),
     ];

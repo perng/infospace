@@ -9,6 +9,8 @@ import { HologramChartSkin } from "./HologramChartSkin";
 import { ConstellationSkin } from "./ConstellationSkin";
 import { CloudTextSkin } from "./CloudTextSkin";
 import { PlaqueSkin } from "./PlaqueSkin";
+import { ChalkboardSkin } from "./ChalkboardSkin";
+import { EtchedGlassSkin } from "./EtchedGlassSkin";
 
 /**
  * Renders every content primitive bound to an anchor through its spatial
@@ -78,5 +80,14 @@ function Skinned({
           video={content.kind === "video"}
         />
       );
+    case "chalkboard":
+      if (content.kind === "formula")
+        return <ChalkboardSkin {...base} latex={content.latex} />;
+      if (content.kind === "text")
+        return <ChalkboardSkin {...base} title={content.title} body={content.body} />;
+      return null;
+    case "etchedGlass":
+      if (content.kind !== "formula") return null;
+      return <EtchedGlassSkin {...base} latex={content.latex} />;
   }
 }

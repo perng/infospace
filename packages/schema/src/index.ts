@@ -179,6 +179,18 @@ export const contentPrimitiveSchema = z.discriminatedUnion("kind", [
     caption: z.string().optional(),
     alt: z.string(),
   }),
+  z.object({
+    id: z.string(),
+    kind: z.literal("formula"),
+    /** LaTeX source — the semantic truth of the equation. The 3D glyphs,
+     *  the outline rendering, and any export all derive from it. */
+    latex: z.string(),
+    display: z.enum(["block", "inline"]).default("block"),
+    numbered: z.boolean().optional(),
+    /** Spoken-math description for the outline and screen readers,
+     *  e.g. "e to the i pi plus one equals zero". */
+    fallbackText: z.string(),
+  }),
 ]);
 export type ContentPrimitive = z.infer<typeof contentPrimitiveSchema>;
 
@@ -188,6 +200,8 @@ export const skinKindSchema = z.enum([
   "constellation", // scatter data as stars in a dark dome
   "cloudText", // quote as drifting luminous text
   "plaque", // framed image / film on a gallery wall
+  "chalkboard", // formula or text as chalk strokes on slate
+  "etchedGlass", // formula etched into a lit glass slab
 ]);
 export type SkinKind = z.infer<typeof skinKindSchema>;
 

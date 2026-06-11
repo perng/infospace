@@ -7,6 +7,13 @@
       "runtimeArgs": ["-c", "cd examples/svd-tour && npx vite --port $PORT --strictPort"],
       "autoPort": true,
       "port": 5181
+    },
+    {
+      "name": "math-primer",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd examples/math-primer && npx vite --port $PORT --strictPort"],
+      "autoPort": true,
+      "port": 5182
     }
   ]
 }

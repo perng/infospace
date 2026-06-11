@@ -47,7 +47,10 @@ export function CameraRig({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock, camera: frameCamera }) => {
+    // Use the frame-state camera, not the render-scoped useThree value:
+    // hook results are frozen under the React Compiler rules.
+    const camera = frameCamera as THREE.PerspectiveCamera;
     const state = store.getState();
     const t = state.transition;
     if (!t) return;

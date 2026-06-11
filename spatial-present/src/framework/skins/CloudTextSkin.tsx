@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { Text, Float } from "@react-three/drei";
 import * as THREE from "three";
 import { FONT_SERIF, FONT_SANS, param, useReveal, type SkinProps } from "./common";
+import { seededRandom } from "../random";
 
 /**
  * A quote drifting as luminous text inside a slow particle nebula.
@@ -19,12 +20,13 @@ export function CloudTextSkin({
   const textMat = useRef<THREE.Group>(null);
 
   const particles = useMemo(() => {
+    const rand = seededRandom(0xc10d);
     const n = 320;
     const arr = new Float32Array(n * 3);
     for (let i = 0; i < n; i++) {
-      arr[i * 3] = (Math.random() - 0.5) * (width + 4);
-      arr[i * 3 + 1] = (Math.random() - 0.5) * 4.5;
-      arr[i * 3 + 2] = (Math.random() - 0.5) * 3;
+      arr[i * 3] = (rand() - 0.5) * (width + 4);
+      arr[i * 3 + 1] = (rand() - 0.5) * 4.5;
+      arr[i * 3 + 2] = (rand() - 0.5) * 3;
     }
     return arr;
   }, [width]);

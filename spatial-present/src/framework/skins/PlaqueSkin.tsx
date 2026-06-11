@@ -122,8 +122,9 @@ function ImageSurface({
   width: number;
   height: number;
 }) {
-  const texture = useTexture(src);
-  texture.colorSpace = THREE.SRGBColorSpace;
+  const texture = useTexture(src, (t) => {
+    t.colorSpace = THREE.SRGBColorSpace;
+  });
   // Treat the artwork as self-lit so dark paintings stay legible regardless
   // of where the camera approaches from; the spotlight adds gallery warmth.
   return (

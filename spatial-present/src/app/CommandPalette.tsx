@@ -1,14 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { PresentationStore } from "../framework/store";
 import { searchBeats } from "../framework/routeGraph";
 
 /** Search-and-jump palette: find any beat by title, anchor, notes or content. */
 export function CommandPalette({ store }: { store: PresentationStore }) {
-  const index = store((s) => s.index);
   const open = store((s) => s.paletteOpen);
+  if (!open) return null;
+  return <PaletteDialog store={store} />;
+}
+
+/** Mounted fresh each time the palette opens, so query state starts clean. */
+function PaletteDialog({ store }: { store: PresentationStore }) {
+  const index = store((s) => s.index);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(0);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const hits = query
     ? searchBeats(index, query)
@@ -17,16 +22,6 @@ export function CommandPalette({ store }: { store: PresentationStore }) {
         anchor: index.anchorById.get(beat.anchorId)!,
         matchedOn: "",
       }));
-
-  useEffect(() => {
-    if (open) {
-      setQuery("");
-      setSelected(0);
-      setTimeout(() => inputRef.current?.focus(), 0);
-    }
-  }, [open]);
-
-  if (!open) return null;
 
   const jump = (beatId: string) => {
     store.getState().setPaletteOpen(false);
@@ -37,7 +32,7 @@ export function CommandPalette({ store }: { store: PresentationStore }) {
     <div className="palette-backdrop" onClick={() => store.getState().setPaletteOpen(false)}>
       <div className="palette" onClick={(e) => e.stopPropagation()}>
         <input
-          ref={inputRef}
+          autoFocus
           value={query}
           placeholder="Jump to a beat, anchor, or topic…"
           onChange={(e) => {

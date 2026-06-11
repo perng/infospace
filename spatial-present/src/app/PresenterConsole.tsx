@@ -117,12 +117,12 @@ export function TopBar({ store }: { store: PresentationStore }) {
 
 function Timer({ store }: { store: PresentationStore }) {
   const startedAtMs = store((s) => s.startedAtMs);
-  const [, tick] = useState(0);
+  const [nowMs, setNowMs] = useState(() => Date.now());
   useEffect(() => {
-    const id = setInterval(() => tick((n) => n + 1), 1000);
+    const id = setInterval(() => setNowMs(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
-  const elapsed = Math.floor((Date.now() - startedAtMs) / 1000);
+  const elapsed = Math.max(0, Math.floor((nowMs - startedAtMs) / 1000));
   const mm = String(Math.floor(elapsed / 60)).padStart(2, "0");
   const ss = String(elapsed % 60).padStart(2, "0");
   return <span className="timer">{mm}:{ss}</span>;

@@ -2,6 +2,7 @@ import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { LENS_POS, MICROSCOPE_POS } from "../layout";
+import { seededRandom } from "../../framework/random";
 
 const MARBLE = "#b8b2a4";
 const MARBLE_DARK = "#7d776b";
@@ -118,13 +119,14 @@ function Colonnade() {
 
 function StarSky() {
   const stars = useMemo(() => {
+    const rand = seededRandom(0x57a55);
     const n = 1400;
     const arr = new Float32Array(n * 3);
     for (let i = 0; i < n; i++) {
       // upper hemisphere shell
       const r = 320;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 0.95);
+      const theta = rand() * Math.PI * 2;
+      const phi = Math.acos(rand() * 0.95);
       arr[i * 3] = r * Math.sin(phi) * Math.cos(theta);
       arr[i * 3 + 1] = r * Math.cos(phi) + 5;
       arr[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);

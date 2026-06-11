@@ -2,6 +2,7 @@ import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { CELL_Y, MITO_CLUSTER, NUCLEUS_POS, RETURN_RING } from "../layout";
+import { seededRandom } from "../../framework/random";
 
 /**
  * The micro world: the inside of a single cell, reached through the
@@ -51,11 +52,12 @@ function Membrane() {
 function MembraneStuds() {
   const ref = useRef<THREE.InstancedMesh>(null);
   const transforms = useMemo(() => {
+    const rand = seededRandom(0x57ad5);
     const dummy = new THREE.Object3D();
     const list: THREE.Matrix4[] = [];
     for (let i = 0; i < 160; i++) {
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
+      const theta = rand() * Math.PI * 2;
+      const phi = Math.acos(2 * rand() - 1);
       const r = 62.5;
       dummy.position.set(
         r * Math.sin(phi) * Math.cos(theta),
@@ -63,7 +65,7 @@ function MembraneStuds() {
         r * Math.sin(phi) * Math.sin(theta)
       );
       dummy.lookAt(0, 0, 0);
-      dummy.scale.setScalar(0.6 + Math.random() * 1.1);
+      dummy.scale.setScalar(0.6 + rand() * 1.1);
       dummy.updateMatrix();
       list.push(dummy.matrix.clone());
     }
@@ -88,12 +90,13 @@ function MembraneStuds() {
 function Cytoplasm() {
   const ref = useRef<THREE.Points>(null);
   const positions = useMemo(() => {
+    const rand = seededRandom(0xce11);
     const n = 1800;
     const arr = new Float32Array(n * 3);
     for (let i = 0; i < n; i++) {
-      const r = Math.cbrt(Math.random()) * 58;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
+      const r = Math.cbrt(rand()) * 58;
+      const theta = rand() * Math.PI * 2;
+      const phi = Math.acos(2 * rand() - 1);
       arr[i * 3] = r * Math.sin(phi) * Math.cos(theta);
       arr[i * 3 + 1] = CELL_Y + r * Math.cos(phi);
       arr[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);

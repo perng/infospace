@@ -1,0 +1,129 @@
+import { useEffect, useState } from "react";
+import type { PresentationStore } from "../framework/store";
+import { nextEdges } from "../framework/routeGraph";
+import type { RouteEdge } from "../framework/schema";
+
+const KIND_LABEL: Record<RouteEdge["kind"], string> = {
+  primary: "Next",
+  portal: "Portal",
+  branch: "Branch",
+  return: "Return",
+};
+
+/** Bottom presenter panel: where am I, what's next, notes, overrides. */
+export function PresenterConsole({ store }: { store: PresentationStore }) {
+  const index = store((s) => s.index);
+  const currentBeatId = store((s) => s.currentBeatId);
+  const manualCamera = store((s) => s.manualCamera);
+  const notesOpen = store((s) => s.notesOpen);
+  const transition = store((s) => s.transition);
+  const history = store((s) => s.history);
+
+  const beat = index.beatById.get(currentBeatId)!;
+  const anchor = index.anchorById.get(beat.anchorId)!;
+  const world = index.project.worlds.find((w) => w.id === anchor.worldId)!;
+  const edges = nextEdges(index, currentBeatId);
+  const beatNumber = index.outlineOrder.findIndex((b) => b.id === beat.id) + 1;
+
+  return (
+    <div className="console">
+      <div className="console-current">
+        <div className="console-kicker">
+          <span className="world-chip" data-world={world.id}>
+            {world.name}
+          </span>
+          <span className="beat-count">
+            beat {beatNumber} / {index.outlineOrder.length}
+          </span>
+          {transition && <span className="moving">moving…</span>}
+          {manualCamera && (
+            <button
+              className="btn btn-warn"
+              onClick={() => store.getState().returnToRoute()}
+            >
+              ⟲ Return to route (Esc)
+            </button>
+          )}
+        </div>
+        <h2 className="beat-title">{beat.title}</h2>
+        <div className="beat-anchor">{anchor.name}</div>
+        {notesOpen && beat.notes && <p className="notes">{beat.notes}</p>}
+      </div>
+
+      <div className="console-next">
+        <button
+          className="btn"
+          disabled={!history.length}
+          onClick={() => store.getState().goBack()}
+          title="Back (←)"
+        >
+          ← Back
+        </button>
+        {edges.map((edge) => {
+          const target = index.beatById.get(edge.to)!;
+          return (
+            <button
+              key={edge.id}
+              className={`btn edge-${edge.kind}`}
+              onClick={() => store.getState().goToBeat(edge.to, edge)}
+            >
+              <span className="edge-kind">{KIND_LABEL[edge.kind]}</span>
+              {edge.label ?? target.title}
+              {(edge.kind === "primary" || edge.kind === "portal") && " →"}
+            </button>
+          );
+        })}
+        {!edges.length && <span className="route-end">end of route</span>}
+      </div>
+    </div>
+  );
+}
+
+export function TopBar({ store }: { store: PresentationStore }) {
+  const index = store((s) => s.index);
+  const outlineOpen = store((s) => s.outlineOpen);
+  const notesOpen = store((s) => s.notesOpen);
+
+  return (
+    <div className="topbar">
+      <div className="topbar-title">{index.project.title}</div>
+      <div className="topbar-tools">
+        <Timer store={store} />
+        <button
+          className="btn"
+          onClick={() => store.getState().setPaletteOpen(true)}
+          title="Search beats (K)"
+        >
+          ⌕ Jump
+        </button>
+        <button
+          className={`btn ${notesOpen ? "btn-on" : ""}`}
+          onClick={() => store.getState().setNotesOpen(!notesOpen)}
+          title="Speaker notes (N)"
+        >
+          Notes
+        </button>
+        <button
+          className={`btn ${outlineOpen ? "btn-on" : ""}`}
+          onClick={() => store.getState().setOutlineOpen(!outlineOpen)}
+          title="Linear outline (O)"
+        >
+          Outline
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function Timer({ store }: { store: PresentationStore }) {
+  const startedAtMs = store((s) => s.startedAtMs);
+  const [, tick] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => tick((n) => n + 1), 1000);
+    return () => clearInterval(id);
+  }, []);
+  const elapsed = Math.floor((Date.now() - startedAtMs) / 1000);
+  const mm = String(Math.floor(elapsed / 60)).padStart(2, "0");
+  const ss = String(elapsed % 60).padStart(2, "0");
+  return <span className="timer">{mm}:{ss}</span>;
+}

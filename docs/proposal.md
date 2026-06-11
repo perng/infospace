@@ -12,7 +12,7 @@ This document answers three questions:
 
 ## 1. Where we are today
 
-MVP 1 (`spatial-present/`) is a **runtime** plus a **single hand-authored journey** ("The Living Cell"). The important thing it proved is the *architecture*, not the one presentation:
+MVP 1 (`spatial-present/`) is a **runtime** plus a **single hand-authored journey** ("Singular Value Decomposition — A Guided Tour"). The important thing it proved is the *architecture*, not the one presentation:
 
 - **The project document is the single source of truth.** Everything else — the 3D scene, the presenter console, search, the linear outline, the markdown handout — is a derived view of one validated data structure ([`schema.ts`](../spatial-present/src/framework/schema.ts), [`defineJourney.ts`](../spatial-present/src/framework/defineJourney.ts)).
 - **Content is separated from presentation.** A `ContentPrimitive` owns data + semantics; a `SpatialSkin` owns how it looks in 3D. The same chart can be a hologram or an accessible table ([`skins/`](../spatial-present/src/framework/skins/), [`OutlineView.tsx`](../spatial-present/src/app/OutlineView.tsx)).
@@ -149,7 +149,7 @@ Ordered roughly by leverage. Items marked **(math)** are also required for §5.
 
 ### 4.1 Split into packages (decouple framework from content)
 Carve the current `src/framework` into publishable packages with clean seams (mirrors the repo layout in [design.md](design.md)):
-`@spatial-present/schema`, `/core` (defineJourney, route graph, store), `/renderer` (camera rig, Stage), `/skins`, `/worlds`, `/cli`. The "Living Cell" becomes `examples/living-cell` consuming the packages.
+`@spatial-present/schema`, `/core` (defineJourney, route graph, store), `/renderer` (camera rig, Stage), `/skins`, `/worlds`, `/cli`. The SVD tour becomes `examples/svd-tour` consuming the packages.
 
 ### 4.2 Registries + plugin API
 Three open registries so the vocabulary is extensible without editing the core:
@@ -268,7 +268,7 @@ Manim is a **Python, offline renderer** — it cannot run in the browser. So int
 
 | Milestone | Delivers | Unblocks |
 | --- | --- | --- |
-| **M1 — Packagize** | split core/renderer/skins/worlds/cli; "Living Cell" as an example | clean seams for everything else |
+| **M1 — Packagize** | split core/renderer/skins/worlds/cli; the SVD tour as an example | clean seams for everything else |
 | **M2 — Registries + layout solver + camera planner** | stations, named camera intents, auto-routing | **AI authoring becomes possible** (no hand coordinates) |
 | **M3 — Math primitives** | `formula` (KaTeX→texture, MathML fallback) + `chalkboard`/`etchedGlass` skins; `math-void` + `lecture-hall` worlds | static math talks hand/SDK-authored |
 | **M4 — Asset pipeline + Manim** | `manim-render` job (transparent, cuepoints), `projection` skin, stepwise reveal | **animated math**; generated-art caching |

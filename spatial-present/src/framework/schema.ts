@@ -110,7 +110,7 @@ export const skinKindSchema = z.enum([
   "hologram", // glowing volumetric chart / glass panel
   "constellation", // scatter data as stars in a dark dome
   "cloudText", // quote as drifting luminous text
-  "plaque", // framed image / film on a museum wall
+  "plaque", // framed image / film on a gallery wall
 ]);
 export type SkinKind = z.infer<typeof skinKindSchema>;
 

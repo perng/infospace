@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { FONT_SANS, FONT_SERIF, param, useReveal, type SkinProps } from "./common";
 
 /**
- * A framed museum piece: an image painting or a film panel, with a brass
+ * A framed gallery piece: an image panel or a film panel, with a brass
  * caption plate. The alt text travels with the primitive into the outline.
  */
 export function PlaqueSkin({

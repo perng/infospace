@@ -8,10 +8,11 @@ holograms, constellations, drifting cloud text, museum plaques.
 This repository is **MVP 1: the runtime prototype**, proving the mental model
 with one handcrafted educational journey:
 
-> **The Living Cell — A Night Tour.** A roofless marble gallery under a
-> starry sky walks through the discovery and anatomy of the cell, then dives
-> through the lens of a giant brass microscope — a *scale portal* — into the
-> interior of a living cell, ten thousand times smaller.
+> **Singular Value Decomposition — A Guided Tour.** A roofless marble gallery
+> under a field of stars walks through the geometry of `A = U S Vᵀ` — a matrix
+> as rotate, stretch, rotate — then dives through a light-splitting prism — a
+> *scale portal* — into the decomposition itself, where the image of the unit
+> sphere is an ellipsoid and the matrix comes apart into its rank-one layers.
 
 ## Run it
 
@@ -57,13 +58,14 @@ src/framework/          the reusable engine
   camera/CameraRig.tsx  pose-to-pose camera planner with portal dives and
                         manual-override orbit controls
   skins/                spatial skins: engraving, hologram chart,
-                        constellation scatter, cloud text, museum plaque
+                        constellation scatter, cloud text, framed plaque
 src/journey/            the handcrafted presentation (15 anchors, 15 beats,
                         20 route edges, 2 worlds, 2 scale portals)
   project.ts            the project document
-  worlds/               procedural scenery: MuseumWorld, CellWorld
+  worlds/               procedural scenery: AtriumWorld, SpectralWorld
 src/app/                presenter UI: console, minimap, palette, outline
 scripts/journey-cli.ts  mini compiler: validate / export handout
+scripts/generate-assets.py  regenerates the SVD media (diagram, montage, film)
 ```
 
 ### Design principles carried into the code
@@ -74,7 +76,7 @@ scripts/journey-cli.ts  mini compiler: validate / export handout
 - **Camera as constraint transitions.** Moves are planned between camera
   poses, never baked frame lists, so the presenter can interrupt at any
   moment and `Esc` always recovers the route.
-- **Scale portals are route edges.** The microscope dive is an edge with
+- **Scale portals are route edges.** The prism dive is an edge with
   `kind: "portal"`, a dive pose, and an emerge pose; the world swap hides
   behind the fade at the midpoint (the "hybrid" strategy from the design doc).
 - **Beautiful degradation.** `O` opens a linear, screen-reader-friendly
@@ -83,11 +85,14 @@ scripts/journey-cli.ts  mini compiler: validate / export handout
 ## Assets
 
 - Procedural geometry only — no glTF downloads; first interactive paint is fast.
-- `public/assets/exhibit-film.webm` — real Paramecium microscopy footage
-  (Wikimedia Commons, CC).
-- `public/assets/*.png` — AI-generated period artwork (portrait & cork
-  engraving), referenced from the project document like any other asset.
-- `public/fonts/` — vendored Cinzel & Inter for SDF text meshes.
+- `public/assets/*.png` and `svd-reconstruct.webm` — generated from real
+  linear algebra (not stock art) by `scripts/generate-assets.py`: the unit
+  circle → ellipse diagram, the truncated-SVD compression montage, and the
+  rank-by-rank reconstruction film. Each is referenced from the project
+  document like any other asset; re-run the script to regenerate them.
+- `public/fonts/` — vendored Cinzel & Inter for SDF text meshes. They carry
+  no Greek/subscript glyphs, so in-world strings stay ASCII (`A = U S Vᵀ`)
+  while the precise typeset notation lives in the generated diagram.
 
 ## What MVP 1 deliberately skips
 

@@ -916,7 +916,7 @@ packages/
   accessibility/
   example-worlds/
 examples/
-  living-cell/
+  svd-tour/
   code-authored-tour/
   ai-generated-garden/
   visual-editor-project/
@@ -935,7 +935,7 @@ The first credible MVP should prove the new mental model without trying to build
 
 ### MVP 1: Runtime Prototype — shipped
 
-**Status: implemented as [`spatial-present/`](../spatial-present/README.md) ("The Living Cell").** A web runtime that loads one handcrafted world and supports:
+**Status: implemented as [`spatial-present/`](../spatial-present/README.md) ("Singular Value Decomposition — A Guided Tour").** A web runtime that loads one handcrafted world and supports:
 
 - 10 to 20 anchors.
 - Route graph navigation.
@@ -953,7 +953,7 @@ Ordered roughly by leverage; see [proposal.md](proposal.md) for the full rationa
 
 | Milestone | Delivers | Unblocks |
 | --- | --- | --- |
-| **M1 — Packagize** | split core/renderer/skins/worlds/cli; "Living Cell" as an example | clean seams for everything else |
+| **M1 — Packagize** | split core/renderer/skins/worlds/cli; the SVD tour as an example | clean seams for everything else |
 | **M2 — Registries + layout solver + camera planner** | stations, named camera intents, auto-routing | **AI authoring becomes possible** (no hand coordinates) |
 | **M3 — Math primitives** | `formula` (KaTeX to texture, MathML fallback) + `chalkboard`/`etchedGlass` skins; `math-void` + `lecture-hall` worlds | static math talks hand/SDK-authored |
 | **M4 — Asset pipeline + Manim + narration** | `manim-render` job (transparent, cuepoints), `tts-narrate` job (timestamps, marks), `projection` skin, stepwise reveal | **animated math**; narrated self-running tours; generated-art caching |

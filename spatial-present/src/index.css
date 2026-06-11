@@ -157,9 +157,9 @@ body,
   color: var(--accent);
 }
 
-.world-chip[data-world="cell"] {
-  background: rgba(140, 240, 200, 0.12);
-  color: #7fe8c0;
+.world-chip[data-world="spectral"] {
+  background: rgba(124, 200, 255, 0.14);
+  color: #9fd0ff;
 }
 
 .moving {
@@ -290,12 +290,12 @@ body,
   fill: #5a6688;
 }
 
-.map-dot.world-museum {
+.map-dot.world-atrium {
   fill: #6f86c8;
 }
 
-.map-dot.world-cell {
-  fill: #4fbf9a;
+.map-dot.world-spectral {
+  fill: #5db4ff;
 }
 
 .map-dot-active {

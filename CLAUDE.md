@@ -6,7 +6,7 @@ A presentation framework that replaces slides with a guided journey through a co
 
 - `docs/design.md` — the canonical design document (vision, concepts, architecture, data model, roadmap).
 - `docs/proposal.md` — the plan for getting from the prototype to a reusable, AI-authorable framework (layered authoring model, stations/camera intents, registries, math/Manim support, M1–M6 milestones).
-- `spatial-present/` — MVP 1 prototype ("The Living Cell"): a Vite + React 19 + TypeScript + React Three Fiber app.
+- `spatial-present/` — MVP 1 prototype ("Singular Value Decomposition — A Guided Tour"): a Vite + React 19 + TypeScript + React Three Fiber app.
 
 Canonical docs live in `docs/` at the repo root. Anything under `spatial-present/docs/` is a stale copy.
 
@@ -29,7 +29,7 @@ Key code:
 - `src/framework/schema.ts`, `src/framework/defineJourney.ts` — the project document schema and authoring entry point; the document is the single source of truth, everything else is a derived view.
 - `src/framework/store.ts`, `src/framework/routeGraph.ts`, `src/framework/camera/CameraRig.tsx` — navigation state, route graph, camera planning as pose-to-pose transitions.
 - `src/framework/skins/` — spatial skins (content primitives stay semantic; skins own the 3D look).
-- `src/journey/project.ts` — the hand-authored "Living Cell" journey.
+- `src/journey/project.ts` — the hand-authored "Singular Value Decomposition" journey.
 - `scripts/journey-cli.ts` — the validate/outline CLI.
 
 ## Conventions

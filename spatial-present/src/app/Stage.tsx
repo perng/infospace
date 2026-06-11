@@ -1,8 +1,8 @@
 import type { PresentationStore } from "../framework/store";
 import { AnchorContent } from "../framework/skins/SkinRenderer";
 import { CameraRig } from "../framework/camera/CameraRig";
-import { MuseumWorld } from "../journey/worlds/MuseumWorld";
-import { CellWorld } from "../journey/worlds/CellWorld";
+import { AtriumWorld } from "../journey/worlds/AtriumWorld";
+import { SpectralWorld } from "../journey/worlds/SpectralWorld";
 
 /** Everything inside the R3F canvas: worlds, anchored content, camera. */
 export function Stage({
@@ -20,8 +20,8 @@ export function Stage({
   return (
     <>
       <WorldAmbience store={store} />
-      <MuseumWorld visible={activeWorldId === "museum"} />
-      <CellWorld visible={activeWorldId === "cell"} />
+      <AtriumWorld visible={activeWorldId === "atrium"} />
+      <SpectralWorld visible={activeWorldId === "spectral"} />
       {index.project.anchors.map((anchor) => (
         <group key={anchor.id} visible={anchor.worldId === activeWorldId}>
           <AnchorContent

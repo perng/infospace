@@ -123,12 +123,30 @@ export const skinBindingSchema = z.object({
 });
 export type SkinBinding = z.infer<typeof skinBindingSchema>;
 
+export const narrationSchema = z.object({
+  /** The semantic source. Captions, transcripts, and audio derive from it. */
+  script: z.string(),
+  /** Advance along the primary route when the clip ends (default true). */
+  autoAdvance: z.boolean().optional(),
+});
+export type Narration = z.infer<typeof narrationSchema>;
+
+/**
+ * Where the asset pipeline puts a beat's rendered narration clip. The audio
+ * file is a derived asset (regenerate with scripts/generate-narration.py);
+ * the script in the document is the source of truth.
+ */
+export function narrationAudioSrc(beatId: string): string {
+  return `/assets/narration/${beatId}.mp3`;
+}
+
 export const beatSchema = z.object({
   id: z.string(),
   anchorId: z.string(),
   title: z.string(),
   camera: cameraPoseSchema,
   notes: z.string().optional(),
+  narration: narrationSchema.optional(),
   durationHintMs: z.number().optional(),
 });
 export type Beat = z.infer<typeof beatSchema>;

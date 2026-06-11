@@ -29,6 +29,8 @@ interface PresentationState {
   outlineOpen: boolean;
   paletteOpen: boolean;
   notesOpen: boolean;
+  /** Narrated-tour mode: play each beat's clip, captions, auto-advance. */
+  narrationOn: boolean;
   startedAtMs: number;
 
   goToBeat: (beatId: string, via?: RouteEdge) => void;
@@ -42,6 +44,7 @@ interface PresentationState {
   setOutlineOpen: (open: boolean) => void;
   setPaletteOpen: (open: boolean) => void;
   setNotesOpen: (open: boolean) => void;
+  setNarrationOn: (on: boolean) => void;
 }
 
 const DURATIONS: Record<TransitionKind, number> = {
@@ -65,6 +68,9 @@ export function createPresentationStore(index: ProjectIndex) {
     outlineOpen: false,
     paletteOpen: false,
     notesOpen: true,
+    // Off by default: in live presenter mode the presenter speaks; narration
+    // is opt-in (V) and turns the tour self-running.
+    narrationOn: false,
     startedAtMs: Date.now(),
 
     goToBeat: (beatId, via) => {
@@ -162,6 +168,7 @@ export function createPresentationStore(index: ProjectIndex) {
     setOutlineOpen: (open) => set({ outlineOpen: open }),
     setPaletteOpen: (open) => set({ paletteOpen: open }),
     setNotesOpen: (open) => set({ notesOpen: open }),
+    setNarrationOn: (on) => set({ narrationOn: on }),
   }));
 }
 

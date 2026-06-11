@@ -166,6 +166,25 @@ body,
   color: var(--accent);
 }
 
+/* Narration caption — derived from the same script as the audio. */
+.caption {
+  position: absolute;
+  top: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  max-width: 640px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: rgba(5, 7, 14, 0.78);
+  border: 1px solid rgba(57, 215, 255, 0.18);
+  color: #e8edfa;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  pointer-events: none;
+}
+
 .beat-title {
   margin: 6px 0 2px;
   font-size: 20px;

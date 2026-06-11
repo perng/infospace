@@ -1,14 +1,21 @@
 /**
  * Minimal presentation compiler CLI.
  *
- *   npm run validate   — schema + route-graph validation, prints a summary
+ *   npm run validate   — schema + route-graph validation, prints a summary,
+ *                        and warns when rendered narration audio is missing
+ *                        or stale relative to the scripts in the document
  *   npm run outline    — emits outline.md, the derived linear handout
+ *   npm run narration  — prints the narration scripts as JSON; consumed by
+ *                        scripts/generate-narration.py (the TTS renderer)
  *
- * Both operate on the same project model the 3D runtime renders.
+ * All operate on the same project model the 3D runtime renders.
  */
-import { writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { journey } from "../src/journey/project";
 import type { ContentPrimitive } from "../src/framework/schema";
+
+const NARRATION_DIR = "public/assets/narration";
 
 const command = process.argv[2] ?? "validate";
 
@@ -26,6 +33,16 @@ if (command === "validate") {
   const portals = p.routes.filter((r) => r.kind === "portal").length;
   const branches = p.routes.filter((r) => r.kind === "branch" || r.kind === "return").length;
   console.log(`  scale portals: ${portals}, branches/returns: ${branches}`);
+  const narrated = p.beats.filter((b) => b.narration).length;
+  console.log(`  narrated beats: ${narrated} / ${p.beats.length}`);
+  for (const w of narrationWarnings()) console.warn(`  ⚠ ${w}`);
+} else if (command === "narration") {
+  // The scripts are the semantic source; the renderer derives audio from
+  // this export and records provenance in manifest.json next to the clips.
+  const beats = journey.project.beats
+    .filter((b) => b.narration)
+    .map((b) => ({ id: b.id, script: b.narration!.script }));
+  console.log(JSON.stringify({ beats }, null, 2));
 } else if (command === "outline") {
   const lines: string[] = [];
   const p = journey.project;
@@ -44,6 +61,8 @@ if (command === "validate") {
       const content = journey.contentById.get(cid);
       if (content) lines.push("", ...fallbackMarkdown(content));
     }
+    if (beat.narration)
+      lines.push("", `**Narration:** ${beat.narration.script}`);
     if (beat.notes) lines.push("", `**Speaker notes:** ${beat.notes}`);
   }
   lines.push("");
@@ -52,6 +71,31 @@ if (command === "validate") {
 } else {
   console.error(`unknown command: ${command}`);
   process.exit(1);
+}
+
+/**
+ * Narration audio is a derived asset: each clip's provenance (script hash,
+ * engine, voice) is recorded in manifest.json by the renderer. Warn when a
+ * clip is missing or its script has changed since it was rendered.
+ */
+function narrationWarnings(): string[] {
+  const warnings: string[] = [];
+  const manifestPath = `${NARRATION_DIR}/manifest.json`;
+  const manifest: Record<string, { scriptHash?: string }> = existsSync(manifestPath)
+    ? JSON.parse(readFileSync(manifestPath, "utf8"))
+    : {};
+  for (const beat of journey.project.beats) {
+    if (!beat.narration) continue;
+    const clip = `${NARRATION_DIR}/${beat.id}.mp3`;
+    if (!existsSync(clip)) {
+      warnings.push(`narration audio missing for "${beat.id}" — run: python3 scripts/generate-narration.py`);
+      continue;
+    }
+    const hash = createHash("sha256").update(beat.narration.script).digest("hex").slice(0, 16);
+    if (manifest[beat.id]?.scriptHash !== hash)
+      warnings.push(`narration audio stale for "${beat.id}" (script changed) — run: python3 scripts/generate-narration.py`);
+  }
+  return warnings;
 }
 
 function fallbackMarkdown(content: ContentPrimitive): string[] {

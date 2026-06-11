@@ -35,11 +35,27 @@ npm run outline    # compiler: derived linear handout (outline.md)
 | `K` / `/` / `⌘K` | Command palette — search any beat, anchor, or content and jump |
 | `O` | Linear outline view (the accessibility fallback) |
 | `N` | Toggle speaker notes |
+| `V` | Narrated tour — per-beat voice clips with captions and auto-advance |
 
 The presenter console shows the active world, current beat, speaker notes,
 and every outgoing route edge — primary, labelled branches, returns, and
 portals — so improvisation never strands you. The left minimap draws the
 whole route graph; click any node to jump.
+
+### Narrated tour
+
+`V` turns the presentation into a self-running narrated tour: each beat's
+clip plays once the camera settles, the script doubles as the caption, and
+when a clip ends the tour advances along the primary route — through scale
+portals included — until a beat opts out (`autoAdvance: false` ends the
+tour). The presenter always wins: navigating stops the clip, and a grabbed
+camera or open palette suppresses auto-advance.
+
+The per-beat `narration.script` in the project document is the semantic
+source; audio is a derived asset rendered offline by
+`python3 scripts/generate-narration.py` (Kokoro TTS, local), cached by
+script hash with provenance in `public/assets/narration/manifest.json`.
+`npm run validate` warns when a clip is missing or stale.
 
 ## Architecture
 
@@ -63,9 +79,12 @@ src/journey/            the handcrafted presentation (15 anchors, 15 beats,
                         20 route edges, 2 worlds, 2 scale portals)
   project.ts            the project document
   worlds/               procedural scenery: AtriumWorld, SpectralWorld
-src/app/                presenter UI: console, minimap, palette, outline
-scripts/journey-cli.ts  mini compiler: validate / export handout
-scripts/generate-assets.py  regenerates the SVD media (diagram, montage, film)
+src/app/                presenter UI: console, minimap, palette, outline,
+                        narrator (clips, captions, auto-advance)
+scripts/journey-cli.ts  mini compiler: validate / export handout / export
+                        narration scripts
+scripts/generate-assets.py     regenerates the SVD media (diagram, montage, film)
+scripts/generate-narration.py  renders narration clips (Kokoro TTS, hash-cached)
 ```
 
 ### Design principles carried into the code
@@ -90,6 +109,9 @@ scripts/generate-assets.py  regenerates the SVD media (diagram, montage, film)
   circle → ellipse diagram, the truncated-SVD compression montage, and the
   rank-by-rank reconstruction film. Each is referenced from the project
   document like any other asset; re-run the script to regenerate them.
+- `public/assets/narration/*.mp3` — narration clips derived from the scripts
+  in the project document by `scripts/generate-narration.py` (local Kokoro
+  TTS; swap the engine by re-rendering, the document doesn't change).
 - `public/fonts/` — vendored Cinzel & Inter for SDF text meshes. They carry
   no Greek/subscript glyphs, so in-world strings stay ASCII (`A = U S Vᵀ`)
   while the precise typeset notation lives in the generated diagram.

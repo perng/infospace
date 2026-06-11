@@ -346,6 +346,10 @@ const doc: PresentationProject = {
       camera: { position: [0, 2.1, 29.5], target: [0, 2.6, 23], fov: 55 },
       notes:
         "Set the premise: this is not a slide deck, it is a building. Tonight's one idea is that every matrix is a geometric transformation, and SVD is its anatomy. The route runs the hall, then through the prism into the matrix itself.",
+      narration: {
+        script:
+          "Welcome to the Atrium of Linear Maps. Tonight we follow a single idea: every matrix is a geometric transformation. We will walk the length of this gallery, and then step through a prism into the matrix itself.",
+      },
     },
     {
       id: "b-transform",
@@ -354,6 +358,10 @@ const doc: PresentationProject = {
       camera: { position: [-5.5, 2.6, 11.125], target: [-11.8, 2.6, 11.125], fov: 52 },
       notes:
         "Anchor the whole talk here: any matrix rotates, stretches, and shears space. SVD's promise is that this is always just rotate, stretch along axes, rotate. Three steps, no exceptions.",
+      narration: {
+        script:
+          "Multiplying by a matrix bends space. It rotates, stretches, and shears every vector at once. The singular value decomposition is the promise that any such map, however tangled, is only three plain steps: rotate, stretch along axes, and rotate again.",
+      },
     },
     {
       id: "b-geometry",
@@ -362,6 +370,10 @@ const doc: PresentationProject = {
       camera: { position: [5.4, 2.5, 4.375], target: [11.8, 2.3, 4.375], fov: 50 },
       notes:
         "The one picture to remember: the unit circle maps to an ellipse. The semi-axis lengths are the singular values; their directions are the left singular vectors. Everything else is bookkeeping around this.",
+      narration: {
+        script:
+          "Here is the one picture to remember. A matrix sends the unit circle to an ellipse. The lengths of the ellipse's axes are the singular values, and their directions are the singular vectors. Everything else tonight is bookkeeping around this picture.",
+      },
     },
     {
       id: "b-compression",
@@ -370,6 +382,10 @@ const doc: PresentationProject = {
       camera: { position: [-5.0, 2.5, -2.375], target: [-11.8, 2.4, -2.375], fov: 52 },
       notes:
         "Make it concrete: an image is a matrix of pixel values. Keep the top few singular values and you keep the picture while throwing away most of the numbers. Point out the ringing at rank 2 versus the crisp rank 24.",
+      narration: {
+        script:
+          "Let us make that concrete. An image is just a matrix of pixel values. Keep only the largest singular values, and most of the picture survives at a fraction of the data. At rank two you see only broad strokes. By rank twenty four, the letters are sharp.",
+      },
     },
     {
       id: "b-reconstruct",
@@ -378,6 +394,10 @@ const doc: PresentationProject = {
       camera: { position: [5.0, 2.5, -9.125], target: [11.8, 2.4, -9.125], fov: 52 },
       notes:
         "Let the film run. Each frame adds one rank-one layer; watch the image snap into focus over the first handful of ranks and barely change after. The side spectrum shows why: the singular values have already collapsed.",
+      narration: {
+        script:
+          "Watch the image rebuild itself, one rank at a time. Each frame adds a single rank one layer. The first few layers do almost all of the work. After that, the picture barely changes, because the singular values have already collapsed.",
+      },
     },
     {
       id: "b-variance",
@@ -386,6 +406,10 @@ const doc: PresentationProject = {
       camera: { position: [-3.2, 2.4, -0.8], target: [-6.5, 1.7, -4], fov: 55 },
       notes:
         "The same idea as a number: the top five components already capture 99% of the variance. This is the engine of PCA and dimensionality reduction - keep the directions that matter, drop the rest.",
+      narration: {
+        script:
+          "Here is the same idea as a number. The top five components already capture ninety nine percent of the variance. This is the engine behind principal component analysis: keep the directions that matter, and drop the rest.",
+      },
     },
     {
       id: "b-equation",
@@ -394,6 +418,10 @@ const doc: PresentationProject = {
       camera: { position: [5.4, 2.6, -2.375], target: [11.8, 2.5, -2.375], fov: 52 },
       notes:
         "Now name the parts: A = U S V-transpose. V-transpose is the first rotation, S the stretches, U the second rotation. Orthonormal columns in U and V, non-negative diagonal in S. Tie each symbol back to the ellipse picture.",
+      narration: {
+        script:
+          "Now we can name the parts. A equals U, S, V transpose. V transpose rotates the input onto the right axes. S stretches each axis by a singular value. And U rotates the result into place. Three steps, written as three matrices.",
+      },
     },
     {
       id: "b-quote",
@@ -402,6 +430,10 @@ const doc: PresentationProject = {
       camera: { position: [0, 5.8, 5.5], target: [0, 7.5, -3], fov: 55 },
       notes:
         "Read the quote slowly. The punchline of linear algebra: in the right orthonormal frame, every matrix is just a diagonal scaling. That frame is exactly what SVD finds.",
+      narration: {
+        script:
+          "Why does this matter? Because in the right orthonormal frame, every matrix, no matter how it tilts or stretches space, is just a diagonal scaling. That frame is exactly what the singular value decomposition finds.",
+      },
     },
     {
       id: "b-pca",
@@ -410,6 +442,10 @@ const doc: PresentationProject = {
       camera: { position: [0, 4.5, -8], target: [0, 13, -29], fov: 60 },
       notes:
         "Each star is a singular value, plotted by index on a logarithmic axis. The steep descent is the whole reason compression and PCA work - most of the matrix lives in the first few directions. Then advance to the prism.",
+      narration: {
+        script:
+          "Look up. Each star above the back wall is a singular value, placed by its index. They fall away steeply, and that steep descent is the whole reason compression works: most of the matrix lives in the first few directions.",
+      },
     },
     {
       id: "b-prism",
@@ -418,6 +454,10 @@ const doc: PresentationProject = {
       camera: { position: [0, 2.2, -8.6], target: [0, 1.8, -15], fov: 50 },
       notes:
         "Build anticipation. White light goes in, a spectrum comes out - the prism is decomposition made visible. Ask the room what is inside a matrix, then advance through the lens.",
+      narration: {
+        script:
+          "Every gallery keeps one door it rarely opens. Ours is made of light. White light enters the prism, and a spectrum comes out: decomposition, made visible. Step up to the lens, and we will go through it.",
+      },
     },
     {
       id: "b-arrival",
@@ -426,6 +466,10 @@ const doc: PresentationProject = {
       camera: { position: [0, DEEP_Y + 7, 36], target: [0, DEEP_Y + 4, 0], fov: 60 },
       notes:
         "Pause and let the scale shift land. We are inside the vector space now. The ellipsoid ahead is the image of the unit sphere; the arrows are the singular axes from the wall diagram, made solid.",
+      narration: {
+        script:
+          "You have passed through the lens. Around you is the vector space itself. The pale shape ahead is the image of the unit sphere, and the bright arrows are its singular axes: the wall diagram, made solid.",
+      },
     },
     {
       id: "b-core",
@@ -434,6 +478,10 @@ const doc: PresentationProject = {
       camera: { position: [0, DEEP_Y + 4.5, 7], target: [0, DEEP_Y + 2, -10], fov: 55 },
       notes:
         "This is the unit circle picture in 3D: a sphere mapped to an ellipsoid. The longest axis is the first singular value and direction; the shortest is the last. Geometry first, formula second.",
+      narration: {
+        script:
+          "Send every unit vector through the matrix, and their tips trace this ellipsoid. Its longest axis is the first singular value. Its shortest is the last. A sphere goes in, an ellipsoid comes out. That is the whole geometry of the decomposition.",
+      },
     },
     {
       id: "b-error",
@@ -442,6 +490,10 @@ const doc: PresentationProject = {
       camera: { position: [10, DEEP_Y + 2.5, 17], target: [16, DEEP_Y + 1, 7], fov: 55 },
       notes:
         "Quantify it: error falls fast as rank rises. The key theorem is Eckart-Young - the truncated SVD is provably the best rank-k approximation, not merely a good one. That is what makes it the tool of choice.",
+      narration: {
+        script:
+          "How good is a low rank approximation? The error falls fast: forty one percent at rank one, down to three percent at rank eight. And by the Eckart Young theorem, truncating the decomposition is not merely good. It is the best rank k approximation that exists.",
+      },
     },
     {
       id: "b-layers",
@@ -450,6 +502,10 @@ const doc: PresentationProject = {
       camera: { position: [-16.5, DEEP_Y + 5, 22.5], target: [-26, DEEP_Y + 5, 12], fov: 55 },
       notes:
         "Pull the matrix apart: A is a sum of rank-one layers, each a singular value times an outer product. The sheets are sorted by brightness because the singular values fall - the first few are almost the whole matrix.",
+      narration: {
+        script:
+          "Each glowing sheet here is one rank one layer: a singular value times an outer product. Stacked and summed, they rebuild the matrix exactly. The sheets dim as the singular values fall, which is why a few of them are almost the entire matrix.",
+      },
     },
     {
       id: "b-return",
@@ -458,6 +514,13 @@ const doc: PresentationProject = {
       camera: { position: [0, DEEP_Y + 7, 28], target: [0, DEEP_Y + 7.5, 39], fov: 55 },
       notes:
         "Close the loop: back through the ring to the atrium. Leave them with the one sentence - rotation, stretches, rotation. Take questions standing at the prism.",
+      // End of the self-running tour: without this the portal would loop the
+      // narration back through the prism forever.
+      narration: {
+        autoAdvance: false,
+        script:
+          "Our tour ends where every decomposition does: back in one piece. Carry a single sentence home with you. Every matrix is a rotation, a set of stretches, and a rotation. Thank you for walking the atrium tonight.",
+      },
     },
   ],
 

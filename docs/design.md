@@ -945,7 +945,7 @@ The first credible MVP should prove the new mental model without trying to build
 - One scale portal.
 - Linear fallback outline.
 
-What it proved is the architecture: the project document as single source of truth, content separated from presentation, an explicit navigable route graph, working scale portals, and schema plus graph validation surfaced through a CLI. What it is not yet is a framework — worlds, skins, and the journey live in one app, authoring requires hand-placed coordinates and camera poses, and there is no registry, asset pipeline, AI generator, or math support.
+What it proved is the architecture: the project document as single source of truth, content separated from presentation, an explicit navigable route graph, working scale portals, and schema plus graph validation surfaced through a CLI. It also carries a prototype slice of the narration design: per-beat scripts in the document, a local TTS render script with hash-based caching and provenance, and caption/auto-advance playback (a foretaste of M4's `tts-narrate` job, without word timestamps or cue marks). What it is not yet is a framework — worlds, skins, and the journey live in one app, authoring requires hand-placed coordinates and camera poses, and there is no registry, generalized asset pipeline, AI generator, or math support.
 
 ### Milestones after MVP 1
 

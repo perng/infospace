@@ -7,6 +7,7 @@ import { PresenterConsole, TopBar } from "./app/PresenterConsole";
 import { Minimap } from "./app/Minimap";
 import { CommandPalette } from "./app/CommandPalette";
 import { OutlineView } from "./app/OutlineView";
+import { Narrator } from "./app/Narrator";
 
 export default function App() {
   const store = useMemo(() => createPresentationStore(journey), []);
@@ -45,6 +46,10 @@ export default function App() {
         case "N":
           state.setNotesOpen(!state.notesOpen);
           break;
+        case "v":
+        case "V":
+          state.setNarrationOn(!state.narrationOn);
+          break;
         case "k":
         case "K":
         case "/":
@@ -75,6 +80,7 @@ export default function App() {
       <PresenterConsole store={store} />
       <CommandPalette store={store} />
       <OutlineView store={store} />
+      <Narrator store={store} />
     </div>
   );
 }

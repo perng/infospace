@@ -1,0 +1,107 @@
+{
+  "b-arrival": {
+    "durationMs": 12565,
+    "engine": "kokoro-onnx",
+    "scriptHash": "ea4bd5d98d44dcfe",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-compression": {
+    "durationMs": 16341,
+    "engine": "kokoro-onnx",
+    "scriptHash": "002f627f61989bb3",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-core": {
+    "durationMs": 15552,
+    "engine": "kokoro-onnx",
+    "scriptHash": "767ceb591ce49d65",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-equation": {
+    "durationMs": 16106,
+    "engine": "kokoro-onnx",
+    "scriptHash": "0fcfbbe812d566ef",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-error": {
+    "durationMs": 16469,
+    "engine": "kokoro-onnx",
+    "scriptHash": "abcead260e7d7e58",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-geometry": {
+    "durationMs": 14698,
+    "engine": "kokoro-onnx",
+    "scriptHash": "bd3e1075a8d5cafd",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-layers": {
+    "durationMs": 15445,
+    "engine": "kokoro-onnx",
+    "scriptHash": "2d8926a9edd9ecb4",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-pca": {
+    "durationMs": 13461,
+    "engine": "kokoro-onnx",
+    "scriptHash": "09a2503f7e106e1d",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-prism": {
+    "durationMs": 12629,
+    "engine": "kokoro-onnx",
+    "scriptHash": "fa18eb799b4e183c",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-quote": {
+    "durationMs": 13717,
+    "engine": "kokoro-onnx",
+    "scriptHash": "428e5bc429b55cf6",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-reconstruct": {
+    "durationMs": 14442,
+    "engine": "kokoro-onnx",
+    "scriptHash": "d2eb7a908ce4f16a",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-return": {
+    "durationMs": 13333,
+    "engine": "kokoro-onnx",
+    "scriptHash": "281d3fa4e8b66e28",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-transform": {
+    "durationMs": 16640,
+    "engine": "kokoro-onnx",
+    "scriptHash": "34cac85e00d1974a",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-variance": {
+    "durationMs": 13568,
+    "engine": "kokoro-onnx",
+    "scriptHash": "339ad8d1ad05509e",
+    "speed": 1.0,
+    "voice": "af_heart"
+  },
+  "b-welcome": {
+    "durationMs": 13333,
+    "engine": "kokoro-onnx",
+    "scriptHash": "cbcecfb999422b82",
+    "speed": 1.0,
+    "voice": "af_heart"
+  }
+}

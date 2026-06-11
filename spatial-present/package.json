@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "validate": "tsx scripts/journey-cli.ts validate",
-    "outline": "tsx scripts/journey-cli.ts outline"
+    "outline": "tsx scripts/journey-cli.ts outline",
+    "narration": "tsx scripts/journey-cli.ts narration"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

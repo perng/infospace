@@ -83,6 +83,7 @@ export function TopBar({ store }: { store: PresentationStore }) {
   const index = store((s) => s.index);
   const outlineOpen = store((s) => s.outlineOpen);
   const notesOpen = store((s) => s.notesOpen);
+  const narrationOn = store((s) => s.narrationOn);
 
   return (
     <div className="topbar">
@@ -95,6 +96,13 @@ export function TopBar({ store }: { store: PresentationStore }) {
           title="Search beats (K)"
         >
           ⌕ Jump
+        </button>
+        <button
+          className={`btn ${narrationOn ? "btn-on" : ""}`}
+          onClick={() => store.getState().setNarrationOn(!narrationOn)}
+          title="Narrated tour: clips, captions, auto-advance (V)"
+        >
+          ♪ Voice
         </button>
         <button
           className={`btn ${notesOpen ? "btn-on" : ""}`}

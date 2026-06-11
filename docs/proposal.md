@@ -1,6 +1,6 @@
 # Proposal: From One Presentation to a Reusable, AI-Authorable Framework
 
-**Status:** design proposal · **Audience:** maintainers and contributors · **Companion docs:** [design.md](design.md) (vision), [README.md](../README.md) (what runs today)
+**Status:** design proposal · **Audience:** maintainers and contributors · **Companion docs:** [design.md](design.md) (vision), [README.md](../spatial-present/README.md) (what runs today)
 
 This document answers three questions:
 
@@ -14,9 +14,9 @@ This document answers three questions:
 
 MVP 1 (`spatial-present/`) is a **runtime** plus a **single hand-authored journey** ("The Living Cell"). The important thing it proved is the *architecture*, not the one presentation:
 
-- **The project document is the single source of truth.** Everything else — the 3D scene, the presenter console, search, the linear outline, the markdown handout — is a derived view of one validated data structure ([`schema.ts`](../src/framework/schema.ts), [`defineJourney.ts`](../src/framework/defineJourney.ts)).
-- **Content is separated from presentation.** A `ContentPrimitive` owns data + semantics; a `SpatialSkin` owns how it looks in 3D. The same chart can be a hologram or an accessible table ([`skins/`](../src/framework/skins/), [`OutlineView.tsx`](../src/app/OutlineView.tsx)).
-- **The route graph is explicit and navigable.** Beats are nodes; edges are `primary | branch | return | portal`. Camera moves are planned as **transitions between poses** so the presenter can interrupt and recover ([`store.ts`](../src/framework/store.ts), [`camera/CameraRig.tsx`](../src/framework/camera/CameraRig.tsx)).
+- **The project document is the single source of truth.** Everything else — the 3D scene, the presenter console, search, the linear outline, the markdown handout — is a derived view of one validated data structure ([`schema.ts`](../spatial-present/src/framework/schema.ts), [`defineJourney.ts`](../spatial-present/src/framework/defineJourney.ts)).
+- **Content is separated from presentation.** A `ContentPrimitive` owns data + semantics; a `SpatialSkin` owns how it looks in 3D. The same chart can be a hologram or an accessible table ([`skins/`](../spatial-present/src/framework/skins/), [`OutlineView.tsx`](../spatial-present/src/app/OutlineView.tsx)).
+- **The route graph is explicit and navigable.** Beats are nodes; edges are `primary | branch | return | portal`. Camera moves are planned as **transitions between poses** so the presenter can interrupt and recover ([`store.ts`](../spatial-present/src/framework/store.ts), [`camera/CameraRig.tsx`](../spatial-present/src/framework/camera/CameraRig.tsx)).
 - **Scale portals work** as a special edge that swaps worlds behind a fade.
 - **Validation exists**: zod schema + graph integrity/reachability checks, surfaced through a CLI (`npm run validate`, `npm run outline`).
 
@@ -115,7 +115,7 @@ A completed framework accepts input at any layer. Here is the same math talk exp
 
 **Layer B — the intent spec** (AI's first draft; you edit it): the YAML above.
 
-**Layer C — the canonical document** (compiler output; rarely hand-edited but always inspectable/diffable) — the same shape as today's [`project.ts`](../src/journey/project.ts), extended with the new primitives (§5).
+**Layer C — the canonical document** (compiler output; rarely hand-edited but always inspectable/diffable) — the same shape as today's [`project.ts`](../spatial-present/src/journey/project.ts), extended with the new primitives (§5).
 
 **Layer D — the SDK** (escape hatch for exact control):
 
@@ -191,7 +191,7 @@ Two new content primitives, supporting skins, and one asset job. Both keep a **s
 
 ### 5.1 The `formula` primitive (LaTeX)
 
-Add to the `ContentPrimitive` discriminated union in [`schema.ts`](../src/framework/schema.ts):
+Add to the `ContentPrimitive` discriminated union in [`schema.ts`](../spatial-present/src/framework/schema.ts):
 
 ```ts
 {

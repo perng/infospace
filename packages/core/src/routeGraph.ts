@@ -1,23 +1,23 @@
 import type {
-  Anchor,
-  Beat,
   ContentPrimitive,
   PresentationProject,
-  RouteEdge,
-  SkinBinding,
+  ResolvedAnchor,
+  ResolvedBeat,
+  ResolvedRouteEdge,
+  ResolvedSkinBinding,
 } from "@spatial-present/schema";
 
-/** Precomputed lookups over a validated project document. */
+/** Precomputed lookups over a compiled, canonical project document. */
 export interface ProjectIndex {
   project: PresentationProject;
-  beatById: Map<string, Beat>;
-  anchorById: Map<string, Anchor>;
+  beatById: Map<string, ResolvedBeat>;
+  anchorById: Map<string, ResolvedAnchor>;
   contentById: Map<string, ContentPrimitive>;
-  bindingsByAnchor: Map<string, SkinBinding[]>;
-  edgesFrom: Map<string, RouteEdge[]>;
-  edgesTo: Map<string, RouteEdge[]>;
+  bindingsByAnchor: Map<string, ResolvedSkinBinding[]>;
+  edgesFrom: Map<string, ResolvedRouteEdge[]>;
+  edgesTo: Map<string, ResolvedRouteEdge[]>;
   /** Linearized beat order for the outline fallback (primary path first). */
-  outlineOrder: Beat[];
+  outlineOrder: ResolvedBeat[];
 }
 
 export function buildIndex(project: PresentationProject): ProjectIndex {
@@ -25,15 +25,15 @@ export function buildIndex(project: PresentationProject): ProjectIndex {
   const anchorById = new Map(project.anchors.map((a) => [a.id, a]));
   const contentById = new Map(project.content.map((c) => [c.id, c]));
 
-  const bindingsByAnchor = new Map<string, SkinBinding[]>();
+  const bindingsByAnchor = new Map<string, ResolvedSkinBinding[]>();
   for (const s of project.skins) {
     const list = bindingsByAnchor.get(s.anchorId) ?? [];
     list.push(s);
     bindingsByAnchor.set(s.anchorId, list);
   }
 
-  const edgesFrom = new Map<string, RouteEdge[]>();
-  const edgesTo = new Map<string, RouteEdge[]>();
+  const edgesFrom = new Map<string, ResolvedRouteEdge[]>();
+  const edgesTo = new Map<string, ResolvedRouteEdge[]>();
   for (const e of project.routes) {
     edgesFrom.set(e.from, [...(edgesFrom.get(e.from) ?? []), e]);
     edgesTo.set(e.to, [...(edgesTo.get(e.to) ?? []), e]);
@@ -58,11 +58,11 @@ export function buildIndex(project: PresentationProject): ProjectIndex {
  */
 function linearize(
   project: PresentationProject,
-  edgesFrom: Map<string, RouteEdge[]>
-): Beat[] {
+  edgesFrom: Map<string, ResolvedRouteEdge[]>
+): ResolvedBeat[] {
   const beatById = new Map(project.beats.map((b) => [b.id, b]));
   const visited = new Set<string>();
-  const order: Beat[] = [];
+  const order: ResolvedBeat[] = [];
 
   const visit = (id: string) => {
     if (visited.has(id)) return;
@@ -79,7 +79,7 @@ function linearize(
   return order;
 }
 
-function rank(e: RouteEdge): number {
+function rank(e: ResolvedRouteEdge): number {
   switch (e.kind) {
     case "primary":
       return 0;
@@ -93,7 +93,10 @@ function rank(e: RouteEdge): number {
 }
 
 /** The presenter's recommended next steps from a beat. */
-export function nextEdges(index: ProjectIndex, beatId: string): RouteEdge[] {
+export function nextEdges(
+  index: ProjectIndex,
+  beatId: string
+): ResolvedRouteEdge[] {
   return [...(index.edgesFrom.get(beatId) ?? [])].sort(
     (a, b) => rank(a) - rank(b)
   );
@@ -102,15 +105,15 @@ export function nextEdges(index: ProjectIndex, beatId: string): RouteEdge[] {
 export function primaryNext(
   index: ProjectIndex,
   beatId: string
-): RouteEdge | undefined {
+): ResolvedRouteEdge | undefined {
   return nextEdges(index, beatId).find(
     (e) => e.kind === "primary" || e.kind === "portal"
   );
 }
 
 export interface SearchHit {
-  beat: Beat;
-  anchor: Anchor;
+  beat: ResolvedBeat;
+  anchor: ResolvedAnchor;
   matchedOn: string;
 }
 
@@ -173,7 +176,7 @@ export function validateGraph(project: PresentationProject): string[] {
     errors.push(`startBeatId "${project.startBeatId}" is not a beat`);
 
   // Reachability from the start beat.
-  const edgesFrom = new Map<string, RouteEdge[]>();
+  const edgesFrom = new Map<string, ResolvedRouteEdge[]>();
   for (const e of project.routes)
     edgesFrom.set(e.from, [...(edgesFrom.get(e.from) ?? []), e]);
   const reachable = new Set<string>();

@@ -65,28 +65,40 @@ It is plain data validated by a zod schema; the 3D scene, the presenter
 console, the search index, the linear outline view, and the markdown handout
 are all derived views of the same model.
 
+The document is also **positionless** (M2): anchors reference named
+*stations* published by the world templates, beats reference named *camera
+intents* (or template poses), and the primary route chain is defaulted from
+beat order. `defineJourney` compiles it — layout solver, skin resolver,
+auto-router, camera planner — into the canonical document the runtime
+renders, keeping the symbolic names as provenance. There is not a single
+raw coordinate in this example's source.
+
 ```
 this example
-  src/journey/project.ts   the project document (15 anchors, 15 beats,
-                           20 route edges, 2 worlds, 2 scale portals,
-                           15 narration scripts)
+  src/journey/project.ts   the authored document (15 anchors via stations,
+                           15 beats via camera intents, 2 portals + 5
+                           branches authored, 13 primary edges auto-routed,
+                           15 narration scripts; zero coordinates)
   src/main.tsx             composition: PresentationApp + the worlds map
                            ({ atrium: AtriumWorld, spectral: SpectralWorld })
   public/                  generated media, narration clips, fonts
   scripts/generate-assets.py   regenerates the SVD media (diagram, montage, film)
 
 the framework (../../packages)
-  @spatial-present/schema    zod schema for the project document
-  @spatial-present/core      defineJourney (validate + index), route graph,
-                             runtime store, seeded PRNG
+  @spatial-present/schema    zod schemas: authored + canonical documents,
+                             stations, envelopes, camera intents, templates
+  @spatial-present/core      defineJourney (the compiler: solver → skin
+                             resolver → auto-router → camera planner),
+                             registries, route graph, store, seeded PRNG
   @spatial-present/skins     engraving, hologram chart, constellation scatter,
                              cloud text, framed plaque + AnchorContent
   @spatial-present/renderer  PresentationApp shell, Stage (worlds injected),
                              camera rig, console, minimap, palette, outline,
                              narrator (clips, captions, auto-advance)
-  @spatial-present/worlds    AtriumWorld, SpectralWorld + landmark constants
-  @spatial-present/cli       journey-cli (validate / outline / narration) +
-                             generate-narration.py (Kokoro TTS, hash-cached)
+  @spatial-present/worlds    AtriumWorld, SpectralWorld + their templates
+                             (stations, camera intents, named portal poses)
+  @spatial-present/cli       journey-cli (validate / outline / resolve /
+                             narration) + generate-narration.py (Kokoro TTS)
 ```
 
 ### Design principles carried into the code
@@ -94,6 +106,9 @@ the framework (../../packages)
 - **Content stays structured.** A chart rendered as a hologram or a star
   field still carries its series data, units, and fallback text; the outline
   view renders the same primitive as a table.
+- **Describe what, not where.** This document never places anything: a
+  station name plus a camera intent replaces every transform and pose. Move
+  a station in the template and the journey re-flows on the next compile.
 - **Camera as constraint transitions.** Moves are planned between camera
   poses, never baked frame lists, so the presenter can interrupt at any
   moment and `Esc` always recovers the route.
@@ -120,7 +135,7 @@ the framework (../../packages)
 
 ## What this stage deliberately skips
 
-Stations and camera intents (M2 — authoring still uses raw coordinates),
-authoring editor, live audience sync, collaboration, generalized asset
-pipeline, WebXR, video export — see [`docs/design.md`](../../docs/design.md)
-for the full roadmap.
+Open plugin registration (the registries are static tables), authoring
+editor, live audience sync, collaboration, generalized asset pipeline,
+math primitives (M3), WebXR, video export — see
+[`docs/design.md`](../../docs/design.md) for the full roadmap.

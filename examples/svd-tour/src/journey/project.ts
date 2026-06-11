@@ -1,6 +1,6 @@
 import { defineJourney } from "@spatial-present/core";
-import type { PresentationProject } from "@spatial-present/schema";
-import { DEEP_Y, LENS_POS, RETURN_RING } from "@spatial-present/worlds";
+import type { AuthoredProjectInput } from "@spatial-present/schema";
+import { AtriumTemplate, SpectralTemplate } from "@spatial-present/worlds";
 
 /**
  * "Singular Value Decomposition - A Guided Tour" — a walk through a marble
@@ -13,8 +13,13 @@ import { DEEP_Y, LENS_POS, RETURN_RING } from "@spatial-present/worlds";
  * which carry no Greek or subscript glyphs, so rendered strings stay ASCII
  * ("sigma", "V^T"). The precise typeset notation (A = U S V-transpose with
  * real Greek) lives in the generated diagram image instead.
+ *
+ * The document is positionless: anchors name stations published by the
+ * world templates, beats name camera intents (or template poses), and the
+ * primary route chain is implied by beat order. The compiler resolves all
+ * geometry; raw positions/poses remain available as escape hatches.
  */
-const doc: PresentationProject = {
+const doc: AuthoredProjectInput = {
   schemaVersion: "0.1",
   id: "svd-tour",
   title: "Singular Value Decomposition - A Guided Tour",
@@ -203,8 +208,7 @@ const doc: PresentationProject = {
       id: "a-entrance",
       worldId: "atrium",
       name: "Entrance Tablet",
-      position: [0, 2.7, 23],
-      rotationY: 0,
+      station: "entry.tablet",
       semanticRole: "chapter",
       contentIds: ["c-welcome"],
     },
@@ -212,9 +216,7 @@ const doc: PresentationProject = {
       id: "a-transform",
       worldId: "atrium",
       name: "West Wall - The Transformation",
-      // Seated in the bay between columns (cols sit at z=7.75 and 14.5).
-      position: [-11.8, 2.8, 11.125],
-      rotationY: Math.PI / 2,
+      station: "west-wall.bay-1",
       semanticRole: "detail",
       contentIds: ["c-transform"],
     },
@@ -222,8 +224,7 @@ const doc: PresentationProject = {
       id: "a-geometry",
       worldId: "atrium",
       name: "East Wall - The Geometric Picture",
-      position: [11.8, 2.9, 4.375],
-      rotationY: -Math.PI / 2,
+      station: "east-wall.bay-1",
       semanticRole: "media",
       contentIds: ["c-geometry"],
     },
@@ -231,8 +232,7 @@ const doc: PresentationProject = {
       id: "a-compression",
       worldId: "atrium",
       name: "West Wall - Image Compression",
-      position: [-11.8, 2.9, -2.375],
-      rotationY: Math.PI / 2,
+      station: "west-wall.bay-2",
       semanticRole: "media",
       contentIds: ["c-compression"],
     },
@@ -240,8 +240,7 @@ const doc: PresentationProject = {
       id: "a-reconstruct",
       worldId: "atrium",
       name: "East Wall - Reconstruction Film",
-      position: [11.8, 2.9, -9.125],
-      rotationY: -Math.PI / 2,
+      station: "east-wall.bay-3",
       semanticRole: "media",
       contentIds: ["c-reconstruct"],
     },
@@ -249,20 +248,17 @@ const doc: PresentationProject = {
       id: "a-variance",
       worldId: "atrium",
       name: "Hologram - Variance Captured",
-      position: [-6.5, 0, -4],
-      rotationY: 0.5,
+      station: "floor.hologram",
       semanticRole: "chart",
       contentIds: ["c-variance"],
     },
     {
+      // The free east bay between the geometry and reconstruction pieces;
+      // a freestanding tablet would block the reconstruction beat's camera.
       id: "a-equation",
       worldId: "atrium",
-      // East wall, in the free bay between the geometry and reconstruction
-      // pieces. A freestanding floor tablet here would sit in front of the
-      // reconstruction beat's camera, so it hangs flush on the wall instead.
       name: "East Wall - The Decomposition",
-      position: [11.8, 2.9, -2.375],
-      rotationY: -Math.PI / 2,
+      station: "east-wall.bay-2",
       semanticRole: "detail",
       contentIds: ["c-equation"],
     },
@@ -270,8 +266,7 @@ const doc: PresentationProject = {
       id: "a-quote",
       worldId: "atrium",
       name: "The Strang Quote",
-      position: [0, 7.5, -3],
-      rotationY: 0,
+      station: "air.quote",
       semanticRole: "quote",
       contentIds: ["c-quote"],
     },
@@ -279,8 +274,7 @@ const doc: PresentationProject = {
       id: "a-sky",
       worldId: "atrium",
       name: "The Spectrum Sky",
-      position: [0, 13, -29],
-      rotationY: 0,
+      station: "sky.dome",
       semanticRole: "chart",
       contentIds: ["c-spectrum"],
     },
@@ -288,8 +282,7 @@ const doc: PresentationProject = {
       id: "a-prism",
       worldId: "atrium",
       name: "The Prism",
-      position: [-3.4, 2.6, -12],
-      rotationY: 0.3,
+      station: "prism.plinth",
       semanticRole: "portal",
       contentIds: ["c-threshold"],
     },
@@ -297,8 +290,7 @@ const doc: PresentationProject = {
       id: "a-arrival",
       worldId: "spectral",
       name: "Arrival in the Vector Space",
-      position: [0, DEEP_Y + 6, 24],
-      rotationY: 0,
+      station: "arrival.overlook",
       semanticRole: "chapter",
       contentIds: ["c-arrival"],
     },
@@ -306,8 +298,7 @@ const doc: PresentationProject = {
       id: "a-core",
       worldId: "spectral",
       name: "Plate - The Ellipsoid",
-      position: [0, DEEP_Y + 4, -3],
-      rotationY: 0,
+      station: "core.plate",
       semanticRole: "detail",
       contentIds: ["c-core"],
     },
@@ -315,8 +306,7 @@ const doc: PresentationProject = {
       id: "a-error",
       worldId: "spectral",
       name: "Hologram - Approximation Error",
-      position: [15, DEEP_Y - 1.5, 11],
-      rotationY: -0.5,
+      station: "field.hologram",
       semanticRole: "chart",
       contentIds: ["c-error"],
     },
@@ -324,8 +314,7 @@ const doc: PresentationProject = {
       id: "a-layers",
       worldId: "spectral",
       name: "The Rank-One Layers",
-      position: [-24, DEEP_Y + 5, 16],
-      rotationY: 0.85,
+      station: "layers.gallery",
       semanticRole: "detail",
       contentIds: ["c-layers"],
     },
@@ -333,8 +322,7 @@ const doc: PresentationProject = {
       id: "a-return",
       worldId: "spectral",
       name: "Return Ring",
-      position: [RETURN_RING[0], RETURN_RING[1] + 1.5, RETURN_RING[2] - 1],
-      rotationY: Math.PI,
+      station: "ring.return",
       semanticRole: "portal",
       contentIds: ["c-return"],
     },
@@ -345,7 +333,7 @@ const doc: PresentationProject = {
       id: "b-welcome",
       anchorId: "a-entrance",
       title: "Welcome",
-      camera: { position: [0, 2.1, 29.5], target: [0, 2.6, 23], fov: 55 },
+      cameraIntent: "read-close",
       notes:
         "Set the premise: this is not a slide deck, it is a building. Tonight's one idea is that every matrix is a geometric transformation, and SVD is its anatomy. The route runs the hall, then through the prism into the matrix itself.",
       narration: {
@@ -357,7 +345,7 @@ const doc: PresentationProject = {
       id: "b-transform",
       anchorId: "a-transform",
       title: "A matrix is a transformation",
-      camera: { position: [-5.5, 2.6, 11.125], target: [-11.8, 2.6, 11.125], fov: 52 },
+      cameraIntent: "read-close",
       notes:
         "Anchor the whole talk here: any matrix rotates, stretches, and shears space. SVD's promise is that this is always just rotate, stretch along axes, rotate. Three steps, no exceptions.",
       narration: {
@@ -369,7 +357,7 @@ const doc: PresentationProject = {
       id: "b-geometry",
       anchorId: "a-geometry",
       title: "The geometric picture",
-      camera: { position: [5.4, 2.5, 4.375], target: [11.8, 2.3, 4.375], fov: 50 },
+      cameraIntent: "read-close",
       notes:
         "The one picture to remember: the unit circle maps to an ellipse. The semi-axis lengths are the singular values; their directions are the left singular vectors. Everything else is bookkeeping around this.",
       narration: {
@@ -381,7 +369,7 @@ const doc: PresentationProject = {
       id: "b-compression",
       anchorId: "a-compression",
       title: "Image compression",
-      camera: { position: [-5.0, 2.5, -2.375], target: [-11.8, 2.4, -2.375], fov: 52 },
+      cameraIntent: "read-close",
       notes:
         "Make it concrete: an image is a matrix of pixel values. Keep the top few singular values and you keep the picture while throwing away most of the numbers. Point out the ringing at rank 2 versus the crisp rank 24.",
       narration: {
@@ -393,7 +381,7 @@ const doc: PresentationProject = {
       id: "b-reconstruct",
       anchorId: "a-reconstruct",
       title: "Adding the layers",
-      camera: { position: [5.0, 2.5, -9.125], target: [11.8, 2.4, -9.125], fov: 52 },
+      cameraIntent: "read-close",
       notes:
         "Let the film run. Each frame adds one rank-one layer; watch the image snap into focus over the first handful of ranks and barely change after. The side spectrum shows why: the singular values have already collapsed.",
       narration: {
@@ -405,7 +393,7 @@ const doc: PresentationProject = {
       id: "b-variance",
       anchorId: "a-variance",
       title: "How few components you need",
-      camera: { position: [-3.2, 2.4, -0.8], target: [-6.5, 1.7, -4], fov: 55 },
+      cameraIntent: "orbit-focus",
       notes:
         "The same idea as a number: the top five components already capture 99% of the variance. This is the engine of PCA and dimensionality reduction - keep the directions that matter, drop the rest.",
       narration: {
@@ -417,7 +405,8 @@ const doc: PresentationProject = {
       id: "b-equation",
       anchorId: "a-equation",
       title: "The decomposition",
-      camera: { position: [5.4, 2.6, -2.375], target: [11.8, 2.5, -2.375], fov: 52 },
+      cameraIntent: "read-close",
+      arrive: "dolly",
       notes:
         "Now name the parts: A = U S V-transpose. V-transpose is the first rotation, S the stretches, U the second rotation. Orthonormal columns in U and V, non-negative diagonal in S. Tie each symbol back to the ellipse picture.",
       narration: {
@@ -429,7 +418,7 @@ const doc: PresentationProject = {
       id: "b-quote",
       anchorId: "a-quote",
       title: "Why it matters",
-      camera: { position: [0, 5.8, 5.5], target: [0, 7.5, -3], fov: 55 },
+      cameraIntent: "quote-gaze",
       notes:
         "Read the quote slowly. The punchline of linear algebra: in the right orthonormal frame, every matrix is just a diagonal scaling. That frame is exactly what SVD finds.",
       narration: {
@@ -441,7 +430,8 @@ const doc: PresentationProject = {
       id: "b-pca",
       anchorId: "a-sky",
       title: "The spectrum sky",
-      camera: { position: [0, 4.5, -8], target: [0, 13, -29], fov: 60 },
+      cameraIntent: "sky-gaze",
+      arrive: "dolly",
       notes:
         "Each star is a singular value, plotted by index on a logarithmic axis. The steep descent is the whole reason compression and PCA work - most of the matrix lives in the first few directions. Then advance to the prism.",
       narration: {
@@ -453,7 +443,9 @@ const doc: PresentationProject = {
       id: "b-prism",
       anchorId: "a-prism",
       title: "The prism threshold",
-      camera: { position: [0, 2.2, -8.6], target: [0, 1.8, -15], fov: 50 },
+      // A template pose, not a computed intent: the framing is about the
+      // prism object, not the plinth tablet the beat is anchored to.
+      cameraIntent: "prism-approach",
       notes:
         "Build anticipation. White light goes in, a spectrum comes out - the prism is decomposition made visible. Ask the room what is inside a matrix, then advance through the lens.",
       narration: {
@@ -465,7 +457,7 @@ const doc: PresentationProject = {
       id: "b-arrival",
       anchorId: "a-arrival",
       title: "Inside the matrix",
-      camera: { position: [0, DEEP_Y + 7, 36], target: [0, DEEP_Y + 4, 0], fov: 60 },
+      cameraIntent: "wide-establishing",
       notes:
         "Pause and let the scale shift land. We are inside the vector space now. The ellipsoid ahead is the image of the unit sphere; the arrows are the singular axes from the wall diagram, made solid.",
       narration: {
@@ -477,7 +469,8 @@ const doc: PresentationProject = {
       id: "b-core",
       anchorId: "a-core",
       title: "The ellipsoid",
-      camera: { position: [0, DEEP_Y + 4.5, 7], target: [0, DEEP_Y + 2, -10], fov: 55 },
+      cameraIntent: "wide-establishing",
+      arrive: "dolly",
       notes:
         "This is the unit circle picture in 3D: a sphere mapped to an ellipsoid. The longest axis is the first singular value and direction; the shortest is the last. Geometry first, formula second.",
       narration: {
@@ -489,7 +482,7 @@ const doc: PresentationProject = {
       id: "b-error",
       anchorId: "a-error",
       title: "Best rank-k approximation",
-      camera: { position: [10, DEEP_Y + 2.5, 17], target: [16, DEEP_Y + 1, 7], fov: 55 },
+      cameraIntent: "orbit-focus",
       notes:
         "Quantify it: error falls fast as rank rises. The key theorem is Eckart-Young - the truncated SVD is provably the best rank-k approximation, not merely a good one. That is what makes it the tool of choice.",
       narration: {
@@ -501,7 +494,7 @@ const doc: PresentationProject = {
       id: "b-layers",
       anchorId: "a-layers",
       title: "The rank-one layers",
-      camera: { position: [-16.5, DEEP_Y + 5, 22.5], target: [-26, DEEP_Y + 5, 12], fov: 55 },
+      cameraIntent: "read-close",
       notes:
         "Pull the matrix apart: A is a sum of rank-one layers, each a singular value times an outer product. The sheets are sorted by brightness because the singular values fall - the first few are almost the whole matrix.",
       narration: {
@@ -513,7 +506,7 @@ const doc: PresentationProject = {
       id: "b-return",
       anchorId: "a-return",
       title: "Back up the prism",
-      camera: { position: [0, DEEP_Y + 7, 28], target: [0, DEEP_Y + 7.5, 39], fov: 55 },
+      cameraIntent: "read-close",
       notes:
         "Close the loop: back through the ring to the atrium. Leave them with the one sentence - rotation, stretches, rotation. Take questions standing at the prism.",
       // End of the self-running tour: without this the portal would loop the
@@ -526,16 +519,10 @@ const doc: PresentationProject = {
     },
   ],
 
+  // Only the non-obvious edges are authored: the portals (with named dive
+  // poses from the templates) and the improvisation branches. The primary
+  // chain is defaulted from beat order by the compiler.
   routes: [
-    { id: "r1", from: "b-welcome", to: "b-transform", kind: "primary", transition: "fly" },
-    { id: "r2", from: "b-transform", to: "b-geometry", kind: "primary", transition: "fly" },
-    { id: "r3", from: "b-geometry", to: "b-compression", kind: "primary", transition: "fly" },
-    { id: "r4", from: "b-compression", to: "b-reconstruct", kind: "primary", transition: "fly" },
-    { id: "r5", from: "b-reconstruct", to: "b-variance", kind: "primary", transition: "fly" },
-    { id: "r6", from: "b-variance", to: "b-equation", kind: "primary", transition: "dolly" },
-    { id: "r7", from: "b-equation", to: "b-quote", kind: "primary", transition: "fly" },
-    { id: "r8", from: "b-quote", to: "b-pca", kind: "primary", transition: "dolly" },
-    { id: "r9", from: "b-pca", to: "b-prism", kind: "primary", transition: "fly" },
     {
       id: "r-portal-down",
       from: "b-prism",
@@ -543,21 +530,9 @@ const doc: PresentationProject = {
       kind: "portal",
       label: "Through the prism",
       transition: "portal",
-      divePose: {
-        position: [LENS_POS[0], LENS_POS[1] + 0.35, LENS_POS[2] + 1.1],
-        target: LENS_POS,
-        fov: 28,
-      },
-      emergePose: {
-        position: [0, DEEP_Y + 30, 70],
-        target: [0, DEEP_Y + 4, 0],
-        fov: 75,
-      },
+      divePose: "prism-dive",
+      emergePose: "deep-emerge",
     },
-    { id: "r10", from: "b-arrival", to: "b-core", kind: "primary", transition: "dolly" },
-    { id: "r11", from: "b-core", to: "b-error", kind: "primary", transition: "fly" },
-    { id: "r12", from: "b-error", to: "b-layers", kind: "primary", transition: "fly" },
-    { id: "r13", from: "b-layers", to: "b-return", kind: "primary", transition: "fly" },
     {
       id: "r-portal-up",
       from: "b-return",
@@ -565,16 +540,8 @@ const doc: PresentationProject = {
       kind: "portal",
       label: "Surface to the atrium",
       transition: "portal",
-      divePose: {
-        position: RETURN_RING,
-        target: [RETURN_RING[0], RETURN_RING[1], RETURN_RING[2] + 6],
-        fov: 30,
-      },
-      emergePose: {
-        position: [LENS_POS[0], LENS_POS[1] + 0.6, LENS_POS[2] + 2],
-        target: LENS_POS,
-        fov: 60,
-      },
+      divePose: "ring-dive",
+      emergePose: "lens-emerge",
     },
     // Branches and shortcuts for live improvisation.
     {
@@ -619,23 +586,28 @@ const doc: PresentationProject = {
     },
   ],
 
+  // skinKind is omitted where the content kind's default applies (text →
+  // engraving, chart → hologram, image/video → plaque); the skin resolver
+  // fills it. Non-default choices stay explicit.
   skins: [
-    { id: "s-welcome", contentId: "c-welcome", anchorId: "a-entrance", skinKind: "engraving", params: { width: 5, height: 3.4 } },
-    { id: "s-transform", contentId: "c-transform", anchorId: "a-transform", skinKind: "engraving", params: { width: 5.4, height: 3.6 } },
-    { id: "s-geometry", contentId: "c-geometry", anchorId: "a-geometry", skinKind: "plaque", params: { width: 3.8, height: 2.14 } },
-    { id: "s-compression", contentId: "c-compression", anchorId: "a-compression", skinKind: "plaque", params: { width: 4.8, height: 1.9 } },
-    { id: "s-reconstruct", contentId: "c-reconstruct", anchorId: "a-reconstruct", skinKind: "plaque", params: { width: 3.4, height: 2.1 } },
-    { id: "s-variance", contentId: "c-variance", anchorId: "a-variance", skinKind: "hologram", params: { width: 4.4, height: 2.2 } },
-    { id: "s-equation", contentId: "c-equation", anchorId: "a-equation", skinKind: "engraving", params: { width: 5, height: 3, stoneColor: "#7c7f8c" } },
+    { id: "s-welcome", contentId: "c-welcome", anchorId: "a-entrance", params: { width: 5, height: 3.4 } },
+    { id: "s-transform", contentId: "c-transform", anchorId: "a-transform", params: { width: 5.4, height: 3.6 } },
+    { id: "s-geometry", contentId: "c-geometry", anchorId: "a-geometry", params: { width: 3.8, height: 2.14 } },
+    { id: "s-compression", contentId: "c-compression", anchorId: "a-compression", params: { width: 4.8, height: 1.9 } },
+    { id: "s-reconstruct", contentId: "c-reconstruct", anchorId: "a-reconstruct", params: { width: 3.4, height: 2.1 } },
+    { id: "s-variance", contentId: "c-variance", anchorId: "a-variance", params: { width: 4.4, height: 2.2 } },
+    { id: "s-equation", contentId: "c-equation", anchorId: "a-equation", params: { width: 5, height: 3, stoneColor: "#7c7f8c" } },
     { id: "s-quote", contentId: "c-quote", anchorId: "a-quote", skinKind: "cloudText", params: { width: 9 } },
     { id: "s-spectrum", contentId: "c-spectrum", anchorId: "a-sky", skinKind: "constellation", params: { width: 20, height: 10 } },
-    { id: "s-threshold", contentId: "c-threshold", anchorId: "a-prism", skinKind: "engraving", params: { width: 3.6, height: 2.6, stoneColor: "#8c7e5e" } },
+    { id: "s-threshold", contentId: "c-threshold", anchorId: "a-prism", params: { width: 3.6, height: 2.6, stoneColor: "#8c7e5e" } },
     { id: "s-arrival", contentId: "c-arrival", anchorId: "a-arrival", skinKind: "cloudText", params: { width: 11, color: "#a9d4ff" } },
-    { id: "s-core", contentId: "c-core", anchorId: "a-core", skinKind: "engraving", params: { width: 4.8, height: 3.2, stoneColor: "#6f7c8c" } },
-    { id: "s-error", contentId: "c-error", anchorId: "a-error", skinKind: "hologram", params: { width: 3.6, height: 2.4 } },
+    { id: "s-core", contentId: "c-core", anchorId: "a-core", params: { width: 4.8, height: 3.2, stoneColor: "#6f7c8c" } },
+    { id: "s-error", contentId: "c-error", anchorId: "a-error", params: { width: 3.6, height: 2.4 } },
     { id: "s-layers", contentId: "c-layers", anchorId: "a-layers", skinKind: "cloudText", params: { width: 9, color: "#9fd0ff" } },
     { id: "s-return", contentId: "c-return", anchorId: "a-return", skinKind: "cloudText", params: { width: 8, color: "#bfe0ff" } },
   ],
 };
 
-export const journey = defineJourney(doc);
+export const journey = defineJourney(doc, {
+  templates: [AtriumTemplate, SpectralTemplate],
+});

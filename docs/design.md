@@ -947,7 +947,9 @@ The first credible MVP should prove the new mental model without trying to build
 
 What it proved is the architecture: the project document as single source of truth, content separated from presentation, an explicit navigable route graph, working scale portals, and schema plus graph validation surfaced through a CLI. It also carries a prototype slice of the narration design: per-beat scripts in the document, a local TTS render script with hash-based caching and provenance, and caption/auto-advance playback (a foretaste of M4's `tts-narrate` job, without word timestamps or cue marks).
 
-With M1 done, the framework and its input are separated: the runtime, skins, schema, SDK, and CLI live in `packages/` (`@spatial-present/*`), the journey document and its world scenery live in `examples/svd-tour/`, and the host app injects world components by id. What it is not yet: authoring still uses hand-placed coordinates and camera poses (M2's stations and camera intents), and there is no registry, generalized asset pipeline, AI generator, or math support.
+With M1 done, the framework and its input are separated: the runtime, skins, schema, SDK, and CLI live in `packages/` (`@spatial-present/*`), the journey document and its world scenery live in `examples/svd-tour/`, and the host app injects world components by id.
+
+With M2 done, authoring is positionless: world templates publish named stations (transform + content envelope) and named poses, `defineJourney` runs the compiler pipeline — layout solver (station resolution with double-booking checks), skin resolver (capability descriptors + per-kind defaults), auto-router (primary chain defaulted from beat order), camera planner (intent + envelope → pose) — and the canonical document stores both the resolved geometry and its symbolic provenance, so a template change re-flows every journey built on it. The example document now contains zero coordinates; `journey-cli validate` reports symbolic-resolution coverage and `resolve` dumps the canonical output. What it is not yet: registries are static tables rather than an open plugin API, there is no generalized asset pipeline, AI generator, or math support.
 
 ### Milestones after MVP 1
 
@@ -956,7 +958,7 @@ Ordered roughly by leverage; see [proposal.md](proposal.md) for the full rationa
 | Milestone | Delivers | Unblocks |
 | --- | --- | --- |
 | **M1 — Packagize** ✅ shipped | split schema/core/renderer/skins/worlds/cli into `packages/`; the SVD tour as `examples/svd-tour` | clean seams for everything else |
-| **M2 — Registries + layout solver + camera planner** | stations, named camera intents, auto-routing | **AI authoring becomes possible** (no hand coordinates) |
+| **M2 — Registries + layout solver + camera planner** ✅ shipped | stations, named camera intents, auto-routing; positionless example document | **AI authoring becomes possible** (no hand coordinates) |
 | **M3 — Math primitives** | `formula` (KaTeX to texture, MathML fallback) + `chalkboard`/`etchedGlass` skins; `math-void` + `lecture-hall` worlds | static math talks hand/SDK-authored |
 | **M4 — Asset pipeline + Manim + narration** | `manim-render` job (transparent, cuepoints), `tts-narrate` job (timestamps, marks), `projection` skin, stepwise reveal | **animated math**; narrated self-running tours; generated-art caching |
 | **M5 — AI generator** | prompt to Authoring Spec to document, grounded by registries + schema; provenance, locking, semantic diff | the "describe it and get a presentation" experience |

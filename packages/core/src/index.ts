@@ -1,4 +1,13 @@
-export { defineJourney } from "./defineJourney";
+export { defineJourney, type JourneyOptions } from "./defineJourney";
+export { resolveStations, resolveSkins } from "./layoutSolver";
+export { planCameras, autoRoute } from "./cameraPlanner";
+export {
+  builtinCameraIntents,
+  defaultSkinFor,
+  skinCapabilities,
+  type ContentKind,
+  type SkinCapability,
+} from "./registries";
 export {
   buildIndex,
   nextEdges,

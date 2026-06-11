@@ -8,6 +8,8 @@
  *        derived linear handout, into the current directory
  *   tsx journey-cli.ts narration [journey-module]   — prints the narration
  *        scripts as JSON; consumed by generate-narration.py (TTS renderer)
+ *   tsx journey-cli.ts resolve   [journey-module]   — prints the canonical,
+ *        fully resolved document (compiled geometry + symbolic provenance)
  *
  * The journey module (default ./src/journey/project.ts, relative to the
  * current directory) must export `journey`, the defineJourney() output.
@@ -51,9 +53,21 @@ if (command === "validate") {
   const portals = p.routes.filter((r) => r.kind === "portal").length;
   const branches = p.routes.filter((r) => r.kind === "branch" || r.kind === "return").length;
   console.log(`  scale portals: ${portals}, branches/returns: ${branches}`);
+  // Symbolic-resolution coverage: how much of the document the compiler
+  // laid out and framed, vs. hand-placed escape hatches.
+  const viaStation = p.anchors.filter((a) => a.station).length;
+  const viaIntent = p.beats.filter((b) => b.cameraIntent).length;
+  const autoRouted = p.routes.filter((r) => r.id.startsWith("r-auto-")).length;
+  console.log(`  anchors via stations:   ${viaStation} / ${p.anchors.length}`);
+  console.log(`  cameras via intents:    ${viaIntent} / ${p.beats.length}`);
+  console.log(`  auto-routed primaries:  ${autoRouted} / ${p.routes.length}`);
   const narrated = p.beats.filter((b) => b.narration).length;
   console.log(`  narrated beats: ${narrated} / ${p.beats.length}`);
   for (const w of narrationWarnings()) console.warn(`  ⚠ ${w}`);
+} else if (command === "resolve") {
+  // The canonical document: resolved geometry plus symbolic provenance.
+  // Useful for diffing compiler output and as the contract for AI tooling.
+  console.log(JSON.stringify(journey.project, null, 2));
 } else if (command === "narration") {
   // The scripts are the semantic source; the renderer derives audio from
   // this export and records provenance in manifest.json next to the clips.

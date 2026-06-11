@@ -153,7 +153,7 @@ Carve the framework into publishable packages with clean seams (mirrors the repo
 
 Shipped as an npm workspace: packages export TypeScript source directly (no per-package build yet — revisit when publishing); the renderer takes a `worlds` component map from the host app instead of importing scenery; per-world UI colors come from the document (`ambience.accent`); the CLI takes a journey-module path.
 
-### 4.2 Registries + plugin API
+### 4.2 Registries + plugin API — ✅ done (as static tables)
 Three open registries so the vocabulary is extensible without editing the core:
 - **World templates** — register a world by id; each exposes **named stations** (slots) and **camera intents**.
 - **Skins** — register `skinKind → React component + capability descriptor` (which content kinds it accepts, size hints, whether it supports stepwise reveal).
@@ -161,10 +161,14 @@ Three open registries so the vocabulary is extensible without editing the core:
 
 The skin/world registries are what let AI (and humans) pick by name. The capability descriptors are what let the **skin resolver** auto-suggest a skin for a primitive.
 
-### 4.3 Layout solver + camera planner (the AI-enablement core)
+Shipped in M2 as data tables in `@spatial-present/core` (`skinCapabilities`, `defaultSkinFor`, `builtinCameraIntents`) plus `WorldTemplate` objects passed to `defineJourney({ templates })`; capability data stays React-free so the CLI compiles documents without a DOM. The *open plugin API* (third-party registration) remains future work.
+
+### 4.3 Layout solver + camera planner (the AI-enablement core) — ✅ done
 - **Stations**: world templates publish slots with a transform and a content "envelope" (max size, facing). Authors/AI reference `hall.blackboard.center`; the solver assigns coordinates and avoids collisions.
 - **Auto-framing**: given an anchor's bounds + content size, compute a `CameraPose` from a named intent (`wide-establishing`, `orbit-focus`, `read-close`). This removes hand-authored poses — the thing blocking AI today.
 - **Auto-routing**: default a `primary` chain from scene order; AI only adds branches/portals.
+
+Shipped in M2: `defineJourney` is now the compiler pipeline (solver → skin resolver → auto-router → camera planner), the canonical document keeps `station`/`cameraIntent` as provenance for re-flow, templates also publish **named poses** for portal dives, and the SVD example compiles from zero coordinates (`journey-cli validate` reports coverage; `resolve` dumps the canonical document).
 
 ### 4.4 AI generator service
 - A prompt → **Authoring Spec** model call, grounded with the registries (so it can only reference real worlds/skins/stations) and the JSON Schema (structured output).
@@ -271,7 +275,7 @@ Manim is a **Python, offline renderer** — it cannot run in the browser. So int
 | Milestone | Delivers | Unblocks |
 | --- | --- | --- |
 | **M1 — Packagize** ✅ shipped | split schema/core/renderer/skins/worlds/cli into `packages/`; the SVD tour as `examples/svd-tour` | clean seams for everything else |
-| **M2 — Registries + layout solver + camera planner** | stations, named camera intents, auto-routing | **AI authoring becomes possible** (no hand coordinates) |
+| **M2 — Registries + layout solver + camera planner** ✅ shipped | stations, named camera intents, auto-routing; positionless example document | **AI authoring becomes possible** (no hand coordinates) |
 | **M3 — Math primitives** | `formula` (KaTeX→texture, MathML fallback) + `chalkboard`/`etchedGlass` skins; `math-void` + `lecture-hall` worlds | static math talks hand/SDK-authored |
 | **M4 — Asset pipeline + Manim** | `manim-render` job (transparent, cuepoints), `projection` skin, stepwise reveal | **animated math**; generated-art caching |
 | **M5 — AI generator** | prompt → Authoring Spec → document, grounded by registries + schema; provenance + locking + semantic diff | the "describe it and get a presentation" experience |

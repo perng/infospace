@@ -1,4 +1,8 @@
-import type { Anchor, ContentPrimitive, SkinBinding } from "@spatial-present/schema";
+import type {
+  ContentPrimitive,
+  ResolvedAnchor,
+  ResolvedSkinBinding,
+} from "@spatial-present/schema";
 import type { ProjectIndex } from "@spatial-present/core";
 import { EngravingSkin } from "./EngravingSkin";
 import { HologramChartSkin } from "./HologramChartSkin";
@@ -17,7 +21,7 @@ export function AnchorContent({
   active,
 }: {
   index: ProjectIndex;
-  anchor: Anchor;
+  anchor: ResolvedAnchor;
   active: boolean;
 }) {
   const bindings = index.bindingsByAnchor.get(anchor.id) ?? [];
@@ -44,7 +48,7 @@ function Skinned({
   content,
   active,
 }: {
-  binding: SkinBinding;
+  binding: ResolvedSkinBinding;
   content: ContentPrimitive;
   active: boolean;
 }) {

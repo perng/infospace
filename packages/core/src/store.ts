@@ -1,5 +1,9 @@
 import { create } from "zustand";
-import type { CameraPose, RouteEdge, TransitionKind } from "@spatial-present/schema";
+import type {
+  CameraPose,
+  ResolvedRouteEdge,
+  TransitionKind,
+} from "@spatial-present/schema";
 import type { ProjectIndex } from "./routeGraph";
 import { primaryNext } from "./routeGraph";
 
@@ -33,7 +37,7 @@ interface PresentationState {
   narrationOn: boolean;
   startedAtMs: number;
 
-  goToBeat: (beatId: string, via?: RouteEdge) => void;
+  goToBeat: (beatId: string, via?: ResolvedRouteEdge) => void;
   advance: () => void;
   goBack: () => void;
   returnToRoute: () => void;

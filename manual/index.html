@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Infospace — Creating a Presentation</title>
+<style>
+  :root {
+    --bg: #fdfdfb;
+    --ink: #1d2129;
+    --muted: #5d6470;
+    --accent: #4856a8;
+    --accent-soft: #eceef9;
+    --code-bg: #f3f4f0;
+    --border: #e2e3dd;
+    --warn-bg: #fdf6e8;
+    --warn-border: #e8d5a8;
+    --tip-bg: #edf5ee;
+    --tip-border: #bcd8c0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161c;
+      --ink: #e4e6eb;
+      --muted: #9aa1ad;
+      --accent: #93a2e8;
+      --accent-soft: #232743;
+      --code-bg: #1d2028;
+      --border: #2c2f38;
+      --warn-bg: #2a2418;
+      --warn-border: #5c4c26;
+      --tip-bg: #1a2620;
+      --tip-border: #2e4a38;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 240px;
+    padding: 2rem 1.2rem;
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    font-size: 0.88rem;
+  }
+  nav .brand {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 1.2rem;
+    color: var(--accent);
+  }
+  nav a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.22rem 0.5rem;
+    border-radius: 5px;
+  }
+  nav a:hover { color: var(--accent); background: var(--accent-soft); }
+  nav a.sub { padding-left: 1.4rem; font-size: 0.84rem; }
+  main {
+    margin-left: 240px;
+    max-width: 820px;
+    padding: 2.5rem 3rem 6rem;
+  }
+  @media (max-width: 920px) {
+    nav { position: static; width: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+    main { margin-left: 0; padding: 1.5rem 1.2rem 4rem; }
+  }
+  h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 0.4rem; }
+  .subtitle { color: var(--muted); font-size: 1.05rem; margin-bottom: 2.5rem; }
+  h2 {
+    font-size: 1.45rem;
+    margin-top: 3.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+  }
+  h3 { font-size: 1.12rem; margin-top: 2rem; }
+  h4 { font-size: 1rem; margin-top: 1.5rem; }
+  p, li { max-width: 72ch; }
+  a { color: var(--accent); }
+  code {
+    font: 0.86em/1.5 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    background: var(--code-bg);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    overflow-x: auto;
+    font-size: 0.84rem;
+    line-height: 1.55;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 0.45rem 0.7rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: var(--accent-soft); font-weight: 600; }
+  td code { white-space: nowrap; }
+  .callout {
+    border-radius: 8px;
+    padding: 0.8rem 1.1rem;
+    margin: 1.2rem 0;
+    font-size: 0.92rem;
+  }
+  .callout.tip  { background: var(--tip-bg);  border: 1px solid var(--tip-border); }
+  .callout.warn { background: var(--warn-bg); border: 1px solid var(--warn-border); }
+  .callout strong:first-child { display: block; margin-bottom: 0.2rem; }
+  .pipeline {
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    font-size: 0.82rem;
+  }
+  kbd {
+    font: 0.82em ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 0.1em 0.45em;
+  }
+  .station-note { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">Infospace Manual</div>
+  <a href="#intro">What is Infospace?</a>
+  <a href="#concepts">Concepts in five minutes</a>
+  <a href="#quickstart">Quick start: run an example</a>
+  <a href="#paths">Three ways to create</a>
+  <a href="#tutorial-ai">Tutorial A — from a brief</a>
+  <a class="sub" href="#tutorial-ai-setup">1. Set up a project</a>
+  <a class="sub" href="#tutorial-ai-brief">2. Write the brief</a>
+  <a class="sub" href="#tutorial-ai-generate">3. Generate</a>
+  <a class="sub" href="#tutorial-ai-review">4. Review &amp; edit</a>
+  <a class="sub" href="#tutorial-ai-lock">5. Lock &amp; regenerate</a>
+  <a href="#tutorial-spec">Tutorial B — write the spec</a>
+  <a class="sub" href="#scene-anatomy">Anatomy of a scene</a>
+  <a class="sub" href="#worked-example">A complete talk</a>
+  <a class="sub" href="#compile-loop">Compile &amp; iterate</a>
+  <a href="#narration">Voice narration</a>
+  <a href="#reference">Reference</a>
+  <a class="sub" href="#ref-worlds">Worlds &amp; stations</a>
+  <a class="sub" href="#ref-cameras">Camera intents</a>
+  <a class="sub" href="#ref-skins">Skins</a>
+  <a class="sub" href="#ref-content">Content kinds</a>
+  <a class="sub" href="#ref-scene">Scene fields</a>
+  <a class="sub" href="#ref-portals">Portals &amp; branches</a>
+  <a href="#commands">Command cheat sheet</a>
+  <a href="#beyond">Beyond the spec</a>
+  <a href="#troubleshooting">Troubleshooting</a>
+</nav>
+
+<main>
+
+<h1>Creating a Presentation in Infospace</h1>
+<p class="subtitle">A user's manual for authors — from a one-paragraph idea to a narrated journey through a 3D world.</p>
+
+<h2 id="intro">What is Infospace?</h2>
+
+<p>Infospace replaces slides with a <strong>guided journey through a continuous 3D world</strong>. Your content — text, formulas, charts — lives at named places inside atmospheric environments: chalk on the boards of an evening lecture hall, formulas etched in glass slabs floating in a dark void, data as glowing holograms. The audience travels from stop to stop along a route you author, with cinematic camera moves, optional voice narration, and portals that dive between worlds.</p>
+
+<p>The crucial idea for you as an author: <strong>you write meaning, the framework handles space.</strong> You never type a coordinate, place a camera, or pick a color. You say <em>"this formula goes on the center board, framed close enough to read"</em> — using names the worlds publish — and the layout solver, camera planner, and skins turn that into the finished scene. Because everything visual is derived from your semantic content, the same document also yields a readable outline, captions, and screen-reader text for free.</p>
+
+<pre class="pipeline">
+brief.md              your idea, one paragraph            (optional — Tutorial A)
+   │   npm run generate
+   ▼
+talk.spec.yaml        the Authoring Spec: scenes naming places, no coordinates
+   │   npm run spec:compile
+   ▼
+document.json         the authored document (still positionless)
+   ▼   compiled at load: layout solver → skins → router → camera planner
+the running 3D tour   npm run dev
+</pre>
+
+<h2 id="concepts">Concepts in five minutes</h2>
+
+<table>
+  <tr><th>Term</th><th>What it is</th></tr>
+  <tr><td><strong>World</strong></td><td>A 3D environment with its own atmosphere and scale — e.g. the marble <em>atrium</em>, the evening <em>lecture-hall</em>, the dark <em>math-void</em>. Worlds are prebuilt; you pick which ones your talk uses.</td></tr>
+  <tr><td><strong>Station</strong></td><td>A named content slot a world publishes, like <code>board.center</code> or <code>plinth.identity</code>. Each station has a position and a size envelope — but you only ever use the <em>name</em>. One scene per station.</td></tr>
+  <tr><td><strong>Scene</strong></td><td>One stop on the tour: a piece of content, the station it lives at, how the camera frames it, and what the narrator says. Scenes play in the order you list them.</td></tr>
+  <tr><td><strong>Skin</strong></td><td>The 3D look of a piece of content: <code>chalkboard</code> renders a formula as chalk strokes that write themselves; <code>hologram</code> renders a bar chart as glowing volumetric bars. Every content kind has a sensible default skin.</td></tr>
+  <tr><td><strong>Camera intent</strong></td><td>A named framing, like <code>read-close</code> (square-on, readable) or <code>orbit-focus</code> (three-quarter view for charts). The planner combines the intent with the station's size to compute the actual camera pose.</td></tr>
+  <tr><td><strong>Portal</strong></td><td>A cinematic transition between worlds — the camera dives into something in one world and emerges in another (e.g. straight through the lecture-hall board into the math void).</td></tr>
+  <tr><td><strong>Branch</strong></td><td>An optional shortcut edge for live presenting — "skip to the reveal" — shown to the presenter without disturbing the main route.</td></tr>
+  <tr><td><strong>Narration</strong></td><td>A spoken script per scene. Stored as text (the source of truth); audio clips are rendered offline by a text-to-speech job, with synchronized captions.</td></tr>
+</table>
+
+<h2 id="quickstart">Quick start: run an example</h2>
+
+<p>From the repository root:</p>
+
+<pre><code>npm install
+cd examples/basel-problem
+npm run dev</code></pre>
+
+<p>Open the local URL Vite prints (usually <code>http://localhost:5173</code>). You're standing in the lecture hall at the first board of <em>"Basel Night Lecture"</em> — a fully AI-generated talk. Press <kbd>V</kbd> to hear it narrate itself.</p>
+
+<p>Three example presentations ship with the repo:</p>
+<ul>
+  <li><code>examples/svd-tour</code> — the flagship: Singular Value Decomposition across the atrium and the spectral world, with rendered animations.</li>
+  <li><code>examples/math-primer</code> — the minimal one: Euler's identity, lecture hall → math void.</li>
+  <li><code>examples/basel-problem</code> — generated from a one-paragraph brief by the AI pipeline (Tutorial A follows its exact steps).</li>
+</ul>
+
+<h3>Viewer controls</h3>
+
+<table>
+  <tr><th>Key</th><th>Action</th></tr>
+  <tr><td><kbd>→</kbd> / <kbd>Space</kbd> / <kbd>PageDown</kbd></td><td>Next stop (scenes with stepwise animations advance one step at a time first)</td></tr>
+  <tr><td><kbd>←</kbd> / <kbd>PageUp</kbd></td><td>Previous stop</td></tr>
+  <tr><td><kbd>V</kbd></td><td>Toggle the narrated tour — voice, synchronized captions, auto-advance</td></tr>
+  <tr><td><kbd>O</kbd></td><td>Outline view: the whole talk as a readable document</td></tr>
+  <tr><td><kbd>N</kbd></td><td>Presenter notes</td></tr>
+  <tr><td><kbd>K</kbd>, <kbd>/</kbd>, <kbd>⌘K</kbd></td><td>Command palette — jump to any stop by name</td></tr>
+  <tr><td>Mouse drag / wheel</td><td>Free look around the current stop</td></tr>
+  <tr><td><kbd>Esc</kbd></td><td>Return to the tour after free look; close the outline</td></tr>
+</table>
+
+<p>The minimap (bottom corner) shows the route graph; the presenter console shows the current stop, notes, and any branch shortcuts leaving it.</p>
+
+<h2 id="paths">Three ways to create a presentation</h2>
+
+<table>
+  <tr><th>Path</th><th>You write</th><th>Best for</th></tr>
+  <tr>
+    <td><strong>A. Generate from a brief</strong></td>
+    <td>One paragraph of prose (<code>brief.md</code>)</td>
+    <td>Getting a complete first draft in minutes, then editing. Recommended starting point.</td>
+  </tr>
+  <tr>
+    <td><strong>B. Write the spec by hand</strong></td>
+    <td>A YAML file (<code>talk.spec.yaml</code>) — one block per scene</td>
+    <td>Full control of every word, while still never touching coordinates.</td>
+  </tr>
+  <tr>
+    <td><strong>C. The document layer</strong></td>
+    <td>TypeScript / JSON (the authored document)</td>
+    <td>Advanced: images, video, rendered <a href="#beyond">Manim animations</a>, custom worlds. See <a href="#beyond">Beyond the spec</a>.</td>
+  </tr>
+</table>
+
+<p>Paths A and B meet in the same file: generation <em>produces</em> a <code>talk.spec.yaml</code> that you then edit by hand. Everything in Tutorial B applies to a generated spec too.</p>
+
+<h2 id="tutorial-ai">Tutorial A — From a one-paragraph brief</h2>
+
+<p>This is exactly how <code>examples/basel-problem</code> was made. You write a paragraph; an AI engine — grounded in the framework's real vocabulary so it cannot invent places that don't exist — drafts the full talk; you review and refine it.</p>
+
+<h3 id="tutorial-ai-setup">Step 1 — Set up a project</h3>
+
+<p>The easiest start is to copy the generated example and empty it:</p>
+
+<pre><code>cp -r examples/basel-problem examples/my-talk
+cd examples/my-talk
+rm -rf node_modules dist public/assets/narration talk.spec.yaml talk.provenance.json
+# edit package.json: change "name" to "my-talk"
+cd ../.. &amp;&amp; npm install        # registers the new workspace</code></pre>
+
+<p>Two more things to personalize:</p>
+<ul>
+  <li><code>index.html</code> — the page title.</li>
+  <li><code>src/main.tsx</code> — which world components the app loads. It must match the worlds your talk uses:</li>
+</ul>
+
+<pre><code>&lt;PresentationApp
+  journey={journey}
+  worlds={{ "lecture-hall": LectureHallWorld, "math-void": MathVoidWorld }}
+/&gt;</code></pre>
+
+<p>(Keep the lecture-hall + math-void pair for your first talk; the <a href="#ref-worlds">reference</a> lists all four worlds.)</p>
+
+<h3 id="tutorial-ai-brief">Step 2 — Write the brief</h3>
+
+<p>Replace <code>brief.md</code> with your own paragraph. Say what the talk is about, who it's for, roughly how many stops, the story arc, and the tone. The real Basel brief, for flavor:</p>
+
+<pre><code># Brief
+
+A guided talk on the **Basel problem** for second-year undergraduates,
+about eight stops, suitable as a self-running narrated tour.
+
+The story: Euler's 1734 solution of the Basel problem. Open by posing the
+question — what is 1 + 1/4 + 1/9 + 1/16 + …? Show that the series
+converges but creeps toward its limit hopelessly slowly (partial sums make
+a nice chart). Walk through Euler's audacious move: treating sin(x)/x as
+an infinite polynomial and reading off its roots, comparing coefficients
+to conjure the answer. The reveal — pi squared over six — should land as
+the dramatic high point somewhere otherworldly. Close with why it
+mattered: the birth of the zeta function and the road toward Riemann.
+
+Tone: wonder with rigor — a night lecture that ends somewhere the
+blackboard cannot go. Use the lecture hall for the setup and the series
+work, then pass through the board into the void for Euler's leap and the
+reveal.</code></pre>
+
+<div class="callout tip"><strong>What makes a good brief</strong>
+Name the dramatic high point and where you want it to land ("somewhere otherworldly"); mention data that wants to be a chart; describe the tone. The generator maps these cues onto worlds, skins, and camera framings.</div>
+
+<h3 id="tutorial-ai-generate">Step 3 — Generate</h3>
+
+<pre><code>npm run generate</code></pre>
+
+<p>This runs the generator with your brief and the worlds you chose (see the <code>generate</code> script in <code>package.json</code> — change <code>--worlds lecture-hall,math-void</code> there if you picked different worlds). It calls a locally installed AI CLI: the <code>claude</code> CLI by default, or pass <code>--engine codex</code> for the Codex CLI. Either must be installed and logged in.</p>
+
+<p>Every draft is validated through the full compiler before it's accepted — invalid output gets one automatic repair round, then is rejected. A successful run writes three files:</p>
+
+<ul>
+  <li><code>talk.spec.yaml</code> — the Authoring Spec: the talk as editable YAML. <strong>This is now your source file.</strong></li>
+  <li><code>src/journey/document.json</code> — the compiled document the app loads.</li>
+  <li><code>talk.provenance.json</code> — a record of the brief, engine, model, and attempts.</li>
+</ul>
+
+<p>Run <code>npm run dev</code> and take the tour.</p>
+
+<h3 id="tutorial-ai-review">Step 4 — Review and edit</h3>
+
+<p>Generation gives you a structurally valid draft; <strong>judgment is still your job</strong>. Walk the tour and read <code>talk.spec.yaml</code> critically. When the Basel talk was generated, the human pass made exactly two edits — both one-liners in the spec:</p>
+
+<ul>
+  <li>A camera intent that didn't suit its content (changed <code>camera: sky-gaze</code> to <code>read-close</code> on a formula that needed to be read).</li>
+  <li>An opening paragraph too long for its board (trimmed the <code>body:</code> text).</li>
+</ul>
+
+<p>After any edit, recompile and check:</p>
+
+<pre><code>npm run spec:compile
+npm run validate
+npm run dev</code></pre>
+
+<h3 id="tutorial-ai-lock">Step 5 — Lock what's good, regenerate the rest</h3>
+
+<p>When a scene is exactly right, mark it:</p>
+
+<pre><code>  - id: reveal-answer
+    locked: true
+    title: Pi Squared Over Six
+    ...</code></pre>
+
+<p>Then <code>npm run generate:regen</code> rewrites the talk from the (possibly updated) brief while preserving every locked scene <em>byte for byte</em>. This is the editing loop: keep the moments that work, let the AI rework the connective tissue around them.</p>
+
+<h2 id="tutorial-spec">Tutorial B — Writing the spec by hand</h2>
+
+<p>The Authoring Spec is a YAML file: a header, a list of scenes, and optional portals and branches. You only ever use <em>names</em> — station names, camera intent names, skin names — from the <a href="#reference">reference tables</a> below.</p>
+
+<h3 id="scene-anatomy">Anatomy of a scene</h3>
+
+<pre><code>  - id: definition          # kebab-case, unique within the talk
+    title: Defining Phi     # shown in the outline, palette, minimap
+    world: lecture-hall     # a world template id (listed in `worlds:`)
+    station: board.center   # a station that world publishes — one scene per station
+    role: detail            # chapter | detail | chart | quote | media | portal
+    content:                # what this stop says (see Content kinds)
+      kind: formula
+      latex: \varphi = \frac{1 + \sqrt{5}}{2}
+      spoken: phi equals one plus the square root of five, all over two
+    skin: chalkboard        # optional — omit for the content kind's default
+    camera: read-close      # optional — a camera intent (default read-close)
+    narrate: &gt;              # optional — the spoken script for the narrated tour
+      Solving the proportion gives a quadratic equation, and its
+      positive root is phi.
+    notes: Derive it live if the room wants the algebra.   # presenter notes
+    arrive: fly             # optional — how the camera travels here: cut | dolly | fly
+    locked: false           # optional — survives --regen verbatim when true</code></pre>
+
+<p>Only <code>id</code>, <code>title</code>, <code>world</code>, <code>station</code>, and <code>content</code> are required. The defaults are good: omit <code>skin</code> and <code>camera</code> unless you want a specific effect.</p>
+
+<h3 id="worked-example">A complete talk: "The Golden Ratio"</h3>
+
+<p>A six-scene talk using the same two worlds as the Basel example — boards in the lecture hall for the setup, then a portal through the board into the void for the payoff. This file compiles as-is:</p>
+
+<pre><code>id: golden-ratio
+title: The Golden Ratio - a short walk
+worlds:
+  - lecture-hall
+  - math-void
+scenes:
+  - id: opening
+    title: An Old Obsession
+    world: lecture-hall
+    station: board.left
+    role: chapter
+    content:
+      kind: text
+      title: The golden ratio
+      body: |
+        Cut a line so the whole relates to the long part
+        as the long part relates to the short.
+
+        That single sentence defines phi.
+    skin: chalkboard
+    narrate: &gt;
+      For more than two thousand years, one proportion has fascinated
+      geometers, painters, and architects. Tonight we meet it properly.
+
+  - id: definition
+    title: Defining Phi
+    world: lecture-hall
+    station: board.center
+    content:
+      kind: formula
+      latex: \varphi = \frac{1 + \sqrt{5}}{2} \approx 1.618
+      spoken: phi equals one plus the square root of five, all over
+        two, approximately one point six one eight
+    narrate: &gt;
+      Solving the defining proportion gives a quadratic equation, and
+      its positive root is phi.
+
+  - id: fibonacci
+    title: Fibonacci Closes In
+    world: lecture-hall
+    station: board.right
+    role: chart
+    content:
+      kind: chart
+      data:
+        type: bar
+        title: Ratios of consecutive Fibonacci numbers
+        series:
+          - { label: 3/2,    value: 1.5 }
+          - { label: 8/5,    value: 1.6 }
+          - { label: 21/13,  value: 1.6154 }
+          - { label: 55/34,  value: 1.6176 }
+          - { label: 144/89, value: 1.618 }
+      summary: Ratios of consecutive Fibonacci numbers settle toward
+        one point six one eight.
+    camera: orbit-focus
+    narrate: &gt;
+      The Fibonacci numbers sneak up on phi. Divide each by the one
+      before it, and the ratios settle onto the same constant.
+
+  - id: leaving-the-hall
+    title: Through the Board
+    world: lecture-hall
+    station: wall.west
+    role: portal
+    content:
+      kind: text
+      title: A self-similar number
+      body: |
+        Phi is the number that contains itself.
+
+        To see that, we leave the hall.
+    skin: cloudText
+    camera: wide-establishing
+    narrate: &gt;
+      What makes phi special is not its decimals but its self-similarity.
+      To see it, we step through the board.
+
+  - id: self-similar
+    title: Phi Squared
+    world: math-void
+    station: plinth.identity
+    content:
+      kind: formula
+      latex: \varphi^{2} = \varphi + 1
+      spoken: phi squared equals phi plus one
+    skin: etchedGlass
+    camera: quote-gaze
+    narrate: &gt;
+      Square phi and you get phi back, plus one. No other positive
+      number does this. Every famous property of the golden ratio
+      unfolds from this single identity.
+
+  - id: closing
+    title: Everywhere and Nowhere
+    world: math-void
+    station: circle.overlook
+    content:
+      kind: text
+      title: Where phi lives
+      body: |
+        Pentagons. Sunflowers. Continued fractions.
+
+        phi = 1 + 1/(1 + 1/(1 + ...))
+    skin: cloudText
+    camera: quote-gaze
+    narrate: &gt;
+      Phi appears wherever growth repeats its own rule. That is where
+      we leave it, glowing over the void.
+
+portals:
+  - from: leaving-the-hall
+    to: self-similar
+    label: Step through the board
+    dive: board-dive          # a pose of the source world (lecture-hall)
+    emerge: void-emerge       # a pose of the target world (math-void)
+
+branches:
+  - { from: opening, to: fibonacci, label: Skip to the evidence, kind: branch }</code></pre>
+
+<p>Things worth noticing:</p>
+<ul>
+  <li><strong>Scene order is the route.</strong> The tour visits scenes in list order; you never wire up edges for the main path.</li>
+  <li><strong>The portal is mandatory there.</strong> <code>leaving-the-hall</code> and <code>self-similar</code> are consecutive but in different worlds — the compiler refuses to guess a world crossing and demands a portal with a dive/emerge pose pair.</li>
+  <li><strong>Skins follow content by default.</strong> The <code>definition</code> scene omits <code>skin:</code>, so its formula gets the chalkboard. The void scenes opt into <code>etchedGlass</code> and <code>cloudText</code> for atmosphere.</li>
+  <li><strong>In-world text is plain ASCII.</strong> The 3D fonts have no Greek or subscripts. Write "phi", "n squared", "1/n^2" in text bodies and titles; real notation belongs in <code>latex:</code>, which renders through a full math pipeline.</li>
+  <li><strong>Every formula and chart carries its spoken form</strong> (<code>spoken:</code> / <code>summary:</code>) — that's what the outline, captions, and screen readers use.</li>
+</ul>
+
+<h3 id="compile-loop">Compile and iterate</h3>
+
+<pre><code>npm run spec:compile     # talk.spec.yaml → src/journey/document.json
+npm run validate         # full structural + coverage report
+npm run outline          # the talk as a readable text outline
+npm run dev              # walk it</code></pre>
+
+<p><code>validate</code> reports the resolution summary — how many cameras came from intents, route coverage, narration coverage — and any errors with the exact names that failed. <code>outline</code> is the fastest way to proofread the words without launching the 3D view.</p>
+
+<div class="callout tip"><strong>Sizing text to a station</strong>
+Boards in the lecture hall are about 3.8 × 2.8 units; a text body of roughly three short paragraphs fits. If text looks cramped in the 3D view, cut words — don't fight the layout. Bigger stations (<code>circle.overlook</code>, <code>arrival.overlook</code>) take more.</div>
+
+<h2 id="narration">Voice narration</h2>
+
+<p>Narration is authored as text — the <code>narrate:</code> field on each scene — and rendered to audio offline. The script text is the source of truth; audio is a derived, cached asset.</p>
+
+<pre><code>npm run narration            # print the scripts as JSON (proofread pass)
+npm run narration:render     # render audio clips with local TTS</code></pre>
+
+<p>Rendering uses the Kokoro text-to-speech engine locally (model files required; see <code>packages/cli/generate-narration.py</code>). Clips land in <code>public/assets/narration/</code> with a manifest of word timestamps — that's what powers the synchronized karaoke captions. Clips are hash-cached: only scenes whose script changed are re-rendered.</p>
+
+<p>In the viewer, <kbd>V</kbd> toggles the narrated tour: each stop plays its clip with captions and auto-advances when it ends. Write <code>narrate:</code> in a spoken style — two to four sentences, numbers and symbols written out as words ("pi squared over six", not "π²/6").</p>
+
+<div class="callout tip"><strong>Validation knows about staleness</strong>
+<code>npm run validate</code> warns when a script changed after its clip was rendered, so you can't accidentally ship narration that says something different from the document.</div>
+
+<h2 id="reference">Reference</h2>
+
+<h3 id="ref-worlds">Worlds and their stations</h3>
+
+<p>Four worlds ship with the framework. A talk lists the worlds it uses in <code>worlds:</code>; each world contributes its stations (one scene per station) and portal poses. Sizes are width × height in world units — a rough guide to how much content fits.</p>
+
+<h4><code>lecture-hall</code> — The Evening Lecture Hall <span class="station-note">(warm, intimate; great for setup and board work)</span></h4>
+<table>
+  <tr><th>Station</th><th>Size</th><th>Notes</th></tr>
+  <tr><td><code>board.left</code></td><td>3.8 × 2.8</td><td>Slate board panel — chalk text or formulas</td></tr>
+  <tr><td><code>board.center</code></td><td>3.8 × 2.8</td><td>Center board; the portal dives through this one</td></tr>
+  <tr><td><code>board.right</code></td><td>3.8 × 2.8</td><td>Third board — also fits a small chart</td></tr>
+  <tr><td><code>wall.west</code></td><td>4 × 3</td><td>Side wall — a good "turn away from the boards" moment</td></tr>
+</table>
+<p>Portal poses: <code>board-dive</code> (leave through the center board), <code>board-emerge</code> (arrive backing out of it).</p>
+
+<h4><code>math-void</code> — The Math Void <span class="station-note">(dark, weightless; where mathematics glows — the payoff world)</span></h4>
+<table>
+  <tr><th>Station</th><th>Size</th><th>Notes</th></tr>
+  <tr><td><code>plinth.identity</code></td><td>5.5 × 3</td><td>The central plinth — a hero formula's home</td></tr>
+  <tr><td><code>gallery.west</code></td><td>6 × 3.2</td><td>Side gallery for supporting formulas</td></tr>
+  <tr><td><code>circle.overlook</code></td><td>8 × 3.5</td><td>Wide overlook — roomy, good for closing thoughts</td></tr>
+  <tr><td><code>screen.theatre</code></td><td>7 × 4.4</td><td>Frameless projection spot floating high in the dark</td></tr>
+  <tr><td><code>gate.return</code></td><td>6.5 × 3</td><td>By the return gate — natural final stop</td></tr>
+</table>
+<p>Portal poses: <code>void-emerge</code> (plunge arrival from above), <code>gate-dive</code> (leave through the gate).</p>
+
+<h4><code>atrium</code> — The Atrium of Linear Maps <span class="station-note">(marble gallery around a central prism)</span></h4>
+<table>
+  <tr><th>Station</th><th>Size</th><th>Notes</th></tr>
+  <tr><td><code>entry.tablet</code></td><td>5 × 3.4</td><td>The entrance tablet — a natural opening</td></tr>
+  <tr><td><code>west-wall.bay-1</code></td><td>5.4 × 3.6</td><td>Wall bays between columns…</td></tr>
+  <tr><td><code>west-wall.bay-2</code></td><td>5 × 2.2</td><td></td></tr>
+  <tr><td><code>east-wall.bay-1</code></td><td>4.5 × 2.6</td><td></td></tr>
+  <tr><td><code>east-wall.bay-2</code></td><td>5 × 3</td><td></td></tr>
+  <tr><td><code>east-wall.bay-3</code></td><td>4 × 2.4</td><td></td></tr>
+  <tr><td><code>floor.hologram</code></td><td>4.4 × 3.2</td><td>Floor emitter — built for hologram charts</td></tr>
+  <tr><td><code>air.quote</code></td><td>9 × 3.5</td><td>Floating overhead — pairs with <code>cloudText</code> + <code>quote-gaze</code></td></tr>
+  <tr><td><code>sky.dome</code></td><td>20 × 10</td><td>Vast and high — pairs with <code>sky-gaze</code></td></tr>
+  <tr><td><code>prism.plinth</code></td><td>3.6 × 2.6</td><td>Beside the prism portal</td></tr>
+</table>
+<p>Portal poses: <code>prism-dive</code>, <code>lens-emerge</code>; named approach <code>prism-approach</code>.</p>
+
+<h4><code>spectral</code> — Inside the Decomposition <span class="station-note">(micro-scale interior, far below the atrium)</span></h4>
+<table>
+  <tr><th>Station</th><th>Size</th><th>Notes</th></tr>
+  <tr><td><code>arrival.overlook</code></td><td>11 × 4</td><td>Wide arrival shelf</td></tr>
+  <tr><td><code>core.plate</code></td><td>4.8 × 3.2</td><td>At the core</td></tr>
+  <tr><td><code>field.hologram</code></td><td>3.6 × 3.2</td><td>Hologram emitter</td></tr>
+  <tr><td><code>layers.gallery</code></td><td>9 × 3.5</td><td>Long gallery</td></tr>
+  <tr><td><code>ring.return</code></td><td>8 × 3</td><td>At the return ring — natural last stop</td></tr>
+</table>
+<p>Portal poses: <code>ring-dive</code>, <code>deep-emerge</code>.</p>
+
+<div class="callout tip"><strong>Classic portal pairings</strong>
+lecture-hall → math-void: <code>dive: board-dive</code>, <code>emerge: void-emerge</code> (and back: <code>gate-dive</code> / <code>board-emerge</code>).
+atrium → spectral: <code>dive: prism-dive</code>, <code>emerge: deep-emerge</code> (and back: <code>ring-dive</code> / <code>lens-emerge</code>).</div>
+
+<h3 id="ref-cameras">Camera intents</h3>
+
+<table>
+  <tr><th>Intent</th><th>Framing</th></tr>
+  <tr><td><code>read-close</code></td><td>Square-on, close enough to read body text comfortably. <strong>The default.</strong></td></tr>
+  <tr><td><code>wide-establishing</code></td><td>Steps back and looks past the content into the world behind it — good for arrivals and departures</td></tr>
+  <tr><td><code>orbit-focus</code></td><td>Off-axis three-quarter view — flatters charts and 3D objects</td></tr>
+  <tr><td><code>sky-gaze</code></td><td>From low ground, gazing up at content overhead — for very high stations</td></tr>
+  <tr><td><code>quote-gaze</code></td><td>Slightly below floating text, looking up at it</td></tr>
+</table>
+
+<p>You pick the intent; the planner computes the actual camera position from the station's size and facing. A scene's <code>camera:</code> may also name one of a world's fixed poses (e.g. <code>prism-approach</code>) for framings about the world's own geometry.</p>
+
+<h3 id="ref-skins">Skins</h3>
+
+<table>
+  <tr><th>Skin</th><th>Accepts</th><th>Look</th></tr>
+  <tr><td><code>engraving</code></td><td>text</td><td>Text carved into a lit stone tablet <em>(default for text)</em></td></tr>
+  <tr><td><code>chalkboard</code></td><td>formula, text</td><td>Chalk strokes on a slate board; formulas write themselves on reveal <em>(default for formulas)</em></td></tr>
+  <tr><td><code>etchedGlass</code></td><td>formula</td><td>A formula etched into a lit glass slab, glowing</td></tr>
+  <tr><td><code>cloudText</code></td><td>text</td><td>A quote drifting as luminous text in a particle nebula</td></tr>
+  <tr><td><code>hologram</code></td><td>chart (bar)</td><td>A glowing volumetric bar chart on a floor emitter <em>(default for bar charts)</em></td></tr>
+  <tr><td><code>constellation</code></td><td>chart (scatter)</td><td>Scatter data as linked stars in a dark dome <em>(default for scatter charts)</em></td></tr>
+  <tr><td><code>plaque</code></td><td>image, video</td><td>A framed image or film on a gallery wall <em>(document layer only)</em></td></tr>
+  <tr><td><code>projection</code></td><td>manim</td><td>A frameless floating panel playing a rendered animation <em>(document layer only)</em></td></tr>
+</table>
+
+<p>Skins size themselves to their station automatically. A skin must accept its content's kind — putting an <code>etchedGlass</code> skin on a chart is a validation error.</p>
+
+<h3 id="ref-content">Content kinds (in the spec)</h3>
+
+<table>
+  <tr><th>Kind</th><th>Fields</th><th>Notes</th></tr>
+  <tr><td><code>text</code></td><td><code>title</code> (optional), <code>body</code></td><td>Plain ASCII. About three short paragraphs fits a board.</td></tr>
+  <tr><td><code>formula</code></td><td><code>latex</code>, <code>spoken</code></td><td>Presentation-sized LaTeX — one line or a small aligned block. <code>spoken</code> is the spoken-math reading.</td></tr>
+  <tr><td><code>chart</code></td><td><code>data</code>, <code>summary</code></td><td><code>data.type</code> is <code>bar</code> (title, optional unit/logScale, <code>series</code> of label/value) or <code>scatter</code> (title, xLabel, yLabel, <code>points</code> of x/y/label). Small inline datasets only. <code>summary</code> is a one-sentence reading.</td></tr>
+</table>
+
+<p>Images, video, and Manim animations need asset files on disk, so they enter at the <a href="#beyond">document layer</a>, not the spec.</p>
+
+<div class="callout warn"><strong>LaTeX in YAML</strong>
+Write <code>latex:</code> as an unquoted (plain) YAML scalar — backslashes pass through as-is, e.g. <code>latex: \frac{\pi^{2}}{6}</code>. If you must quote with double quotes, every backslash doubles: <code>"\\frac{\\pi^{2}}{6}"</code>. Unquoted is easier.</div>
+
+<h3 id="ref-scene">Scene fields</h3>
+
+<table>
+  <tr><th>Field</th><th>Required</th><th>Meaning</th></tr>
+  <tr><td><code>id</code></td><td>yes</td><td>Kebab-case, unique (<code>^[a-z0-9][a-z0-9-]*$</code>)</td></tr>
+  <tr><td><code>title</code></td><td>yes</td><td>Shown in outline, palette, presenter console</td></tr>
+  <tr><td><code>world</code></td><td>yes</td><td>A world id listed in <code>worlds:</code></td></tr>
+  <tr><td><code>station</code></td><td>yes</td><td>A station that world publishes; one scene per station</td></tr>
+  <tr><td><code>content</code></td><td>yes</td><td>See <a href="#ref-content">Content kinds</a></td></tr>
+  <tr><td><code>skin</code></td><td>no</td><td>Defaults to the content kind's skin</td></tr>
+  <tr><td><code>camera</code></td><td>no</td><td>Camera intent or world pose name; default <code>read-close</code></td></tr>
+  <tr><td><code>role</code></td><td>no</td><td><code>chapter</code> | <code>detail</code> (default) | <code>chart</code> | <code>quote</code> | <code>media</code> | <code>portal</code> — semantic weight for the minimap and outline</td></tr>
+  <tr><td><code>place</code></td><td>no</td><td>Display name for the location (defaults to the title)</td></tr>
+  <tr><td><code>narrate</code></td><td>no</td><td>Spoken script, 2–4 sentences, plain ASCII</td></tr>
+  <tr><td><code>notes</code></td><td>no</td><td>Presenter notes (<kbd>N</kbd> in the viewer)</td></tr>
+  <tr><td><code>arrive</code></td><td>no</td><td>How the camera travels here: <code>cut</code> | <code>dolly</code> | <code>fly</code> (default)</td></tr>
+  <tr><td><code>locked</code></td><td>no</td><td>Survives <code>--regen</code> verbatim when <code>true</code></td></tr>
+</table>
+
+<h3 id="ref-portals">Portals and branches</h3>
+
+<pre><code>portals:                      # REQUIRED between consecutive scenes in different worlds
+  - from: leaving-the-hall    # scene id in the source world
+    to: self-similar          # scene id in the target world
+    label: Step through the board
+    dive: board-dive          # pose name from the source world (optional but recommended)
+    emerge: void-emerge       # pose name from the target world
+
+branches:                     # optional shortcuts for live presenting
+  - from: opening
+    to: fibonacci
+    label: Skip to the evidence
+    kind: branch              # branch (skip ahead) | return (go back)</code></pre>
+
+<p>Portals are the only way the tour changes worlds; the dive/emerge poses choreograph the crossing (accelerate into the board, plunge out of the sky). Branches never interrupt the main route — they appear as labeled options in the presenter console and on the minimap.</p>
+
+<h2 id="commands">Command cheat sheet</h2>
+
+<p>All run from your presentation's directory (e.g. <code>examples/my-talk/</code>):</p>
+
+<table>
+  <tr><th>Command</th><th>Does</th></tr>
+  <tr><td><code>npm run dev</code></td><td>Launch the presentation in the browser (Vite dev server)</td></tr>
+  <tr><td><code>npm run generate</code></td><td>Brief → spec → document via an AI engine (Tutorial A)</td></tr>
+  <tr><td><code>npm run generate:regen</code></td><td>Regenerate, preserving <code>locked: true</code> scenes verbatim</td></tr>
+  <tr><td><code>npm run spec:compile</code></td><td>Recompile <code>talk.spec.yaml</code> → <code>src/journey/document.json</code></td></tr>
+  <tr><td><code>npm run validate</code></td><td>Structural validation + coverage report + asset staleness warnings</td></tr>
+  <tr><td><code>npm run outline</code></td><td>The whole talk as a readable text outline</td></tr>
+  <tr><td><code>npm run narration</code></td><td>Print narration scripts as JSON</td></tr>
+  <tr><td><code>npm run narration:render</code></td><td>Render narration audio (local TTS, hash-cached)</td></tr>
+  <tr><td><code>npm run diff -- &lt;a&gt; &lt;b&gt;</code></td><td>Semantic diff between two journey versions</td></tr>
+  <tr><td><code>npm run build</code></td><td>Type-check and bundle for deployment</td></tr>
+</table>
+
+<h2 id="beyond">Beyond the spec: the document layer</h2>
+
+<p>The YAML spec deliberately covers only content that needs no external assets, so a talk always renders. For more, edit the authored document itself (the layer below the spec):</p>
+
+<ul>
+  <li><strong>Images and video</strong> — <code>plaque</code>-framed media referencing files in <code>public/</code>.</li>
+  <li><strong>Manim animations</strong> — write a <a href="https://www.manim.community/">Manim</a> scene in Python; the render job produces a transparent clip with cuepoints, and the <code>projection</code> skin plays it composited over the world. With <code>reveal: stepwise</code>, each press of <kbd>→</kbd> advances one animation step, and narration cue marks drive the same steps in the self-running tour.</li>
+  <li><strong>Hand-tuned framings</strong> — explicit camera poses where an intent isn't enough.</li>
+</ul>
+
+<p><code>examples/svd-tour</code> shows all of this in action (see its <code>src/journey/project.ts</code>). The document is still positionless — stations and intents — it just speaks the framework's full vocabulary. The complete data model lives in <code>docs/design.md</code>, and <code>docs/creation-guide.md</code> is a condensed reference (written for AI assistants, equally useful to humans who want every field on one page).</p>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<table>
+  <tr><th>Symptom / message</th><th>Fix</th></tr>
+  <tr>
+    <td><code>…are consecutive but in different worlds — add a portal…</code></td>
+    <td>Two back-to-back scenes change worlds without a portal. Add an entry to <code>portals:</code> from the first to the second, with a dive/emerge pose pair.</td>
+  </tr>
+  <tr>
+    <td><code>station "…" is double-booked by anchors…</code></td>
+    <td>Two scenes claim the same station. Move one to a free station (each world's table above is the menu).</td>
+  </tr>
+  <tr>
+    <td><code>…references unknown station "…" (available: …)</code></td>
+    <td>Typo, or the station belongs to a different world. The error lists the valid names.</td>
+  </tr>
+  <tr>
+    <td><code>unknown world template "…"</code></td>
+    <td><code>worlds:</code> must use template ids exactly: <code>atrium</code>, <code>spectral</code>, <code>lecture-hall</code>, <code>math-void</code>.</td>
+  </tr>
+  <tr>
+    <td>Formula renders blank or wrong</td>
+    <td>Check the YAML escaping (see the <a href="#ref-content">LaTeX callout</a>), and keep to presentation-sized standard LaTeX (amsmath); exotic packages aren't available.</td>
+  </tr>
+  <tr>
+    <td>Text spills over its board</td>
+    <td>The station is smaller than your paragraph. Cut words or move to a bigger station — boards are 3.8 × 2.8.</td>
+  </tr>
+  <tr>
+    <td>Greek letters / symbols missing in 3D text</td>
+    <td>In-world text is ASCII-only. Spell it out ("pi", "n squared"); use a <code>formula</code> scene for real notation.</td>
+  </tr>
+  <tr>
+    <td>Narration sounds stale after editing</td>
+    <td>Re-run <code>npm run narration:render</code> — only changed scripts are re-rendered. <code>npm run validate</code> lists stale clips.</td>
+  </tr>
+  <tr>
+    <td><code>npm run generate</code> fails to start an engine</td>
+    <td>The default engine is the <code>claude</code> CLI and it must be logged in; otherwise install/log in the <code>codex</code> CLI and add <code>--engine codex</code> to the generate script.</td>
+  </tr>
+  <tr>
+    <td>Edits to <code>talk.spec.yaml</code> don't show up</td>
+    <td>The app loads <code>document.json</code>, not the YAML. Run <code>npm run spec:compile</code> after every spec edit.</td>
+  </tr>
+</table>
+
+<p style="margin-top:3rem;color:var(--muted);font-size:0.85rem;border-top:1px solid var(--border);padding-top:1rem;">
+Infospace — Spatial Presentation Framework. This manual covers authoring with the Authoring Spec and the AI generation pipeline; the canonical design document is <code>docs/design.md</code>.
+</p>
+
+</main>
+</body>
+</html>

@@ -3,6 +3,7 @@ import { useVideoTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { param, useReveal, type SkinProps } from "./common";
+import { fetchManimManifest } from "./manimManifest";
 
 /**
  * A frameless floating panel playing a rendered manim clip. With an
@@ -82,11 +83,16 @@ function ProjectionSurface({
     start: false,
   });
 
-  // Drive the underlying <video> element from reveal state. The element
-  // lives outside React (drei owns it), so imperative control in an
-  // effect is the honest pattern here.
+  // The <video> element lives outside React (drei owns it); hold it in a
+  // ref — React's mutable channel — and drive playback imperatively.
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   useEffect(() => {
-    const video = texture.image as HTMLVideoElement;
+    videoRef.current = texture.image as HTMLVideoElement;
+  }, [texture]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
     if (!active) {
       video.pause();
       return;
@@ -109,7 +115,7 @@ function ProjectionSurface({
     video.addEventListener("timeupdate", onTime);
     void video.play().catch(() => {});
     return () => video.removeEventListener("timeupdate", onTime);
-  }, [texture, active, reveal, revealStep, cuepoints]);
+  }, [active, reveal, revealStep, cuepoints]);
 
   return (
     <mesh>
@@ -125,20 +131,6 @@ function ProjectionSurface({
       />
     </mesh>
   );
-}
-
-let manifestPromise: Promise<
-  Record<string, { durationMs: number; cuepoints: number[] }>
-> | null = null;
-
-/** The manim asset manifest (cuepoints, durations), fetched once. */
-export function fetchManimManifest(): Promise<
-  Record<string, { durationMs: number; cuepoints: number[] }>
-> {
-  manifestPromise ??= fetch("/assets/manim/manifest.json")
-    .then((r) => (r.ok ? r.json() : {}))
-    .catch(() => ({}));
-  return manifestPromise;
 }
 
 function useManimCuepoints(contentId: string): number[] | null {

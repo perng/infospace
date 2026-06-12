@@ -269,7 +269,7 @@ console.log(
 );
 
 let attempts = 0;
-let yamlText = "";
+let yamlText: string;
 let spec: AuthoringSpec | null = null;
 let prompt = basePrompt;
 while (attempts < 2 && !spec) {

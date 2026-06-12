@@ -5,6 +5,7 @@ A presentation framework that replaces slides with a guided journey through a co
 ## Layout
 
 - `docs/design.md` — canonical design document. `docs/proposal.md` — plan to a reusable framework (M1 packagize, M2 stations/intents/auto-routing, M3 math primitives, M4 manim/narration asset jobs, M5 AI generator are done).
+- `docs/creation-guide.md` — self-contained authoring guide for AI assistants (vocabulary, rules, commands; keep in sync with registries/templates). `manual/index.html` — the human authoring manual (static HTML, no build).
 - `packages/` — the framework: `@spatial-present/schema` (zod authored + canonical document schemas, stations, camera intents, world templates), `/core` (defineJourney compiler: solver → skin resolver → auto-router → camera planner; registries, route graph, store), `/skins` (spatial skins + AnchorContent + the lazy MathJax→glyph-geometry formula pipeline), `/renderer` (PresentationApp, Stage, camera rig, presenter UI, narrator), `/worlds` (procedural worlds + their templates), `/cli` (journey-cli + generate-narration.py).
 - `examples/svd-tour/` — the flagship journey ("Singular Value Decomposition — A Guided Tour"): document, world wiring, assets. Content lives here, never in `packages/`.
 - `examples/math-primer/` — the minimal math journey ("Euler's Identity"): formula primitives, chalkboard/etchedGlass, lecture-hall → math-void portal.

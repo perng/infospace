@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Infospace：建立簡報</title>
+<style>
+  :root {
+    --bg: #fdfdfb;
+    --ink: #1d2129;
+    --muted: #5d6470;
+    --accent: #4856a8;
+    --accent-soft: #eceef9;
+    --code-bg: #f3f4f0;
+    --border: #e2e3dd;
+    --warn-bg: #fdf6e8;
+    --warn-border: #e8d5a8;
+    --tip-bg: #edf5ee;
+    --tip-border: #bcd8c0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161c;
+      --ink: #e4e6eb;
+      --muted: #9aa1ad;
+      --accent: #93a2e8;
+      --accent-soft: #232743;
+      --code-bg: #1d2028;
+      --border: #2c2f38;
+      --warn-bg: #2a2418;
+      --warn-border: #5c4c26;
+      --tip-bg: #1a2620;
+      --tip-border: #2e4a38;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang TC", "Noto Sans TC", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 240px;
+    padding: 2rem 1.2rem;
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    font-size: 0.88rem;
+  }
+  nav .brand {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 1.2rem;
+    color: var(--accent);
+  }
+  nav a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.22rem 0.5rem;
+    border-radius: 5px;
+  }
+  nav a:hover { color: var(--accent); background: var(--accent-soft); }
+  nav a.sub { padding-left: 1.4rem; font-size: 0.84rem; }
+  main {
+    margin-left: 240px;
+    max-width: 820px;
+    padding: 2.5rem 3rem 6rem;
+  }
+  @media (max-width: 920px) {
+    nav { position: static; width: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+    main { margin-left: 0; padding: 1.5rem 1.2rem 4rem; }
+  }
+  h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 0.4rem; }
+  .subtitle { color: var(--muted); font-size: 1.05rem; margin-bottom: 2.5rem; }
+  h2 {
+    font-size: 1.45rem;
+    margin-top: 3.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+  }
+  h3 { font-size: 1.12rem; margin-top: 2rem; }
+  h4 { font-size: 1rem; margin-top: 1.5rem; }
+  p, li { max-width: 72ch; }
+  a { color: var(--accent); }
+  code {
+    font: 0.86em/1.5 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    background: var(--code-bg);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    overflow-x: auto;
+    font-size: 0.84rem;
+    line-height: 1.55;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 0.45rem 0.7rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: var(--accent-soft); font-weight: 600; }
+  td code { white-space: nowrap; }
+  .callout {
+    border-radius: 8px;
+    padding: 0.8rem 1.1rem;
+    margin: 1.2rem 0;
+    font-size: 0.92rem;
+  }
+  .callout.tip  { background: var(--tip-bg);  border: 1px solid var(--tip-border); }
+  .callout.warn { background: var(--warn-bg); border: 1px solid var(--warn-border); }
+  .callout strong:first-child { display: block; margin-bottom: 0.2rem; }
+  .pipeline {
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    font-size: 0.82rem;
+  }
+  kbd {
+    font: 0.82em ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 0.1em 0.45em;
+  }
+  .station-note { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">Infospace 手冊</div>
+  <a href="#intro">Infospace 是什麼？</a>
+  <a href="#concepts">五分鐘掌握概念</a>
+  <a href="#quickstart">快速開始：執行範例</a>
+  <a href="#paths">三種創作方式</a>
+  <a href="#tutorial-ai">教學 A：從 brief 開始</a>
+  <a class="sub" href="#tutorial-ai-setup">1. 設定專案</a>
+  <a class="sub" href="#tutorial-ai-brief">2. 撰寫 brief</a>
+  <a class="sub" href="#tutorial-ai-generate">3. 生成</a>
+  <a class="sub" href="#tutorial-ai-review">4. 檢視與編輯</a>
+  <a class="sub" href="#tutorial-ai-lock">5. 鎖定與重新生成</a>
+  <a href="#tutorial-spec">教學 B：手寫 spec</a>
+  <a class="sub" href="#scene-anatomy">場景剖析</a>
+  <a class="sub" href="#worked-example">完整講座範例</a>
+  <a class="sub" href="#compile-loop">編譯與迭代</a>
+  <a href="#narration">語音旁白</a>
+  <a href="#reference">參考資料</a>
+  <a class="sub" href="#ref-worlds">世界與站位</a>
+  <a class="sub" href="#ref-cameras">鏡頭意圖</a>
+  <a class="sub" href="#ref-skins">Skins</a>
+  <a class="sub" href="#ref-content">內容種類</a>
+  <a class="sub" href="#ref-scene">場景欄位</a>
+  <a class="sub" href="#ref-portals">傳送門與分支</a>
+  <a href="#commands">指令速查表</a>
+  <a href="#beyond">Spec 之外</a>
+  <a href="#troubleshooting">疑難排解</a>
+</nav>
+
+<main>
+
+<h1>在 Infospace 中建立簡報</h1>
+<p class="subtitle">給作者的使用手冊：從一段想法開始，建立一趟有旁白的 3D 世界導覽。</p>
+
+<h2 id="intro">Infospace 是什麼？</h2>
+
+<p>Infospace 以<strong>穿越連續 3D 世界的引導式旅程</strong>取代投影片。你的內容，像是文字、公式、圖表，會存在於具有氛圍的環境裡的命名位置：傍晚講堂黑板上的粉筆字、漂浮在黑暗虛空中的玻璃板蝕刻公式、化為發光全像圖的資料。觀眾沿著你撰寫的路線從一站移動到下一站，搭配電影式鏡頭運動、選用的語音旁白，以及在世界之間深入切換的傳送門。</p>
+
+<p>身為作者，最重要的概念是：<strong>你寫的是意義，框架處理的是空間。</strong>你永遠不需要輸入座標、擺放鏡頭或挑選顏色。你只要使用各個世界公布的名稱，說出<em>「這個公式放在中央黑板上，鏡頭靠近到足以閱讀」</em>，layout solver、camera planner 和 skins 就會把它轉成完成後的場景。因為所有視覺形式都從你的語意內容推導而來，同一份文件也會自動產出可閱讀的大綱、字幕與螢幕閱讀器文字。</p>
+
+<pre class="pipeline">
+brief.md              你的想法，一段文字                 （選用，見教學 A）
+   │   npm run generate
+   ▼
+talk.spec.yaml        Authoring Spec：用名稱指定場景與位置，沒有座標
+   │   npm run spec:compile
+   ▼
+document.json         authored document（仍然不含座標）
+   ▼   載入時編譯：layout solver → skins → router → camera planner
+執行中的 3D 導覽       npm run dev
+</pre>
+
+<h2 id="concepts">五分鐘掌握概念</h2>
+
+<table>
+  <tr><th>術語</th><th>意思</th></tr>
+  <tr><td><strong>World（世界）</strong></td><td>一個具有自身氛圍與尺度的 3D 環境，例如大理石的 <em>atrium</em>、傍晚的 <em>lecture-hall</em>、黑暗的 <em>math-void</em>。世界已預先建好；你選擇簡報要使用哪些世界。</td></tr>
+  <tr><td><strong>Station（站位）</strong></td><td>世界公布的命名內容槽位，例如 <code>board.center</code> 或 <code>plinth.identity</code>。每個站位都有位置與尺寸包絡，但你只會使用它的<em>名稱</em>。每個站位只能放一個場景。</td></tr>
+  <tr><td><strong>Scene（場景）</strong></td><td>導覽中的一站：一段內容、它所在的站位、鏡頭如何構圖，以及旁白要說什麼。場景會依照你列出的順序播放。</td></tr>
+  <tr><td><strong>Skin</strong></td><td>一段內容的 3D 外觀：<code>chalkboard</code> 會把公式渲染成會自行書寫的粉筆筆畫；<code>hologram</code> 會把長條圖渲染成發光的體積長條。每種內容都有合理的預設 skin。</td></tr>
+  <tr><td><strong>Camera intent（鏡頭意圖）</strong></td><td>命名的構圖方式，例如 <code>read-close</code>（正面、可閱讀）或 <code>orbit-focus</code>（適合圖表的四分之三視角）。Planner 會把 intent 和站位尺寸合併，計算實際鏡頭姿態。</td></tr>
+  <tr><td><strong>Portal（傳送門）</strong></td><td>世界之間的電影式轉場，鏡頭會鑽入一個世界中的某個物件，並從另一個世界現身，例如直接穿過講堂黑板進入數學虛空。</td></tr>
+  <tr><td><strong>Branch（分支）</strong></td><td>現場簡報時可用的選用捷徑，例如「跳到揭曉」。它會顯示給主講者，不會干擾主要路線。</td></tr>
+  <tr><td><strong>Narration（旁白）</strong></td><td>每個場景的口述腳本。它以文字儲存，也就是來源真相；音訊片段由文字轉語音工作離線產生，並同步字幕。</td></tr>
+</table>
+
+<h2 id="quickstart">快速開始：執行範例</h2>
+
+<p>從 repository root 執行：</p>
+
+<pre><code>npm install
+cd examples/basel-problem
+npm run dev</code></pre>
+
+<p>打開 Vite 印出的本機網址，通常是 <code>http://localhost:5173</code>。你會站在講堂中 <em>「Basel Night Lecture」</em> 的第一塊黑板前，這是一個完整由 AI 生成的講座。按 <kbd>V</kbd> 可以聽它自動旁白。</p>
+
+<p>Repo 內附三個範例簡報：</p>
+<ul>
+  <li><code>examples/svd-tour</code>：旗艦範例，帶你在 atrium 與 spectral world 中理解 Singular Value Decomposition，包含已渲染的動畫。</li>
+  <li><code>examples/math-primer</code>：最小範例，Euler's identity，從 lecture hall 進入 math void。</li>
+  <li><code>examples/basel-problem</code>：由 AI pipeline 從一段 brief 生成。教學 A 會沿用它的確切步驟。</li>
+</ul>
+
+<h3>Viewer 控制</h3>
+
+<table>
+  <tr><th>按鍵</th><th>動作</th></tr>
+  <tr><td><kbd>→</kbd> / <kbd>Space</kbd> / <kbd>PageDown</kbd></td><td>下一站。有 stepwise 動畫的場景會先一次前進一個步驟。</td></tr>
+  <tr><td><kbd>←</kbd> / <kbd>PageUp</kbd></td><td>上一站</td></tr>
+  <tr><td><kbd>V</kbd></td><td>切換旁白導覽：語音、同步字幕、自動前進</td></tr>
+  <tr><td><kbd>O</kbd></td><td>大綱檢視：把整個簡報當成可閱讀文件呈現</td></tr>
+  <tr><td><kbd>N</kbd></td><td>主講者備註</td></tr>
+  <tr><td><kbd>K</kbd>, <kbd>/</kbd>, <kbd>⌘K</kbd></td><td>Command palette：依名稱跳到任何一站</td></tr>
+  <tr><td>滑鼠拖曳 / 滾輪</td><td>在目前站點自由觀看</td></tr>
+  <tr><td><kbd>Esc</kbd></td><td>自由觀看後返回導覽；關閉大綱</td></tr>
+</table>
+
+<p>Minimap 位於底角，會顯示 route graph；presenter console 會顯示目前站點、備註，以及從此處離開的任何 branch 捷徑。</p>
+
+<h2 id="paths">三種建立簡報的方式</h2>
+
+<table>
+  <tr><th>路徑</th><th>你撰寫</th><th>最適合</th></tr>
+  <tr>
+    <td><strong>A. 從 brief 生成</strong></td>
+    <td>一段文字（<code>brief.md</code>）</td>
+    <td>幾分鐘內得到完整初稿，再開始編輯。建議從這裡開始。</td>
+  </tr>
+  <tr>
+    <td><strong>B. 手寫 spec</strong></td>
+    <td>一個 YAML 檔（<code>talk.spec.yaml</code>），每個場景一個區塊</td>
+    <td>完整掌控每一句話，同時仍然完全不碰座標。</td>
+  </tr>
+  <tr>
+    <td><strong>C. 文件層</strong></td>
+    <td>TypeScript / JSON（authored document）</td>
+    <td>進階用途：圖片、影片、已渲染的 <a href="#beyond">Manim 動畫</a>、自訂世界。請見 <a href="#beyond">Spec 之外</a>。</td>
+  </tr>
+</table>
+
+<p>路徑 A 和 B 會匯流到同一個檔案：生成流程會<em>產生</em>一份 <code>talk.spec.yaml</code>，之後你再手動編輯。教學 B 的所有內容也都適用於生成出來的 spec。</p>
+
+<h2 id="tutorial-ai">教學 A：從一段 brief 開始</h2>
+
+<p><code>examples/basel-problem</code> 正是這樣做出來的。你寫一段文字；AI engine 會以框架實際存在的 vocabulary 為依據，所以不會憑空編出不存在的位置，然後草擬完整講座；接著你再檢視並調整。</p>
+
+<h3 id="tutorial-ai-setup">步驟 1：設定專案</h3>
+
+<p>最簡單的起點是複製生成範例並清空它：</p>
+
+<pre><code>cp -r examples/basel-problem examples/my-talk
+cd examples/my-talk
+rm -rf node_modules dist public/assets/narration talk.spec.yaml talk.provenance.json
+# edit package.json: change "name" to "my-talk"
+cd ../.. &amp;&amp; npm install        # registers the new workspace</code></pre>
+
+<p>還有兩個地方需要個人化：</p>
+<ul>
+  <li><code>index.html</code>：頁面標題。</li>
+  <li><code>src/main.tsx</code>：app 要載入哪些 world components。這必須符合你的簡報使用的世界：</li>
+</ul>
+
+<pre><code>&lt;PresentationApp
+  journey={journey}
+  worlds={{ "lecture-hall": LectureHallWorld, "math-void": MathVoidWorld }}
+/&gt;</code></pre>
+
+<p>第一次做簡報時，先保留 lecture-hall + math-void 這一組；<a href="#ref-worlds">參考資料</a>列出全部四個世界。</p>
+
+<h3 id="tutorial-ai-brief">步驟 2：撰寫 brief</h3>
+
+<p>用你自己的段落取代 <code>brief.md</code>。說明講座主題、目標觀眾、大約幾站、故事弧線，以及語氣。以下是實際 Basel brief 的中文譯文，方便感受它的口吻：</p>
+
+<pre><code># Brief
+
+一場給大二學生的 **Basel problem** 引導式講座，
+大約八站，適合做成可自行播放的旁白導覽。
+
+故事：Euler 在 1734 年對 Basel problem 的解法。開場先提出
+問題，1 + 1/4 + 1/9 + 1/16 + … 等於什麼？展示這個級數
+會收斂，但會以極慢速度爬向極限（partial sums 很適合做成
+圖表）。接著帶大家走過 Euler 大膽的一步：把 sin(x)/x 當成
+無限多項式，讀出它的 roots，並比較係數來變出答案。
+揭曉，也就是 pi squared over six，應該在某個超現實之處成為
+戲劇性的高點。結尾說明它為何重要：zeta function 的誕生，
+以及通往 Riemann 的道路。
+
+語氣：帶著嚴謹的驚奇感，一場夜間講座，最後抵達黑板無法去的地方。
+前半使用 lecture hall 進行鋪陳與級數推導，然後穿過黑板進入 void，
+完成 Euler 的躍進與答案揭曉。</code></pre>
+
+<div class="callout tip"><strong>好的 brief 有什麼特徵</strong>
+點出戲劇高點，以及你想讓它在哪裡發生（例如「某個超現實之處」）；提到適合做成圖表的資料；描述語氣。Generator 會把這些線索映射到 worlds、skins 與 camera framings。</div>
+
+<h3 id="tutorial-ai-generate">步驟 3：生成</h3>
+
+<pre><code>npm run generate</code></pre>
+
+<p>這會以你的 brief 和你選擇的世界執行 generator。請看 <code>package.json</code> 裡的 <code>generate</code> script；如果你選了不同世界，就在那裡更改 <code>--worlds lecture-hall,math-void</code>。它會呼叫本機安裝的 AI CLI：預設是 <code>claude</code> CLI，或傳入 <code>--engine codex</code> 使用 Codex CLI。不論哪一個，都必須已安裝並登入。</p>
+
+<p>每份草稿在接受前都會通過完整 compiler 驗證。無效輸出會有一次自動修復，之後仍失敗就會被拒絕。成功執行會寫入三個檔案：</p>
+
+<ul>
+  <li><code>talk.spec.yaml</code>：Authoring Spec，以可編輯 YAML 表示的講座。<strong>現在這就是你的來源檔。</strong></li>
+  <li><code>src/journey/document.json</code>：app 載入的 compiled document。</li>
+  <li><code>talk.provenance.json</code>：brief、engine、model 與嘗試次數的紀錄。</li>
+</ul>
+
+<p>執行 <code>npm run dev</code>，然後走一遍導覽。</p>
+
+<h3 id="tutorial-ai-review">步驟 4：檢視與編輯</h3>
+
+<p>生成會給你一份結構有效的草稿；<strong>判斷仍然是你的工作</strong>。走一遍導覽，並批判性地閱讀 <code>talk.spec.yaml</code>。Basel 講座生成後，人工檢視只做了兩個編輯，而且都是 spec 裡的一行：</p>
+
+<ul>
+  <li>有個 camera intent 不適合內容，將需要閱讀的公式從 <code>camera: sky-gaze</code> 改成 <code>read-close</code>。</li>
+  <li>開場段落對黑板來說太長，所以修剪了 <code>body:</code> 文字。</li>
+</ul>
+
+<p>每次編輯後，重新編譯並檢查：</p>
+
+<pre><code>npm run spec:compile
+npm run validate
+npm run dev</code></pre>
+
+<h3 id="tutorial-ai-lock">步驟 5：鎖定好的部分，重新生成其餘部分</h3>
+
+<p>當一個場景完全正確時，標記它：</p>
+
+<pre><code>  - id: reveal-answer
+    locked: true
+    title: Pi Squared Over Six
+    ...</code></pre>
+
+<p>接著 <code>npm run generate:regen</code> 會根據可能已更新的 brief 重寫講座，同時把所有 locked scenes <em>逐 byte 保留</em>。這就是編輯迴圈：保留有效的時刻，讓 AI 重做它們之間的連接組織。</p>
+
+<h2 id="tutorial-spec">教學 B：手寫 spec</h2>
+
+<p>Authoring Spec 是一個 YAML 檔：header、一組 scenes，以及選用的 portals 和 branches。你只會使用下面<a href="#reference">參考表</a>中的<em>名稱</em>，也就是 station names、camera intent names、skin names。</p>
+
+<h3 id="scene-anatomy">場景剖析</h3>
+
+<pre><code>  - id: definition          # kebab-case, unique within the talk
+    title: Defining Phi     # shown in the outline, palette, minimap
+    world: lecture-hall     # a world template id (listed in `worlds:`)
+    station: board.center   # a station that world publishes — one scene per station
+    role: detail            # chapter | detail | chart | quote | media | portal
+    content:                # what this stop says (see Content kinds)
+      kind: formula
+      latex: \\varphi = \\frac{1 + \\sqrt{5}}{2}
+      spoken: phi equals one plus the square root of five, all over two
+    skin: chalkboard        # optional — omit for the content kind's default
+    camera: read-close      # optional — a camera intent (default read-close)
+    narrate: &gt;              # optional — the spoken script for the narrated tour
+      Solving the proportion gives a quadratic equation, and its
+      positive root is phi.
+    notes: Derive it live if the room wants the algebra.   # presenter notes
+    arrive: fly             # optional — how the camera travels here: cut | dolly | fly
+    locked: false           # optional — survives --regen verbatim when true</code></pre>
+
+<p>只有 <code>id</code>、<code>title</code>、<code>world</code>、<code>station</code> 和 <code>content</code> 是必要欄位。預設值都很好用：除非你想要特定效果，否則可以省略 <code>skin</code> 和 <code>camera</code>。</p>
+
+<h3 id="worked-example">完整講座範例：「The Golden Ratio」</h3>
+
+<p>這是一個六場景講座，使用與 Basel 範例相同的兩個世界：在講堂黑板上鋪陳，然後透過黑板傳送門進入虛空迎來收束。這個檔案可直接編譯：</p>
+
+<pre><code>id: golden-ratio
+title: The Golden Ratio - a short walk
+worlds:
+  - lecture-hall
+  - math-void
+scenes:
+  - id: opening
+    title: An Old Obsession
+    world: lecture-hall
+    station: board.left
+    role: chapter
+    content:
+      kind: text
+      title: The golden ratio
+      body: |
+        Cut a line so the whole relates to the long part
+        as the long part relates to the short.
+
+        That single sentence defines phi.
+    skin: chalkboard
+    narrate: &gt;
+      For more than two thousand years, one proportion has fascinated
+      geometers, painters, and architects. Tonight we meet it properly.
+
+  - id: definition
+    title: Defining Phi
+    world: lecture-hall
+    station: board.center
+    content:
+      kind: formula
+      latex: \\varphi = \\frac{1 + \\sqrt{5}}{2} \\approx 1.618
+      spoken: phi equals one plus the square root of five, all over
+        two, approximately one point six one eight
+    narrate: &gt;
+      Solving the defining proportion gives a quadratic equation, and
+      its positive root is phi.
+
+  - id: fibonacci
+    title: Fibonacci Closes In
+    world: lecture-hall
+    station: board.right
+    role: chart
+    content:
+      kind: chart
+      data:
+        type: bar
+        title: Ratios of consecutive Fibonacci numbers
+        series:
+          - { label: 3/2,    value: 1.5 }
+          - { label: 8/5,    value: 1.6 }
+          - { label: 21/13,  value: 1.6154 }
+          - { label: 55/34,  value: 1.6176 }
+          - { label: 144/89, value: 1.618 }
+      summary: Ratios of consecutive Fibonacci numbers settle toward
+        one point six one eight.
+    camera: orbit-focus
+    narrate: &gt;
+      The Fibonacci numbers sneak up on phi. Divide each by the one
+      before it, and the ratios settle onto the same constant.
+
+  - id: leaving-the-hall
+    title: Through the Board
+    world: lecture-hall
+    station: wall.west
+    role: portal
+    content:
+      kind: text
+      title: A self-similar number
+      body: |
+        Phi is the number that contains itself.
+
+        To see that, we leave the hall.
+    skin: cloudText
+    camera: wide-establishing
+    narrate: &gt;
+      What makes phi special is not its decimals but its self-similarity.
+      To see it, we step through the board.
+
+  - id: self-similar
+    title: Phi Squared
+    world: math-void
+    station: plinth.identity
+    content:
+      kind: formula
+      latex: \\varphi^{2} = \\varphi + 1
+      spoken: phi squared equals phi plus one
+    skin: etchedGlass
+    camera: quote-gaze
+    narrate: &gt;
+      Square phi and you get phi back, plus one. No other positive
+      number does this. Every famous property of the golden ratio
+      unfolds from this single identity.
+
+  - id: closing
+    title: Everywhere and Nowhere
+    world: math-void
+    station: circle.overlook
+    content:
+      kind: text
+      title: Where phi lives
+      body: |
+        Pentagons. Sunflowers. Continued fractions.
+
+        phi = 1 + 1/(1 + 1/(1 + ...))
+    skin: cloudText
+    camera: quote-gaze
+    narrate: &gt;
+      Phi appears wherever growth repeats its own rule. That is where
+      we leave it, glowing over the void.
+
+portals:
+  - from: leaving-the-hall
+    to: self-similar
+    label: Step through the board
+    dive: board-dive          # a pose of the source world (lecture-hall)
+    emerge: void-emerge       # a pose of the target world (math-void)
+
+branches:
+  - { from: opening, to: fibonacci, label: Skip to the evidence, kind: branch }</code></pre>
+
+<p>值得注意的事：</p>
+<ul>
+  <li><strong>Scene order 就是路線。</strong>導覽會依照 scenes 列表順序拜訪場景；主路徑不需要手動接 edge。</li>
+  <li><strong>那裡的 portal 是必要的。</strong><code>leaving-the-hall</code> 和 <code>self-similar</code> 是連續場景，但位於不同世界；compiler 不會猜測世界切換方式，而是要求提供有 dive/emerge pose pair 的 portal。</li>
+  <li><strong>Skins 預設跟隨內容種類。</strong><code>definition</code> 場景省略 <code>skin:</code>，所以它的 formula 會取得 chalkboard。Void scenes 則選用 <code>etchedGlass</code> 與 <code>cloudText</code> 來建立氛圍。</li>
+  <li><strong>世界內文字是純 ASCII。</strong>3D 字型沒有希臘字母或下標。文字 body 與 title 請寫 "phi"、"n squared"、"1/n^2"；真正的符號應該放在 <code>latex:</code> 中，會經由完整數學 pipeline 渲染。</li>
+  <li><strong>每個公式與圖表都有口述形式</strong>（<code>spoken:</code> / <code>summary:</code>），outline、captions 與 screen readers 都使用它。</li>
+</ul>
+
+<h3 id="compile-loop">編譯與迭代</h3>
+
+<pre><code>npm run spec:compile     # talk.spec.yaml → src/journey/document.json
+npm run validate         # full structural + coverage report
+npm run outline          # the talk as a readable text outline
+npm run dev              # walk it</code></pre>
+
+<p><code>validate</code> 會報告 resolution summary，例如有多少 cameras 來自 intents、route coverage、narration coverage，並指出任何錯誤與失敗的確切名稱。<code>outline</code> 是不啟動 3D view 就能校對文字的最快方式。</p>
+
+<div class="callout tip"><strong>讓文字符合站位大小</strong>
+講堂黑板約為 3.8 × 2.8 units；大約三個短段落的 text body 可以放得下。如果 3D view 中文字看起來很擠，就刪字，不要和 layout 對抗。較大的站位（<code>circle.overlook</code>、<code>arrival.overlook</code>）可以容納更多內容。</div>
+
+<h2 id="narration">語音旁白</h2>
+
+<p>Narration 是以文字撰寫的，也就是每個 scene 的 <code>narrate:</code> 欄位，並離線渲染成音訊。腳本文字是來源真相；音訊是衍生出來且可快取的 asset。</p>
+
+<pre><code>npm run narration            # print the scripts as JSON (proofread pass)
+npm run narration:render     # render audio clips with local TTS</code></pre>
+
+<p>Rendering 會在本機使用 Kokoro text-to-speech engine。需要 model files；請見 <code>packages/cli/generate-narration.py</code>。Clips 會與 word timestamps manifest 一起放在 <code>public/assets/narration/</code>，這正是同步 karaoke captions 的來源。Clips 會以 hash 快取：只有腳本變更過的 scenes 會重新渲染。</p>
+
+<p>在 viewer 中，<kbd>V</kbd> 會切換旁白導覽：每一站播放 clip、顯示 captions，並在結束時自動前進。請用口語風格撰寫 <code>narrate:</code>，通常兩到四句，數字和符號要寫成文字，例如 "pi squared over six"，不要寫 "π²/6"。</p>
+
+<div class="callout tip"><strong>Validation 會知道 asset 是否過期</strong>
+<code>npm run validate</code> 會在 script 於 clip 渲染後又被修改時提出警告，所以你不會不小心出貨一份旁白內容和文件不一致的簡報。</div>
+
+<h2 id="reference">參考資料</h2>
+
+<h3 id="ref-worlds">世界與它們的站位</h3>
+
+<p>框架內附四個世界。簡報會在 <code>worlds:</code> 中列出它使用的 worlds；每個 world 都提供自己的 stations（每個 station 一個 scene）與 portal poses。尺寸以 world units 表示為 width × height，是估計內容可容納量的粗略參考。</p>
+
+<h4><code>lecture-hall</code>：傍晚講堂 <span class="station-note">（溫暖、親密；很適合鋪陳與黑板推導）</span></h4>
+<table>
+  <tr><th>站位</th><th>尺寸</th><th>備註</th></tr>
+  <tr><td><code>board.left</code></td><td>3.8 × 2.8</td><td>Slate board panel，適合粉筆文字或公式</td></tr>
+  <tr><td><code>board.center</code></td><td>3.8 × 2.8</td><td>中央黑板；portal 會穿過這一塊</td></tr>
+  <tr><td><code>board.right</code></td><td>3.8 × 2.8</td><td>第三塊黑板，也能容納小圖表</td></tr>
+  <tr><td><code>wall.west</code></td><td>4 × 3</td><td>側牆，適合「從黑板轉身離開」的時刻</td></tr>
+</table>
+<p>Portal poses：<code>board-dive</code>（從中央黑板離開）、<code>board-emerge</code>（從黑板倒退出現）。</p>
+
+<h4><code>math-void</code>：數學虛空 <span class="station-note">（黑暗、失重；數學發光的 payoff world）</span></h4>
+<table>
+  <tr><th>站位</th><th>尺寸</th><th>備註</th></tr>
+  <tr><td><code>plinth.identity</code></td><td>5.5 × 3</td><td>中央 plinth，hero formula 的家</td></tr>
+  <tr><td><code>gallery.west</code></td><td>6 × 3.2</td><td>側邊 gallery，放支援公式</td></tr>
+  <tr><td><code>circle.overlook</code></td><td>8 × 3.5</td><td>寬闊 overlook，空間充裕，適合收束想法</td></tr>
+  <tr><td><code>screen.theatre</code></td><td>7 × 4.4</td><td>漂浮在高處黑暗中的 frameless projection spot</td></tr>
+  <tr><td><code>gate.return</code></td><td>6.5 × 3</td><td>位於 return gate 旁，自然的最後一站</td></tr>
+</table>
+<p>Portal poses：<code>void-emerge</code>（從上方墜入抵達）、<code>gate-dive</code>（穿過 gate 離開）。</p>
+
+<h4><code>atrium</code>：線性映射中庭 <span class="station-note">（圍繞中央 prism 的大理石 gallery）</span></h4>
+<table>
+  <tr><th>站位</th><th>尺寸</th><th>備註</th></tr>
+  <tr><td><code>entry.tablet</code></td><td>5 × 3.4</td><td>入口 tablet，是自然的開場位置</td></tr>
+  <tr><td><code>west-wall.bay-1</code></td><td>5.4 × 3.6</td><td>柱子之間的 wall bays…</td></tr>
+  <tr><td><code>west-wall.bay-2</code></td><td>5 × 2.2</td><td></td></tr>
+  <tr><td><code>east-wall.bay-1</code></td><td>4.5 × 2.6</td><td></td></tr>
+  <tr><td><code>east-wall.bay-2</code></td><td>5 × 3</td><td></td></tr>
+  <tr><td><code>east-wall.bay-3</code></td><td>4 × 2.4</td><td></td></tr>
+  <tr><td><code>floor.hologram</code></td><td>4.4 × 3.2</td><td>Floor emitter，為 hologram charts 而設計</td></tr>
+  <tr><td><code>air.quote</code></td><td>9 × 3.5</td><td>漂浮在上方，適合搭配 <code>cloudText</code> + <code>quote-gaze</code></td></tr>
+  <tr><td><code>sky.dome</code></td><td>20 × 10</td><td>巨大且高聳，適合搭配 <code>sky-gaze</code></td></tr>
+  <tr><td><code>prism.plinth</code></td><td>3.6 × 2.6</td><td>在 prism portal 旁</td></tr>
+</table>
+<p>Portal poses：<code>prism-dive</code>、<code>lens-emerge</code>；named approach：<code>prism-approach</code>。</p>
+
+<h4><code>spectral</code>：分解內部 <span class="station-note">（微觀尺度的內部世界，遠低於 atrium）</span></h4>
+<table>
+  <tr><th>站位</th><th>尺寸</th><th>備註</th></tr>
+  <tr><td><code>arrival.overlook</code></td><td>11 × 4</td><td>寬闊 arrival shelf</td></tr>
+  <tr><td><code>core.plate</code></td><td>4.8 × 3.2</td><td>位於核心</td></tr>
+  <tr><td><code>field.hologram</code></td><td>3.6 × 3.2</td><td>Hologram emitter</td></tr>
+  <tr><td><code>layers.gallery</code></td><td>9 × 3.5</td><td>長 gallery</td></tr>
+  <tr><td><code>ring.return</code></td><td>8 × 3</td><td>位於 return ring，是自然的最後一站</td></tr>
+</table>
+<p>Portal poses：<code>ring-dive</code>、<code>deep-emerge</code>。</p>
+
+<div class="callout tip"><strong>經典 portal 配對</strong>
+lecture-hall → math-void：<code>dive: board-dive</code>、<code>emerge: void-emerge</code>（返回時：<code>gate-dive</code> / <code>board-emerge</code>）。
+atrium → spectral：<code>dive: prism-dive</code>、<code>emerge: deep-emerge</code>（返回時：<code>ring-dive</code> / <code>lens-emerge</code>）。</div>
+
+<h3 id="ref-cameras">鏡頭意圖</h3>
+
+<table>
+  <tr><th>Intent</th><th>構圖</th></tr>
+  <tr><td><code>read-close</code></td><td>正面、足夠靠近，可以舒適閱讀 body text。<strong>預設值。</strong></td></tr>
+  <tr><td><code>wide-establishing</code></td><td>向後退並越過內容看向背後世界，適合抵達與離開</td></tr>
+  <tr><td><code>orbit-focus</code></td><td>偏軸四分之三視角，讓圖表與 3D 物件更好看</td></tr>
+  <tr><td><code>sky-gaze</code></td><td>從低處地面仰望高空內容，適合非常高的站位</td></tr>
+  <tr><td><code>quote-gaze</code></td><td>略低於漂浮文字，向上觀看</td></tr>
+</table>
+
+<p>你選擇 intent；planner 會根據 station 的 size 與 facing 計算實際 camera position。場景的 <code>camera:</code> 也可以命名某個世界的 fixed poses，例如 <code>prism-approach</code>，用於針對該世界自身幾何的構圖。</p>
+
+<h3 id="ref-skins">Skins</h3>
+
+<table>
+  <tr><th>Skin</th><th>接受</th><th>外觀</th></tr>
+  <tr><td><code>engraving</code></td><td>text</td><td>文字刻在受光的石板上<em>（text 的預設值）</em></td></tr>
+  <tr><td><code>chalkboard</code></td><td>formula, text</td><td>石板黑板上的粉筆筆畫；公式會在 reveal 時自行書寫<em>（formula 的預設值）</em></td></tr>
+  <tr><td><code>etchedGlass</code></td><td>formula</td><td>公式蝕刻在發光玻璃板上</td></tr>
+  <tr><td><code>cloudText</code></td><td>text</td><td>在粒子星雲中漂浮的發光 quote 文字</td></tr>
+  <tr><td><code>hologram</code></td><td>chart (bar)</td><td>Floor emitter 上的發光體積長條圖<em>（bar charts 的預設值）</em></td></tr>
+  <tr><td><code>constellation</code></td><td>chart (scatter)</td><td>把 scatter data 表示成黑暗 dome 中相連的星星<em>（scatter charts 的預設值）</em></td></tr>
+  <tr><td><code>plaque</code></td><td>image, video</td><td>Gallery wall 上的 framed image 或 film<em>（僅 document layer）</em></td></tr>
+  <tr><td><code>projection</code></td><td>manim</td><td>播放已渲染動畫的 frameless floating panel<em>（僅 document layer）</em></td></tr>
+</table>
+
+<p>Skins 會自動縮放到各自的 station。Skin 必須接受內容種類；把 <code>etchedGlass</code> skin 放在 chart 上會造成 validation error。</p>
+
+<h3 id="ref-content">內容種類（在 spec 中）</h3>
+
+<table>
+  <tr><th>Kind</th><th>欄位</th><th>備註</th></tr>
+  <tr><td><code>text</code></td><td><code>title</code>（選用）、<code>body</code></td><td>純 ASCII。大約三個短段落可放進一塊黑板。</td></tr>
+  <tr><td><code>formula</code></td><td><code>latex</code>、<code>spoken</code></td><td>簡報尺寸的 LaTeX，一行或一小塊 aligned block。<code>spoken</code> 是數學式的口述讀法。</td></tr>
+  <tr><td><code>chart</code></td><td><code>data</code>、<code>summary</code></td><td><code>data.type</code> 可為 <code>bar</code>（title、選用 unit/logScale、label/value 的 <code>series</code>）或 <code>scatter</code>（title、xLabel、yLabel、x/y/label 的 <code>points</code>）。只適合小型 inline datasets。<code>summary</code> 是一句話的圖表解讀。</td></tr>
+</table>
+
+<p>圖片、影片與 Manim 動畫需要磁碟上的 asset files，因此會從 <a href="#beyond">document layer</a> 進入，而不是從 spec 進入。</p>
+
+<div class="callout warn"><strong>YAML 中的 LaTeX</strong>
+請把 <code>latex:</code> 寫成未加引號的 plain YAML scalar，反斜線會原樣通過，例如 <code>latex: \\frac{\\pi^{2}}{6}</code>。如果一定要用雙引號，每個反斜線都要加倍：<code>"\\\\frac{\\\\pi^{2}}{6}"</code>。不加引號比較簡單。</div>
+
+<h3 id="ref-scene">場景欄位</h3>
+
+<table>
+  <tr><th>欄位</th><th>必要</th><th>意思</th></tr>
+  <tr><td><code>id</code></td><td>是</td><td>Kebab-case，唯一（<code>^[a-z0-9][a-z0-9-]*$</code>）</td></tr>
+  <tr><td><code>title</code></td><td>是</td><td>顯示在 outline、palette、presenter console 中</td></tr>
+  <tr><td><code>world</code></td><td>是</td><td>列在 <code>worlds:</code> 中的 world id</td></tr>
+  <tr><td><code>station</code></td><td>是</td><td>該 world 公布的 station；每個 station 一個 scene</td></tr>
+  <tr><td><code>content</code></td><td>是</td><td>見 <a href="#ref-content">內容種類</a></td></tr>
+  <tr><td><code>skin</code></td><td>否</td><td>預設為 content kind 對應的 skin</td></tr>
+  <tr><td><code>camera</code></td><td>否</td><td>Camera intent 或 world pose name；預設 <code>read-close</code></td></tr>
+  <tr><td><code>role</code></td><td>否</td><td><code>chapter</code> | <code>detail</code>（預設）| <code>chart</code> | <code>quote</code> | <code>media</code> | <code>portal</code>，用於 minimap 與 outline 的語意權重</td></tr>
+  <tr><td><code>place</code></td><td>否</td><td>Location 的顯示名稱，預設為 title</td></tr>
+  <tr><td><code>narrate</code></td><td>否</td><td>口述腳本，2 到 4 句，純 ASCII</td></tr>
+  <tr><td><code>notes</code></td><td>否</td><td>主講者備註（viewer 中按 <kbd>N</kbd>）</td></tr>
+  <tr><td><code>arrive</code></td><td>否</td><td>Camera 到達此處的移動方式：<code>cut</code> | <code>dolly</code> | <code>fly</code>（預設）</td></tr>
+  <tr><td><code>locked</code></td><td>否</td><td>當為 <code>true</code> 時，會在 <code>--regen</code> 時逐字保留</td></tr>
+</table>
+
+<h3 id="ref-portals">傳送門與分支</h3>
+
+<pre><code>portals:                      # REQUIRED between consecutive scenes in different worlds
+  - from: leaving-the-hall    # scene id in the source world
+    to: self-similar          # scene id in the target world
+    label: Step through the board
+    dive: board-dive          # pose name from the source world (optional but recommended)
+    emerge: void-emerge       # pose name from the target world
+
+branches:                     # optional shortcuts for live presenting
+  - from: opening
+    to: fibonacci
+    label: Skip to the evidence
+    kind: branch              # branch (skip ahead) | return (go back)</code></pre>
+
+<p>Portals 是導覽切換世界的唯一方式；dive/emerge poses 會編排穿越動作，例如加速進入黑板、從天空墜出。Branches 不會中斷主路線，它們會以標記選項出現在 presenter console 與 minimap 上。</p>
+
+<h2 id="commands">指令速查表</h2>
+
+<p>全部都從你的 presentation directory 執行，例如 <code>examples/my-talk/</code>：</p>
+
+<table>
+  <tr><th>指令</th><th>作用</th></tr>
+  <tr><td><code>npm run dev</code></td><td>在瀏覽器中啟動簡報（Vite dev server）</td></tr>
+  <tr><td><code>npm run generate</code></td><td>透過 AI engine 走完 brief → spec → document（教學 A）</td></tr>
+  <tr><td><code>npm run generate:regen</code></td><td>重新生成，並逐字保留 <code>locked: true</code> scenes</td></tr>
+  <tr><td><code>npm run spec:compile</code></td><td>重新編譯 <code>talk.spec.yaml</code> → <code>src/journey/document.json</code></td></tr>
+  <tr><td><code>npm run validate</code></td><td>結構驗證、coverage report、asset staleness warnings</td></tr>
+  <tr><td><code>npm run outline</code></td><td>把整個簡報輸出為可閱讀的 text outline</td></tr>
+  <tr><td><code>npm run narration</code></td><td>以 JSON 印出 narration scripts</td></tr>
+  <tr><td><code>npm run narration:render</code></td><td>渲染旁白音訊（local TTS、hash-cached）</td></tr>
+  <tr><td><code>npm run diff -- &lt;a&gt; &lt;b&gt;</code></td><td>兩個 journey 版本之間的 semantic diff</td></tr>
+  <tr><td><code>npm run build</code></td><td>Type-check 並 bundle 以部署</td></tr>
+</table>
+
+<h2 id="beyond">Spec 之外：document layer</h2>
+
+<p>YAML spec 刻意只涵蓋不需要 external assets 的內容，因此簡報永遠可以渲染。若要更多能力，請編輯 authored document 本身，也就是 spec 下方那一層：</p>
+
+<ul>
+  <li><strong>圖片與影片</strong>：以 <code>plaque</code> 框住，並引用 <code>public/</code> 中的檔案。</li>
+  <li><strong>Manim 動畫</strong>：用 Python 撰寫 <a href="https://www.manim.community/">Manim</a> scene；render job 會產生帶 cuepoints 的透明 clip，而 <code>projection</code> skin 會把它合成播放在世界上。搭配 <code>reveal: stepwise</code> 時，每按一次 <kbd>→</kbd> 會前進一個 animation step，旁白 cue marks 也會在 self-running tour 中驅動同樣步驟。</li>
+  <li><strong>手動微調構圖</strong>：當 intent 不夠時，可使用 explicit camera poses。</li>
+</ul>
+
+<p><code>examples/svd-tour</code> 展示了這些能力，請看它的 <code>src/journey/project.ts</code>。Document 仍然是 positionless，也就是 stations 與 intents，只是它會使用框架完整 vocabulary。完整 data model 位於 <code>docs/design.md</code>，而 <code>docs/creation-guide.md</code> 是濃縮參考，雖然是為 AI assistants 撰寫，但對想把所有欄位放在同一頁閱讀的人類作者同樣有用。</p>
+
+<h2 id="troubleshooting">疑難排解</h2>
+
+<table>
+  <tr><th>症狀 / 訊息</th><th>修正方式</th></tr>
+  <tr>
+    <td><code>…are consecutive but in different worlds — add a portal…</code></td>
+    <td>兩個前後相接的 scenes 在沒有 portal 的情況下切換 worlds。請在 <code>portals:</code> 中加入一筆從第一個到第二個的 entry，並附上 dive/emerge pose pair。</td>
+  </tr>
+  <tr>
+    <td><code>station "…" is double-booked by anchors…</code></td>
+    <td>兩個 scenes 使用了同一個 station。把其中一個移到空的 station；上方每個 world 的表格就是選單。</td>
+  </tr>
+  <tr>
+    <td><code>…references unknown station "…" (available: …)</code></td>
+    <td>可能是 typo，或 station 屬於另一個 world。錯誤訊息會列出有效名稱。</td>
+  </tr>
+  <tr>
+    <td><code>unknown world template "…"</code></td>
+    <td><code>worlds:</code> 必須完全使用 template ids：<code>atrium</code>、<code>spectral</code>、<code>lecture-hall</code>、<code>math-void</code>。</td>
+  </tr>
+  <tr>
+    <td>公式渲染為空白或錯誤</td>
+    <td>檢查 YAML escaping（見 <a href="#ref-content">LaTeX 提示</a>），並維持 presentation-sized standard LaTeX（amsmath）；exotic packages 無法使用。</td>
+  </tr>
+  <tr>
+    <td>文字溢出黑板</td>
+    <td>Station 比你的段落小。刪字或移到更大的 station；黑板是 3.8 × 2.8。</td>
+  </tr>
+  <tr>
+    <td>3D text 中缺少希臘字母 / 符號</td>
+    <td>世界內文字只支援 ASCII。請拼出來，例如 "pi"、"n squared"；真正的符號請使用 <code>formula</code> scene。</td>
+  </tr>
+  <tr>
+    <td>編輯後旁白聽起來過期</td>
+    <td>重新執行 <code>npm run narration:render</code>，只有更動過的 scripts 會重新渲染。<code>npm run validate</code> 會列出 stale clips。</td>
+  </tr>
+  <tr>
+    <td><code>npm run generate</code> 無法啟動 engine</td>
+    <td>預設 engine 是 <code>claude</code> CLI，而且必須已登入；否則請安裝並登入 <code>codex</code> CLI，然後在 generate script 加上 <code>--engine codex</code>。</td>
+  </tr>
+  <tr>
+    <td>編輯 <code>talk.spec.yaml</code> 後沒有反映出來</td>
+    <td>App 載入的是 <code>document.json</code>，不是 YAML。每次 spec 編輯後都要執行 <code>npm run spec:compile</code>。</td>
+  </tr>
+</table>
+
+<p style="margin-top:3rem;color:var(--muted);font-size:0.85rem;border-top:1px solid var(--border);padding-top:1rem;">
+Infospace：空間簡報框架。本手冊涵蓋使用 Authoring Spec 與 AI generation pipeline 的 authoring；canonical design document 是 <code>docs/design.md</code>。
+</p>
+
+</main>
+</body>
+</html>

@@ -5,6 +5,8 @@ A presentation framework that replaces slides with a guided journey through a co
 ## Repository layout
 
 - `docs/design.md` — the canonical design document (vision, concepts, architecture, data model, roadmap).
+- `docs/creation-guide.md` — self-contained authoring guide for AI assistants (spec format, full station/intent/skin vocabulary, compiler rules, commands); keep it in sync when registries or templates change.
+- `manual/index.html` — the human user's manual for creating presentations (self-contained single page, no build step).
 - `docs/proposal.md` — the plan to a reusable, AI-authorable framework (layered authoring model, stations/camera intents, registries, math/Manim support, M1–M6 milestones). M1 (packagize), M2 (stations, camera intents, auto-routing — positionless authoring), M3 (formula primitive, math skins and worlds), M4 (manim + narration asset jobs, projection skin, stepwise reveal), and M5 (Authoring Spec, registry-grounded generator, locking, semantic diff) are done.
 - `packages/` — the framework, as workspace packages:
   - `@spatial-present/schema` — zod schemas for the Authoring Spec (Layer B), the authored (positionless) and canonical (resolved + provenance) documents, plus stations, envelopes, camera intents, and `WorldTemplate`; the contract every tool shares.

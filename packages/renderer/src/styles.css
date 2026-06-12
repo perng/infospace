@@ -181,6 +181,15 @@ body,
   pointer-events: none;
 }
 
+/* Karaoke caption words: dim until spoken. */
+.caption-word {
+  opacity: 0.4;
+  transition: opacity 0.15s ease;
+}
+.caption-word-spoken {
+  opacity: 1;
+}
+
 .beat-title {
   margin: 6px 0 2px;
   font-size: 20px;

@@ -19,6 +19,8 @@ export interface SkinCapability {
   accepts: ContentKind[];
   /** For chart content: which chart types the skin can take. */
   chartTypes?: ("bar" | "scatter")[];
+  /** Whether the skin can step through cuepoints on advance. */
+  supportsStepwise?: boolean;
   description: string;
 }
 
@@ -54,6 +56,12 @@ export const skinCapabilities: Record<SkinKind, SkinCapability> = {
     accepts: ["formula"],
     description: "a formula etched into a lit glass slab, glowing",
   },
+  projection: {
+    accepts: ["manim"],
+    supportsStepwise: true,
+    description:
+      "a frameless floating panel playing a rendered animation; with alpha the graphics composite straight over the world",
+  },
 };
 
 /** Default skin per content kind, used when a binding omits skinKind. */
@@ -63,6 +71,7 @@ export const defaultSkinFor: Record<ContentKind, SkinKind> = {
   image: "plaque",
   video: "plaque",
   formula: "chalkboard",
+  manim: "projection",
 };
 
 /**

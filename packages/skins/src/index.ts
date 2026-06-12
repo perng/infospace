@@ -6,6 +6,7 @@ export { CloudTextSkin } from "./CloudTextSkin";
 export { PlaqueSkin } from "./PlaqueSkin";
 export { ChalkboardSkin } from "./ChalkboardSkin";
 export { EtchedGlassSkin } from "./EtchedGlassSkin";
+export { ProjectionSkin, fetchManimManifest } from "./ProjectionSkin";
 export {
   useFormulaGeometry,
   fitFormula,

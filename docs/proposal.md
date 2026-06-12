@@ -224,7 +224,7 @@ A formula is still a formula under any of them.
 
 Shipped with `lecture-hall` and `math-void` world templates and `examples/math-primer` ("Euler's Identity — a short walk": chalk series in the hall, a portal through the center board, the identity in etched glass beside a living unit circle).
 
-### 5.2 Manim integration (build-time render → in-world projection)
+### 5.2 Manim integration (build-time render → in-world projection) — ✅ done (M4)
 
 Manim is a **Python, offline renderer** — it cannot run in the browser. So integrate it as an **asset job**, not a runtime dependency. This is clean and cache-friendly.
 
@@ -278,7 +278,7 @@ Manim is a **Python, offline renderer** — it cannot run in the browser. So int
 | **M1 — Packagize** ✅ shipped | split schema/core/renderer/skins/worlds/cli into `packages/`; the SVD tour as `examples/svd-tour` | clean seams for everything else |
 | **M2 — Registries + layout solver + camera planner** ✅ shipped | stations, named camera intents, auto-routing; positionless example document | **AI authoring becomes possible** (no hand coordinates) |
 | **M3 — Math primitives** ✅ shipped | `formula` (MathJax SVG→glyph geometry, spoken fallback) + `chalkboard`/`etchedGlass` skins; `math-void` + `lecture-hall` world templates; `examples/math-primer` | static math talks hand/SDK-authored |
-| **M4 — Asset pipeline + Manim** | `manim-render` job (transparent, cuepoints), `projection` skin, stepwise reveal | **animated math**; generated-art caching |
+| **M4 — Asset pipeline + Manim** ✅ shipped | `manim-render` job (transparent VP9, auto cuepoints via a `Scene.play` hook), `projection` skin, stepwise reveal (next-press or narration `[mark:step]` cues), `tts-narrate` timestamps | **animated math**; generated-art caching |
 | **M5 — AI generator** | prompt → Authoring Spec → document, grounded by registries + schema; provenance + locking + semantic diff | the "describe it and get a presentation" experience |
 | **M6 — Visual editor** | direct manipulation over the same document | the approachable third path |
 

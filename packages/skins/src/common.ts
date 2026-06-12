@@ -8,6 +8,8 @@ export const FONT_SANS_BOLD = "/fonts/inter-600.ttf";
 export interface SkinProps {
   active: boolean;
   params: Record<string, unknown>;
+  /** Completed reveal steps at the active beat (stepwise content). */
+  revealStep?: number;
 }
 
 /**

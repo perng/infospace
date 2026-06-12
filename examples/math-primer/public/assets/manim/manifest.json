@@ -1,0 +1,15 @@
+{
+  "c-sweep": {
+    "cuepoints": [
+      1300,
+      2600,
+      5900,
+      7700
+    ],
+    "durationMs": 7700,
+    "engine": "manim 0.20.1",
+    "quality": "h",
+    "sceneHash": "69e07bbbc8619475",
+    "transparent": true
+  }
+}

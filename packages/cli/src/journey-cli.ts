@@ -63,7 +63,10 @@ if (command === "validate") {
   console.log(`  auto-routed primaries:  ${autoRouted} / ${p.routes.length}`);
   const narrated = p.beats.filter((b) => b.narration).length;
   console.log(`  narrated beats: ${narrated} / ${p.beats.length}`);
+  const animated = p.content.filter((c) => c.kind === "manim").length;
+  if (animated) console.log(`  manim clips: ${animated}`);
   for (const w of narrationWarnings()) console.warn(`  ⚠ ${w}`);
+  for (const w of manimWarnings()) console.warn(`  ⚠ ${w}`);
 } else if (command === "resolve") {
   // The canonical document: resolved geometry plus symbolic provenance.
   // Useful for diffing compiler output and as the contract for AI tooling.
@@ -75,6 +78,17 @@ if (command === "validate") {
     .filter((b) => b.narration)
     .map((b) => ({ id: b.id, script: b.narration!.script }));
   console.log(JSON.stringify({ beats }, null, 2));
+} else if (command === "manim") {
+  // Scene list for the manim render job (render-manim.py).
+  const scenes = journey.project.content
+    .filter((c) => c.kind === "manim")
+    .map((c) => ({
+      id: c.id,
+      scene: c.scene,
+      quality: c.quality ?? "m",
+      transparent: c.transparent ?? true,
+    }));
+  console.log(JSON.stringify({ scenes }, null, 2));
 } else if (command === "outline") {
   const lines: string[] = [];
   const p = journey.project;
@@ -130,6 +144,40 @@ function narrationWarnings(): string[] {
   return warnings;
 }
 
+/**
+ * Manim clips are derived assets: provenance (scene-source hash, flags)
+ * is recorded in manifest.json by the render job. Warn when a clip is
+ * missing or its scene source changed since it was rendered.
+ */
+function manimWarnings(): string[] {
+  const warnings: string[] = [];
+  const manifestPath = "public/assets/manim/manifest.json";
+  const manifest: Record<string, { sceneHash?: string }> = existsSync(manifestPath)
+    ? JSON.parse(readFileSync(manifestPath, "utf8"))
+    : {};
+  for (const content of journey.project.content) {
+    if (content.kind !== "manim") continue;
+    const clip = `public/assets/manim/${content.id}.webm`;
+    if (!existsSync(clip)) {
+      warnings.push(`manim clip missing for "${content.id}" — run: python3 ../../packages/cli/render-manim.py`);
+      continue;
+    }
+    const [file] = content.scene.split("#");
+    if (!existsSync(file)) {
+      warnings.push(`manim scene file missing: "${file}" (content "${content.id}")`);
+      continue;
+    }
+    const hash = createHash("sha256")
+      .update(readFileSync(file, "utf8"))
+      .update(JSON.stringify({ scene: content.scene, quality: content.quality ?? "m", transparent: content.transparent ?? true }))
+      .digest("hex")
+      .slice(0, 16);
+    if (manifest[content.id]?.sceneHash !== hash)
+      warnings.push(`manim clip stale for "${content.id}" (scene changed) — run: python3 ../../packages/cli/render-manim.py`);
+  }
+  return warnings;
+}
+
 function fallbackMarkdown(content: ContentPrimitive): string[] {
   switch (content.kind) {
     case "text":
@@ -164,5 +212,7 @@ function fallbackMarkdown(content: ContentPrimitive): string[] {
       // The LaTeX is the semantic source; the spoken-math line keeps the
       // handout accessible without a math renderer.
       return ["```latex", content.latex, "```", "", `*Spoken:* ${content.fallbackText}`];
+    case "manim":
+      return [`*Animation — \`${content.scene}\`*: ${content.fallbackText}`];
   }
 }

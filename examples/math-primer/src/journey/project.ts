@@ -90,6 +90,15 @@ const doc: AuthoredProjectInput = {
         "Every value of e to the i theta lies at distance one from zero. The exponential does not explode along this axis - it orbits.",
     },
     {
+      id: "c-sweep",
+      kind: "manim",
+      scene: "scenes/half_turn.py#HalfTurn",
+      quality: "h",
+      reveal: "stepwise",
+      fallbackText:
+        "An animation of the unit circle: the point e to the i theta starts at one, sweeps half a turn along the top of the circle while never leaving distance one from zero, and lands exactly on minus one; the line e to the i pi equals minus one appears.",
+    },
+    {
       id: "c-identity",
       kind: "formula",
       latex: "e^{i\\pi} + 1 \\;=\\; 0",
@@ -153,6 +162,14 @@ const doc: AuthoredProjectInput = {
       station: "circle.overlook",
       semanticRole: "quote",
       contentIds: ["c-circle"],
+    },
+    {
+      id: "a-sweep",
+      worldId: "math-void",
+      name: "Theatre - the Half Turn",
+      station: "screen.theatre",
+      semanticRole: "media",
+      contentIds: ["c-sweep"],
     },
     {
       id: "a-identity",
@@ -223,6 +240,18 @@ const doc: AuthoredProjectInput = {
         "Watch the point orbit: modulus one, forever. Imaginary exponents rotate instead of growing - that is the geometric heart of it.",
     },
     {
+      id: "b-sweep",
+      anchorId: "a-sweep",
+      title: "Half a turn",
+      cameraIntent: "read-close",
+      notes:
+        "Stepwise: each advance plays one move of the animation - the stage, the radius, the sweep, the landing. With voice on, the narration drives the steps; the next press only moves on after the last step.",
+      narration: {
+        script:
+          "Watch the half turn unfold. [mark:step] This is the radius: e to the i theta, length one, angle theta. [mark:step] Sweep theta from zero to pi, and the point walks the top of the circle, never leaving distance one. [mark:step] At theta equal to pi it lands. e to the i pi is exactly minus one.",
+      },
+    },
+    {
       id: "b-identity",
       anchorId: "a-identity",
       title: "The identity",
@@ -289,6 +318,7 @@ const doc: AuthoredProjectInput = {
     { id: "s-threshold", contentId: "c-threshold", anchorId: "a-threshold", params: { width: 3.6, height: 2.8, stoneColor: "#6e5f4a" } },
     { id: "s-euler", contentId: "c-euler", anchorId: "a-euler", skinKind: "etchedGlass", params: { width: 5.6, height: 3 } },
     { id: "s-circle", contentId: "c-circle", anchorId: "a-circle", skinKind: "cloudText", params: { width: 7.5, color: "#aac8ff" } },
+    { id: "s-sweep", contentId: "c-sweep", anchorId: "a-sweep", params: { width: 7, height: 3.94 } },
     { id: "s-identity", contentId: "c-identity", anchorId: "a-identity", skinKind: "etchedGlass", params: { width: 5, height: 2.8 } },
     { id: "s-return", contentId: "c-return", anchorId: "a-return", skinKind: "cloudText", params: { width: 6.5, color: "#bcc4ff" } },
   ],

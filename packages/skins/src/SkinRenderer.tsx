@@ -1,7 +1,8 @@
-import type {
-  ContentPrimitive,
-  ResolvedAnchor,
-  ResolvedSkinBinding,
+import {
+  manimVideoSrc,
+  type ContentPrimitive,
+  type ResolvedAnchor,
+  type ResolvedSkinBinding,
 } from "@spatial-present/schema";
 import type { ProjectIndex } from "@spatial-present/core";
 import { EngravingSkin } from "./EngravingSkin";
@@ -11,6 +12,7 @@ import { CloudTextSkin } from "./CloudTextSkin";
 import { PlaqueSkin } from "./PlaqueSkin";
 import { ChalkboardSkin } from "./ChalkboardSkin";
 import { EtchedGlassSkin } from "./EtchedGlassSkin";
+import { ProjectionSkin } from "./ProjectionSkin";
 
 /**
  * Renders every content primitive bound to an anchor through its spatial
@@ -21,10 +23,13 @@ export function AnchorContent({
   index,
   anchor,
   active,
+  revealStep = 0,
 }: {
   index: ProjectIndex;
   anchor: ResolvedAnchor;
   active: boolean;
+  /** Completed reveal steps at the current beat (stepwise content). */
+  revealStep?: number;
 }) {
   const bindings = index.bindingsByAnchor.get(anchor.id) ?? [];
   return (
@@ -38,6 +43,7 @@ export function AnchorContent({
             binding={binding}
             content={content}
             active={active}
+            revealStep={revealStep}
           />
         );
       })}
@@ -49,12 +55,14 @@ function Skinned({
   binding,
   content,
   active,
+  revealStep,
 }: {
   binding: ResolvedSkinBinding;
   content: ContentPrimitive;
   active: boolean;
+  revealStep: number;
 }) {
-  const base = { active, params: binding.params };
+  const base = { active, params: binding.params, revealStep };
   switch (binding.skinKind) {
     case "engraving":
       if (content.kind !== "text") return null;
@@ -89,5 +97,16 @@ function Skinned({
     case "etchedGlass":
       if (content.kind !== "formula") return null;
       return <EtchedGlassSkin {...base} latex={content.latex} />;
+    case "projection":
+      if (content.kind !== "manim") return null;
+      return (
+        <ProjectionSkin
+          {...base}
+          src={manimVideoSrc(content.id)}
+          contentId={content.id}
+          reveal={content.reveal ?? "play"}
+          revealStep={revealStep}
+        />
+      );
   }
 }

@@ -765,6 +765,8 @@ In-world, a `projection` skin plays the clip on a lecture screen, a floating sla
 
 Stepwise reveal is the powerful bit: beat advancement maps to Manim animation time. Manim scenes are sequences of `self.play(...)` steps; if the job emits cuepoints at each `play` boundary, pressing next at a beat advances the clip to the next cuepoint instead of moving the camera. The presenter walks a derivation one transformation at a time, inside the spatial world. This reuses the existing reveal-state concept on `Beat`.
 
+As implemented (M4): the job drives Manim programmatically in a uv-managed Python, hooking `Scene.play` to record the renderer clock — cuepoints come for free at every non-Wait play, with waits merged into the preceding segment, so scene authors need no `next_section()` calls. Output is VP9 webm (alpha when transparent) via ffmpeg, and cuepoints/provenance land in a manifest sidecar next to the clips rather than being written back into the document — same pattern as narration.
+
 ### Math World Templates
 
 Ship templates that give AI good defaults for math talks: `math-void` (dark, glowing graphs), `lecture-hall` (board, projector, seats), `number-line-promenade`, and `geometry-garden` (proofs as growing constructions).
@@ -795,6 +797,8 @@ Narration audio is produced by an asset-pipeline job, never synthesized live in 
 2. On miss, render with the configured engine. Engines are pluggable behind the job: local open models (Kokoro, Piper) for zero-cost iteration, cloud voices (ElevenLabs, OpenAI, Azure) for premium delivery. Swapping engines is a re-render, not a document change.
 3. Emit word- and sentence-level timestamps, plus a timestamp for each inline cue mark in the script. Engines that do not report timings get forced alignment as a fallback.
 4. Register the clip as an `AssetRef` with provenance (script hash, engine, voice, version).
+
+As implemented (M4) for the local Kokoro engine: cue marks split the script into separately rendered segments, so each mark's timestamp is exact — it is the concatenation point. Segment start/end times are exact; word-level times are estimated within a segment by character weight (sufficient for caption highlighting; a timestamping engine can replace them without touching the document). Timing lands in the narration manifest beside the clips.
 
 ### Synchronization
 
@@ -950,7 +954,9 @@ With M1 done, the framework and its input are separated: the runtime, skins, sch
 
 With M2 done, authoring is positionless: world templates publish named stations (transform + content envelope) and named poses, `defineJourney` runs the compiler pipeline — layout solver (station resolution with double-booking checks), skin resolver (capability descriptors + per-kind defaults), auto-router (primary chain defaulted from beat order), camera planner (intent + envelope → pose) — and the canonical document stores both the resolved geometry and its symbolic provenance, so a template change re-flows every journey built on it. The example document now contains zero coordinates; `journey-cli validate` reports symbolic-resolution coverage and `resolve` dumps the canonical output.
 
-With M3 done, math is a first-class content type: the `formula` primitive (LaTeX source + spoken-math fallback) renders through MathJax SVG into flat glyph geometry, the `chalkboard` skin writes formulas on glyph by glyph (and takes plain text as chalk), the `etchedGlass` skin sets them glowing in a lit slab, and the `lecture-hall` and `math-void` world templates ship with stations, intents, and portal poses. `examples/math-primer` ("Euler's Identity — a short walk") proves the slice end to end. What it is not yet: registries are static tables rather than an open plugin API, and there is no generalized asset pipeline, Manim/animated math, or AI generator.
+With M3 done, math is a first-class content type: the `formula` primitive (LaTeX source + spoken-math fallback) renders through MathJax SVG into flat glyph geometry, the `chalkboard` skin writes formulas on glyph by glyph (and takes plain text as chalk), the `etchedGlass` skin sets them glowing in a lit slab, and the `lecture-hall` and `math-void` world templates ship with stations, intents, and portal poses. `examples/math-primer` ("Euler's Identity — a short walk") proves the slice end to end.
+
+With M4 done, animated math and steerable narration work end to end: the `manim` primitive references a scene by `file#Class`, the `manim-render` job renders it offline (transparent VP9 webm) with cuepoints detected automatically at every non-Wait `self.play` boundary, and the frameless `projection` skin composites the animation straight over the world. Stepwise reveal maps "next" onto cuepoints — the presenter walks a derivation one transformation at a time before the camera moves on — and the upgraded `tts-narrate` job emits segment/word timestamps plus exact `[mark:step]` cue times, so in narrated mode the voice drives the same steps at the spoken word, with word-by-word caption highlighting. Both jobs hash-cache their outputs with provenance manifests. What it is not yet: registries are static tables rather than an open plugin API, narration word times are estimates (segment boundaries are exact), and there is no AI generator or visual editor.
 
 ### Milestones after MVP 1
 
@@ -961,7 +967,7 @@ Ordered roughly by leverage; see [proposal.md](proposal.md) for the full rationa
 | **M1 — Packagize** ✅ shipped | split schema/core/renderer/skins/worlds/cli into `packages/`; the SVD tour as `examples/svd-tour` | clean seams for everything else |
 | **M2 — Registries + layout solver + camera planner** ✅ shipped | stations, named camera intents, auto-routing; positionless example document | **AI authoring becomes possible** (no hand coordinates) |
 | **M3 — Math primitives** ✅ shipped | `formula` (MathJax SVG to glyph geometry, spoken-math fallback) + `chalkboard`/`etchedGlass` skins; `math-void` + `lecture-hall` world templates; `examples/math-primer` | static math talks hand/SDK-authored |
-| **M4 — Asset pipeline + Manim + narration** | `manim-render` job (transparent, cuepoints), `tts-narrate` job (timestamps, marks), `projection` skin, stepwise reveal | **animated math**; narrated self-running tours; generated-art caching |
+| **M4 — Asset pipeline + Manim + narration** ✅ shipped | `manim-render` job (transparent VP9, auto cuepoints), `tts-narrate` upgrade (segment/word timestamps, cue marks), `projection` skin, stepwise reveal driven by next-press or narration marks | **animated math**; narrated self-running tours; generated-art caching |
 | **M5 — AI generator** | prompt to Authoring Spec to document, grounded by registries + schema; provenance, locking, semantic diff | the "describe it and get a presentation" experience |
 | **M6 — Visual editor** | direct manipulation over the same document | the approachable third path |
 

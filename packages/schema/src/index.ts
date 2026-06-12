@@ -181,6 +181,23 @@ export const contentPrimitiveSchema = z.discriminatedUnion("kind", [
   }),
   z.object({
     id: z.string(),
+    kind: z.literal("manim"),
+    /** "scenes/euler_sweep.py#EulerSweep" — scene file (relative to the
+     *  presentation root) and Scene class. The semantic source; the clip
+     *  and its cuepoints are derived assets rendered by the manim job. */
+    scene: z.string(),
+    /** Manim quality flag (l/m/h/k); the job defaults to m. */
+    quality: z.enum(["l", "m", "h", "k"]).optional(),
+    /** Alpha-channel render compositing over the world (default true). */
+    transparent: z.boolean().optional(),
+    /** stepwise: advancing steps the clip cuepoint by cuepoint before the
+     *  tour moves on; narration cue marks drive the same steps. */
+    reveal: z.enum(["play", "loop", "stepwise"]).optional(),
+    /** Describes the animation for the outline and screen readers. */
+    fallbackText: z.string(),
+  }),
+  z.object({
+    id: z.string(),
     kind: z.literal("formula"),
     /** LaTeX source — the semantic truth of the equation. The 3D glyphs,
      *  the outline rendering, and any export all derive from it. */
@@ -202,6 +219,7 @@ export const skinKindSchema = z.enum([
   "plaque", // framed image / film on a gallery wall
   "chalkboard", // formula or text as chalk strokes on slate
   "etchedGlass", // formula etched into a lit glass slab
+  "projection", // frameless video panel for rendered manim clips
 ]);
 export type SkinKind = z.infer<typeof skinKindSchema>;
 
@@ -235,6 +253,15 @@ export type Narration = z.infer<typeof narrationSchema>;
  */
 export function narrationAudioSrc(beatId: string): string {
   return `/assets/narration/${beatId}.mp3`;
+}
+
+/**
+ * Where the manim job puts a scene's rendered clip (VP9 webm, alpha when
+ * transparent). Cuepoints and provenance live in manifest.json next to it;
+ * the scene source referenced by the document is the source of truth.
+ */
+export function manimVideoSrc(contentId: string): string {
+  return `/assets/manim/${contentId}.webm`;
 }
 
 export const transitionKindSchema = z.enum(["cut", "dolly", "fly", "portal"]);

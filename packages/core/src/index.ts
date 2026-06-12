@@ -19,6 +19,8 @@ export {
 } from "./routeGraph";
 export {
   createPresentationStore,
+  stepwiseStepCount,
+  stepwiseContent,
   type PresentationStore,
   type ActiveTransition,
 } from "./store";

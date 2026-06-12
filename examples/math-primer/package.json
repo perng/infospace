@@ -10,7 +10,10 @@
     "preview": "vite preview",
     "validate": "tsx ../../packages/cli/src/journey-cli.ts validate src/journey/project.ts",
     "outline": "tsx ../../packages/cli/src/journey-cli.ts outline src/journey/project.ts",
-    "resolve": "tsx ../../packages/cli/src/journey-cli.ts resolve src/journey/project.ts"
+    "resolve": "tsx ../../packages/cli/src/journey-cli.ts resolve src/journey/project.ts",
+    "narration": "tsx ../../packages/cli/src/journey-cli.ts narration src/journey/project.ts",
+    "narration:render": "python3 ../../packages/cli/generate-narration.py src/journey/project.ts",
+    "manim:render": "python3 ../../packages/cli/render-manim.py src/journey/project.ts"
   },
   "dependencies": {
     "@spatial-present/core": "*",

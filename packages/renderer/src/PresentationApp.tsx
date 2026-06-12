@@ -4,6 +4,7 @@ import {
   createPresentationStore,
   type ProjectIndex,
 } from "@spatial-present/core";
+import { fetchManimManifest } from "@spatial-present/skins";
 import { Stage, type WorldComponents } from "./Stage";
 import { PresenterConsole, TopBar } from "./PresenterConsole";
 import { Minimap } from "./Minimap";
@@ -36,6 +37,19 @@ export function PresentationApp({
         );
     }
   }, [journey, worlds]);
+
+  // Clip timings (cuepoints) for stepwise reveal — derived assets, loaded
+  // beside the document, never part of it.
+  useEffect(() => {
+    if (!journey.project.content.some((c) => c.kind === "manim")) return;
+    let cancelled = false;
+    void fetchManimManifest().then((manifest) => {
+      if (!cancelled) store.getState().setManimTimings(manifest);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [journey, store]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -92,6 +106,12 @@ export function PresentationApp({
         shadows
         camera={{ position: [0, 2.1, 29.5], fov: 55, near: 0.1, far: 800 }}
         gl={{ antialias: true }}
+        onCreated={(state) => {
+          // Dev-only escape hatch: lets headless test drivers pump frames
+          // (state.advance) when the tab is hidden and rAF never fires.
+          if (import.meta.env?.DEV)
+            (window as unknown as Record<string, unknown>).__spatialPresent = state;
+        }}
       >
         <Stage store={store} worlds={worlds} fadeRef={fadeRef} />
       </Canvas>

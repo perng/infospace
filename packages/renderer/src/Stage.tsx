@@ -26,6 +26,7 @@ export function Stage({
   const index = store((s) => s.index);
   const activeWorldId = store((s) => s.activeWorldId);
   const currentBeatId = store((s) => s.currentBeatId);
+  const revealStep = store((s) => s.revealStep);
   const currentAnchorId = index.beatById.get(currentBeatId)?.anchorId;
 
   return (
@@ -42,6 +43,7 @@ export function Stage({
             active={
               anchor.id === currentAnchorId && anchor.worldId === activeWorldId
             }
+            revealStep={anchor.id === currentAnchorId ? revealStep : 0}
           />
         </group>
       ))}

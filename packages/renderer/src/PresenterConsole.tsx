@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { PresentationStore } from "@spatial-present/core";
-import { nextEdges } from "@spatial-present/core";
+import { nextEdges, stepwiseStepCount } from "@spatial-present/core";
 import type { RouteEdge } from "@spatial-present/schema";
 
 const KIND_LABEL: Record<RouteEdge["kind"], string> = {
@@ -18,6 +18,8 @@ export function PresenterConsole({ store }: { store: PresentationStore }) {
   const notesOpen = store((s) => s.notesOpen);
   const transition = store((s) => s.transition);
   const history = store((s) => s.history);
+  const revealStep = store((s) => s.revealStep);
+  const stepCount = store((s) => stepwiseStepCount(s));
 
   const beat = index.beatById.get(currentBeatId)!;
   const anchor = index.anchorById.get(beat.anchorId)!;
@@ -45,6 +47,11 @@ export function PresenterConsole({ store }: { store: PresentationStore }) {
           <span className="beat-count">
             beat {beatNumber} / {index.outlineOrder.length}
           </span>
+          {stepCount > 0 && (
+            <span className="beat-count">
+              step {Math.min(revealStep + 1, stepCount)} / {stepCount}
+            </span>
+          )}
           {transition && <span className="moving">moving…</span>}
           {manualCamera && (
             <button

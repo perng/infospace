@@ -1,6 +1,6 @@
 # Euler's Identity - a short walk
 
-> Linear handout derived from the spatial presentation model — 8 beats across The Evening Lecture Hall and The Math Void.
+> Linear handout derived from the spatial presentation model — 9 beats across The Evening Lecture Hall and The Math Void.
 
 ## Five constants, one line
 *The Evening Lecture Hall · Left Board*
@@ -65,6 +65,15 @@ e^{ix} \;=\; \cos x \,+\, i\,\sin x
 Every value of e to the i theta lies at distance one from zero. The exponential does not explode along this axis - it orbits.
 
 **Speaker notes:** Watch the point orbit: modulus one, forever. Imaginary exponents rotate instead of growing - that is the geometric heart of it.
+
+## Half a turn
+*The Math Void · Theatre - the Half Turn*
+
+*Animation — `scenes/half_turn.py#HalfTurn`*: An animation of the unit circle: the point e to the i theta starts at one, sweeps half a turn along the top of the circle while never leaving distance one from zero, and lands exactly on minus one; the line e to the i pi equals minus one appears.
+
+**Narration:** Watch the half turn unfold. [mark:step] This is the radius: e to the i theta, length one, angle theta. [mark:step] Sweep theta from zero to pi, and the point walks the top of the circle, never leaving distance one. [mark:step] At theta equal to pi it lands. e to the i pi is exactly minus one.
+
+**Speaker notes:** Stepwise: each advance plays one move of the animation - the stage, the radius, the sweep, the landing. With voice on, the narration drives the steps; the next press only moves on after the last step.
 
 ## The identity
 *The Math Void · Glass - the Identity*

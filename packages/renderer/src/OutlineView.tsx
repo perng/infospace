@@ -131,5 +131,13 @@ function ContentFallback({ content }: { content: ContentPrimitive }) {
           </p>
         </div>
       );
+    case "manim":
+      return (
+        <div className="outline-media">
+          <p>
+            <em>Animation:</em> {content.fallbackText}
+          </p>
+        </div>
+      );
   }
 }

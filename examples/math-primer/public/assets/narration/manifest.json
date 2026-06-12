@@ -1,0 +1,312 @@
+{
+  "b-sweep": {
+    "durationMs": 17184,
+    "engine": "kokoro-onnx",
+    "marks": [
+      {
+        "atMs": 1784,
+        "name": "step"
+      },
+      {
+        "atMs": 6021,
+        "name": "step"
+      },
+      {
+        "atMs": 12200,
+        "name": "step"
+      }
+    ],
+    "scriptHash": "a6227b2746b03f90",
+    "segments": [
+      {
+        "endMs": 1664,
+        "startMs": 0,
+        "text": "Watch the half turn unfold."
+      },
+      {
+        "endMs": 5901,
+        "startMs": 1784,
+        "text": "This is the radius: e to the i theta, length one, angle theta."
+      },
+      {
+        "endMs": 12080,
+        "startMs": 6021,
+        "text": "Sweep theta from zero to pi, and the point walks the top of the circle, never leaving distance one."
+      },
+      {
+        "endMs": 17064,
+        "startMs": 12200,
+        "text": "At theta equal to pi it lands. e to the i pi is exactly minus one."
+      }
+    ],
+    "speed": 1.0,
+    "voice": "af_heart",
+    "words": [
+      {
+        "endMs": 356,
+        "startMs": 0,
+        "text": "Watch"
+      },
+      {
+        "endMs": 594,
+        "startMs": 356,
+        "text": "the"
+      },
+      {
+        "endMs": 891,
+        "startMs": 594,
+        "text": "half"
+      },
+      {
+        "endMs": 1188,
+        "startMs": 891,
+        "text": "turn"
+      },
+      {
+        "endMs": 1664,
+        "startMs": 1188,
+        "text": "unfold."
+      },
+      {
+        "endMs": 2110,
+        "startMs": 1784,
+        "text": "This"
+      },
+      {
+        "endMs": 2306,
+        "startMs": 2110,
+        "text": "is"
+      },
+      {
+        "endMs": 2568,
+        "startMs": 2306,
+        "text": "the"
+      },
+      {
+        "endMs": 3090,
+        "startMs": 2568,
+        "text": "radius:"
+      },
+      {
+        "endMs": 3221,
+        "startMs": 3090,
+        "text": "e"
+      },
+      {
+        "endMs": 3417,
+        "startMs": 3221,
+        "text": "to"
+      },
+      {
+        "endMs": 3679,
+        "startMs": 3417,
+        "text": "the"
+      },
+      {
+        "endMs": 3809,
+        "startMs": 3679,
+        "text": "i"
+      },
+      {
+        "endMs": 4267,
+        "startMs": 3809,
+        "text": "theta,"
+      },
+      {
+        "endMs": 4724,
+        "startMs": 4267,
+        "text": "length"
+      },
+      {
+        "endMs": 5051,
+        "startMs": 4724,
+        "text": "one,"
+      },
+      {
+        "endMs": 5443,
+        "startMs": 5051,
+        "text": "angle"
+      },
+      {
+        "endMs": 5901,
+        "startMs": 5443,
+        "text": "theta."
+      },
+      {
+        "endMs": 6384,
+        "startMs": 6021,
+        "text": "Sweep"
+      },
+      {
+        "endMs": 6747,
+        "startMs": 6384,
+        "text": "theta"
+      },
+      {
+        "endMs": 7050,
+        "startMs": 6747,
+        "text": "from"
+      },
+      {
+        "endMs": 7353,
+        "startMs": 7050,
+        "text": "zero"
+      },
+      {
+        "endMs": 7535,
+        "startMs": 7353,
+        "text": "to"
+      },
+      {
+        "endMs": 7777,
+        "startMs": 7535,
+        "text": "pi,"
+      },
+      {
+        "endMs": 8020,
+        "startMs": 7777,
+        "text": "and"
+      },
+      {
+        "endMs": 8262,
+        "startMs": 8020,
+        "text": "the"
+      },
+      {
+        "endMs": 8625,
+        "startMs": 8262,
+        "text": "point"
+      },
+      {
+        "endMs": 8989,
+        "startMs": 8625,
+        "text": "walks"
+      },
+      {
+        "endMs": 9231,
+        "startMs": 8989,
+        "text": "the"
+      },
+      {
+        "endMs": 9474,
+        "startMs": 9231,
+        "text": "top"
+      },
+      {
+        "endMs": 9655,
+        "startMs": 9474,
+        "text": "of"
+      },
+      {
+        "endMs": 9898,
+        "startMs": 9655,
+        "text": "the"
+      },
+      {
+        "endMs": 10382,
+        "startMs": 9898,
+        "text": "circle,"
+      },
+      {
+        "endMs": 10746,
+        "startMs": 10382,
+        "text": "never"
+      },
+      {
+        "endMs": 11230,
+        "startMs": 10746,
+        "text": "leaving"
+      },
+      {
+        "endMs": 11776,
+        "startMs": 11230,
+        "text": "distance"
+      },
+      {
+        "endMs": 12078,
+        "startMs": 11776,
+        "text": "one."
+      },
+      {
+        "endMs": 12417,
+        "startMs": 12200,
+        "text": "At"
+      },
+      {
+        "endMs": 12853,
+        "startMs": 12417,
+        "text": "theta"
+      },
+      {
+        "endMs": 13288,
+        "startMs": 12853,
+        "text": "equal"
+      },
+      {
+        "endMs": 13506,
+        "startMs": 13288,
+        "text": "to"
+      },
+      {
+        "endMs": 13724,
+        "startMs": 13506,
+        "text": "pi"
+      },
+      {
+        "endMs": 13942,
+        "startMs": 13724,
+        "text": "it"
+      },
+      {
+        "endMs": 14450,
+        "startMs": 13942,
+        "text": "lands."
+      },
+      {
+        "endMs": 14595,
+        "startMs": 14450,
+        "text": "e"
+      },
+      {
+        "endMs": 14813,
+        "startMs": 14595,
+        "text": "to"
+      },
+      {
+        "endMs": 15103,
+        "startMs": 14813,
+        "text": "the"
+      },
+      {
+        "endMs": 15249,
+        "startMs": 15103,
+        "text": "i"
+      },
+      {
+        "endMs": 15466,
+        "startMs": 15249,
+        "text": "pi"
+      },
+      {
+        "endMs": 15684,
+        "startMs": 15466,
+        "text": "is"
+      },
+      {
+        "endMs": 16265,
+        "startMs": 15684,
+        "text": "exactly"
+      },
+      {
+        "endMs": 16701,
+        "startMs": 16265,
+        "text": "minus"
+      },
+      {
+        "endMs": 17063,
+        "startMs": 16701,
+        "text": "one."
+      }
+    ]
+  }
+}

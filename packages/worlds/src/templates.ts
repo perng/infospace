@@ -203,6 +203,12 @@ export const MathVoidTemplate: WorldTemplate = {
       rotationY: -0.2,
       envelope: { width: 8, height: 3.5 },
     },
+    "screen.theatre": {
+      // A frameless projection spot, floating high in the dark.
+      position: [-3, 4.2, -17],
+      rotationY: 0.25,
+      envelope: { width: 7, height: 4.4 },
+    },
     "gate.return": {
       position: [VOID_GATE[0], VOID_GATE[1], VOID_GATE[2] - 1],
       rotationY: Math.PI,

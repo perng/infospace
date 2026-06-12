@@ -1,0 +1,431 @@
+{
+  "schemaVersion": "0.1",
+  "id": "basel-night-lecture",
+  "title": "Basel Night Lecture",
+  "startBeatId": "b-opening-question",
+  "worlds": [
+    {
+      "id": "lecture-hall",
+      "name": "The Evening Lecture Hall",
+      "unitScale": "human",
+      "ambience": {
+        "background": "#171310",
+        "fogColor": "#13100c",
+        "fogNear": 18,
+        "fogFar": 64,
+        "accent": "#d9a85c"
+      }
+    },
+    {
+      "id": "math-void",
+      "name": "The Math Void",
+      "unitScale": "macro",
+      "ambience": {
+        "background": "#05060f",
+        "fogColor": "#0a0f26",
+        "fogNear": 30,
+        "fogFar": 140,
+        "accent": "#7d8cff"
+      }
+    }
+  ],
+  "content": [
+    {
+      "id": "c-opening-question",
+      "kind": "text",
+      "title": "The Basel problem",
+      "body": "What number is hiding behind this sum?\n\n1 + 1/4 + 1/9 + 1/16 + ...\n\nIn 1734, nobody in Europe knew.\n"
+    },
+    {
+      "id": "c-convergence-is-not-enough",
+      "kind": "formula",
+      "latex": "\\sum_{n=1}^{\\infty} \\frac{1}{n^{2}} \\leq 1 + \\int_{1}^{\\infty} \\frac{1}{x^{2}}\\,dx = 2",
+      "display": "block",
+      "fallbackText": "the sum from n equals one to infinity of one over n squared is at most one plus the integral from one to infinity of one over x squared dx, which equals two"
+    },
+    {
+      "id": "c-painfully-slow",
+      "kind": "chart",
+      "data": {
+        "type": "bar",
+        "title": "Partial sums of 1/n^2",
+        "unit": "value",
+        "series": [
+          {
+            "label": "N=1",
+            "value": 1
+          },
+          {
+            "label": "N=2",
+            "value": 1.25
+          },
+          {
+            "label": "N=5",
+            "value": 1.46361
+          },
+          {
+            "label": "N=10",
+            "value": 1.54977
+          },
+          {
+            "label": "N=50",
+            "value": 1.62513
+          },
+          {
+            "label": "N=100",
+            "value": 1.63498
+          },
+          {
+            "label": "limit",
+            "value": 1.64493
+          }
+        ]
+      },
+      "fallbackText": "The partial sums climb quickly at first, then creep toward about one point six four four nine."
+    },
+    {
+      "id": "c-doorway-through-board",
+      "kind": "text",
+      "title": "The risky idea",
+      "body": "Leave arithmetic behind.\n\nEuler will treat a function as if it were an infinite polynomial,\nthen listen to its roots.\n"
+    },
+    {
+      "id": "c-sine-as-product",
+      "kind": "formula",
+      "latex": "\\frac{\\sin x}{x} = \\left(1-\\frac{x^{2}}{\\pi^{2}}\\right)\\left(1-\\frac{x^{2}}{4\\pi^{2}}\\right)\\left(1-\\frac{x^{2}}{9\\pi^{2}}\\right)\\cdots",
+      "display": "block",
+      "fallbackText": "sine x over x equals one minus x squared over pi squared times one minus x squared over four pi squared times one minus x squared over nine pi squared and so on"
+    },
+    {
+      "id": "c-power-series-side",
+      "kind": "formula",
+      "latex": "\\frac{\\sin x}{x} = 1 - \\frac{x^{2}}{3!} + \\frac{x^{4}}{5!} - \\cdots",
+      "display": "block",
+      "fallbackText": "sine x over x equals one minus x squared over three factorial plus x to the fourth over five factorial minus and so on"
+    },
+    {
+      "id": "c-coefficient-comparison",
+      "kind": "formula",
+      "latex": "\\text{coefficient of }x^{2}:\\quad -\\left(\\frac{1}{\\pi^{2}}+\\frac{1}{4\\pi^{2}}+\\frac{1}{9\\pi^{2}}+\\cdots\\right) = -\\frac{1}{6}",
+      "display": "block",
+      "fallbackText": "the coefficient of x squared is minus the quantity one over pi squared plus one over four pi squared plus one over nine pi squared and so on, and this equals minus one sixth"
+    },
+    {
+      "id": "c-reveal-answer",
+      "kind": "formula",
+      "latex": "\\sum_{n=1}^{\\infty} \\frac{1}{n^{2}} = \\frac{\\pi^{2}}{6}",
+      "display": "block",
+      "fallbackText": "the sum from n equals one to infinity of one over n squared equals pi squared over six"
+    },
+    {
+      "id": "c-road-to-zeta",
+      "kind": "text",
+      "title": "From Euler to zeta",
+      "body": "Euler's answer became one point on a larger map.\n\nzeta(2) = pi^2/6\nzeta(s) = 1 + 1/2^s + 1/3^s + 1/4^s + ...\n\nThe Basel problem opened a road from infinite series to prime numbers,\ncomplex functions, and eventually Riemann's zeta function.\n"
+    }
+  ],
+  "anchors": [
+    {
+      "id": "a-opening-question",
+      "worldId": "lecture-hall",
+      "name": "What Is This Sum",
+      "station": "board.left",
+      "semanticRole": "chapter",
+      "contentIds": [
+        "c-opening-question"
+      ]
+    },
+    {
+      "id": "a-convergence-is-not-enough",
+      "worldId": "lecture-hall",
+      "name": "The Sum Settles Down",
+      "station": "board.center",
+      "semanticRole": "detail",
+      "contentIds": [
+        "c-convergence-is-not-enough"
+      ]
+    },
+    {
+      "id": "a-painfully-slow",
+      "worldId": "lecture-hall",
+      "name": "Slow Partial Sums",
+      "station": "board.right",
+      "semanticRole": "chart",
+      "contentIds": [
+        "c-painfully-slow"
+      ]
+    },
+    {
+      "id": "a-doorway-through-board",
+      "worldId": "lecture-hall",
+      "name": "Through the Board",
+      "station": "wall.west",
+      "semanticRole": "portal",
+      "contentIds": [
+        "c-doorway-through-board"
+      ]
+    },
+    {
+      "id": "a-sine-as-product",
+      "worldId": "math-void",
+      "name": "Sine Has Known Zeros",
+      "station": "plinth.identity",
+      "semanticRole": "detail",
+      "contentIds": [
+        "c-sine-as-product"
+      ]
+    },
+    {
+      "id": "a-power-series-side",
+      "worldId": "math-void",
+      "name": "The Ordinary Expansion",
+      "station": "gallery.west",
+      "semanticRole": "detail",
+      "contentIds": [
+        "c-power-series-side"
+      ]
+    },
+    {
+      "id": "a-coefficient-comparison",
+      "worldId": "math-void",
+      "name": "Reading The Coefficient",
+      "station": "circle.overlook",
+      "semanticRole": "detail",
+      "contentIds": [
+        "c-coefficient-comparison"
+      ]
+    },
+    {
+      "id": "a-reveal-answer",
+      "worldId": "math-void",
+      "name": "Pi Squared Over Six",
+      "station": "screen.theatre",
+      "semanticRole": "chapter",
+      "contentIds": [
+        "c-reveal-answer"
+      ]
+    },
+    {
+      "id": "a-road-to-zeta",
+      "worldId": "math-void",
+      "name": "Beyond Basel",
+      "station": "gate.return",
+      "semanticRole": "detail",
+      "contentIds": [
+        "c-road-to-zeta"
+      ]
+    }
+  ],
+  "beats": [
+    {
+      "id": "b-opening-question",
+      "anchorId": "a-opening-question",
+      "title": "What Is This Sum",
+      "cameraIntent": "read-close",
+      "notes": "State the problem before naming the method.",
+      "narration": {
+        "script": "We begin with a question that looks harmless. Add one, then one fourth, then one ninth, then one sixteenth, and keep going forever. The terms are shrinking, but the sum is still a mystery. This is the Basel problem, and tonight we follow Euler to its answer.\n"
+      }
+    },
+    {
+      "id": "b-convergence-is-not-enough",
+      "anchorId": "a-convergence-is-not-enough",
+      "title": "The Sum Settles Down",
+      "cameraIntent": "read-close",
+      "notes": "Emphasize rigor before the dramatic leap.",
+      "narration": {
+        "script": "First, this infinite sum really does converge. A simple integral comparison shows that after the first term, the remaining area is bounded. So the answer exists, and it is less than two. But existence is not the same thing as knowing the number.\n"
+      }
+    },
+    {
+      "id": "b-painfully-slow",
+      "anchorId": "a-painfully-slow",
+      "title": "Slow Partial Sums",
+      "cameraIntent": "orbit-focus",
+      "notes": "Let the chart make the slowness tangible.",
+      "narration": {
+        "script": "Direct calculation gives us a trail of approximations. The first few terms move quickly, but then the progress becomes painfully slow. Even after one hundred terms, the answer is still not fully visible. Euler needed a way to see the limit all at once.\n"
+      }
+    },
+    {
+      "id": "b-doorway-through-board",
+      "anchorId": "a-doorway-through-board",
+      "title": "Through the Board",
+      "cameraIntent": "wide-establishing",
+      "notes": "Transition from standard estimates to Euler's formal argument.",
+      "narration": {
+        "script": "The lecture hall has taken us as far as ordinary summation can go. Euler's next move is bold enough to feel like stepping through the board itself. He will compare a familiar power series with a shadowy infinite product. The calculation is daring, but the clue it reveals is unmistakable.\n"
+      }
+    },
+    {
+      "id": "b-sine-as-product",
+      "anchorId": "a-sine-as-product",
+      "title": "Sine Has Known Zeros",
+      "cameraIntent": "quote-gaze",
+      "notes": "Connect each factor to the roots of sine.",
+      "narration": {
+        "script": "In the void, roots become architecture. The function sine x over x is zero at plus and minus pi, plus and minus two pi, plus and minus three pi, and so on. Euler imagined it as an infinite polynomial whose factors remember exactly those zeros.\n"
+      }
+    },
+    {
+      "id": "b-power-series-side",
+      "anchorId": "a-power-series-side",
+      "title": "The Ordinary Expansion",
+      "cameraIntent": "read-close",
+      "notes": "Prepare for comparing the x squared coefficient.",
+      "narration": {
+        "script": "The same function also has a power series known from calculus. Divide the sine series by x, and the coefficient of x squared is negative one sixth. This coefficient is the hinge of the whole argument. Euler now has two descriptions of one object.\n"
+      }
+    },
+    {
+      "id": "b-coefficient-comparison",
+      "anchorId": "a-coefficient-comparison",
+      "title": "Reading The Coefficient",
+      "cameraIntent": "read-close",
+      "notes": "Make clear that only the x squared term is being compared.",
+      "narration": {
+        "script": "Multiply the infinite factors only far enough to read the x squared term. From the product, that coefficient is the negative sum of one over pi squared, one over four pi squared, one over nine pi squared, and onward. From the power series, the same coefficient is negative one sixth. The unknown Basel sum has appeared inside a coefficient.\n"
+      }
+    },
+    {
+      "id": "b-reveal-answer",
+      "anchorId": "a-reveal-answer",
+      "title": "Pi Squared Over Six",
+      "cameraIntent": "wide-establishing",
+      "notes": "Let this scene be the dramatic peak.",
+      "narration": {
+        "script": "Now cancel the minus signs and multiply by pi squared. The answer is not a decimal reached by patient addition. It is pi squared over six. A sum over square numbers has secretly been governed by the geometry of the circle.\n"
+      }
+    },
+    {
+      "id": "b-road-to-zeta",
+      "anchorId": "a-road-to-zeta",
+      "title": "Beyond Basel",
+      "cameraIntent": "quote-gaze",
+      "notes": "Close by tying Euler's computation to the zeta function and Riemann.",
+      "narration": {
+        "script": "Euler did more than solve a famous sum. He revealed that infinite series, trigonometric functions, and the primes could belong to one story. The modern zeta function grows from this soil. The tour ends at a gate, with the blackboard behind us and a much larger mathematics ahead.\n"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "id": "r-portal-doorway-through-board",
+      "from": "b-doorway-through-board",
+      "to": "b-sine-as-product",
+      "kind": "portal",
+      "label": "Step through the board",
+      "transition": "portal",
+      "divePose": "board-dive",
+      "emergePose": "void-emerge"
+    },
+    {
+      "id": "r-branch-opening-question-painfully-slow",
+      "from": "b-opening-question",
+      "to": "b-painfully-slow",
+      "kind": "branch",
+      "label": "Jump to the evidence",
+      "transition": "fly"
+    },
+    {
+      "id": "r-branch-sine-as-product-reveal-answer",
+      "from": "b-sine-as-product",
+      "to": "b-reveal-answer",
+      "kind": "branch",
+      "label": "Skip to the reveal",
+      "transition": "fly"
+    }
+  ],
+  "skins": [
+    {
+      "id": "s-opening-question",
+      "contentId": "c-opening-question",
+      "anchorId": "a-opening-question",
+      "skinKind": "chalkboard",
+      "params": {
+        "width": 3.4,
+        "height": 2.4
+      }
+    },
+    {
+      "id": "s-convergence-is-not-enough",
+      "contentId": "c-convergence-is-not-enough",
+      "anchorId": "a-convergence-is-not-enough",
+      "skinKind": "chalkboard",
+      "params": {
+        "width": 3.4,
+        "height": 2.4
+      }
+    },
+    {
+      "id": "s-painfully-slow",
+      "contentId": "c-painfully-slow",
+      "anchorId": "a-painfully-slow",
+      "skinKind": "hologram",
+      "params": {
+        "width": 3.4,
+        "height": 2.4
+      }
+    },
+    {
+      "id": "s-doorway-through-board",
+      "contentId": "c-doorway-through-board",
+      "anchorId": "a-doorway-through-board",
+      "skinKind": "cloudText",
+      "params": {
+        "width": 3.6,
+        "height": 2.6
+      }
+    },
+    {
+      "id": "s-sine-as-product",
+      "contentId": "c-sine-as-product",
+      "anchorId": "a-sine-as-product",
+      "skinKind": "etchedGlass",
+      "params": {
+        "width": 5.1,
+        "height": 2.6
+      }
+    },
+    {
+      "id": "s-power-series-side",
+      "contentId": "c-power-series-side",
+      "anchorId": "a-power-series-side",
+      "skinKind": "etchedGlass",
+      "params": {
+        "width": 5.6,
+        "height": 2.8
+      }
+    },
+    {
+      "id": "s-coefficient-comparison",
+      "contentId": "c-coefficient-comparison",
+      "anchorId": "a-coefficient-comparison",
+      "skinKind": "etchedGlass",
+      "params": {
+        "width": 7.6,
+        "height": 3.1
+      }
+    },
+    {
+      "id": "s-reveal-answer",
+      "contentId": "c-reveal-answer",
+      "anchorId": "a-reveal-answer",
+      "skinKind": "etchedGlass",
+      "params": {
+        "width": 6.6,
+        "height": 4
+      }
+    },
+    {
+      "id": "s-road-to-zeta",
+      "contentId": "c-road-to-zeta",
+      "anchorId": "a-road-to-zeta",
+      "skinKind": "cloudText",
+      "params": {
+        "width": 6.1,
+        "height": 2.6
+      }
+    }
+  ]
+}

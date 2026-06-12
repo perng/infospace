@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Basel Problem — Spatial Present</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Headless-QA shim: hidden tabs neither fire requestAnimationFrame
+      // nor deliver ResizeObserver callbacks (both ride the paint cycle),
+      // which freezes the 3D runtime when this page is driven by an agent
+      // or test harness without a visible window. While hidden, back both
+      // with timers; a visible tab uses the native implementations.
+      (() => {
+        // Timer-based fallbacks get intensively throttled in hidden tabs
+        // (1 wake/minute after ~5 min), so the heartbeat comes from a Web
+        // Worker — worker timers are exempt, and postMessage delivery
+        // wakes the main thread immediately.
+        const nativeRaf = window.requestAnimationFrame.bind(window);
+        const pending = [];
+        let worker = null;
+        const ensureWorker = () => {
+          if (worker) return;
+          const blob = new Blob(["setInterval(() => postMessage(0), 33);"], {
+            type: "text/javascript",
+          });
+          worker = new Worker(URL.createObjectURL(blob));
+          worker.onmessage = () => {
+            const cbs = pending.splice(0);
+            const t = performance.now();
+            for (const cb of cbs) cb(t);
+          };
+        };
+        window.requestAnimationFrame = (cb) => {
+          if (document.visibilityState !== "hidden") return nativeRaf(cb);
+          ensureWorker();
+          pending.push(cb);
+          return 0;
+        };
+
+        // ResizeObserver callbacks also ride the paint cycle, so observe
+        // via polling instead — only notifying on actual size changes.
+        window.ResizeObserver = class {
+          constructor(cb) {
+            this.cb = cb;
+            this.els = new Map();
+            this.id = setInterval(() => {
+              const entries = [];
+              for (const [el, last] of this.els) {
+                const rect = el.getBoundingClientRect();
+                if (rect.width !== last.width || rect.height !== last.height) {
+                  this.els.set(el, { width: rect.width, height: rect.height });
+                  entries.push({ target: el, contentRect: rect });
+                }
+              }
+              if (entries.length) this.cb(entries, this);
+            }, 250);
+          }
+          observe(el) {
+            this.els.set(el, { width: -1, height: -1 });
+          }
+          unobserve(el) {
+            this.els.delete(el);
+          }
+          disconnect() {
+            this.els.clear();
+            clearInterval(this.id);
+          }
+        };
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

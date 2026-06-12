@@ -10,6 +10,11 @@
  *        scripts as JSON; consumed by generate-narration.py (TTS renderer)
  *   tsx journey-cli.ts resolve   [journey-module]   — prints the canonical,
  *        fully resolved document (compiled geometry + symbolic provenance)
+ *   tsx journey-cli.ts spec-compile <talk.spec.yaml> [out.json] — compiles
+ *        an Authoring Spec (Layer B) into an authored document; world
+ *        templates are looked up by id in @spatial-present/worlds
+ *   tsx journey-cli.ts diff <module-a> <module-b>    — semantic diff of two
+ *        compiled documents: what changed at the document level, by id
  *
  * The journey module (default ./src/journey/project.ts, relative to the
  * current directory) must export `journey`, the defineJourney() output.
@@ -26,18 +31,95 @@ import type { ContentPrimitive } from "@spatial-present/schema";
 const NARRATION_DIR = "public/assets/narration";
 
 const command = process.argv[2] ?? "validate";
+
+async function loadJourney(path: string): Promise<ProjectIndex> {
+  if (!existsSync(path)) {
+    console.error(`journey module not found: ${resolve(path)}`);
+    process.exit(1);
+  }
+  const { journey } = (await import(pathToFileURL(resolve(path)).href)) as {
+    journey: ProjectIndex;
+  };
+  if (!journey?.project) {
+    console.error(`${path} does not export \`journey\` (defineJourney output)`);
+    process.exit(1);
+  }
+  return journey;
+}
+
+if (command === "spec-compile") {
+  const specPath = process.argv[3];
+  if (!specPath) {
+    console.error("usage: journey-cli spec-compile <talk.spec.yaml> [out.json]");
+    process.exit(1);
+  }
+  const [{ parse }, { compileSpec, defineJourney }, worlds] = await Promise.all([
+    import("yaml"),
+    import("@spatial-present/core"),
+    import("@spatial-present/worlds"),
+  ]);
+  const templates = [
+    worlds.AtriumTemplate,
+    worlds.SpectralTemplate,
+    worlds.LectureHallTemplate,
+    worlds.MathVoidTemplate,
+  ];
+  const spec = parse(readFileSync(specPath, "utf8"));
+  const doc = compileSpec(spec, templates);
+  // Full compile proves the spec renders before anything is written.
+  defineJourney(doc, { templates });
+  const out = process.argv[4];
+  const json = JSON.stringify(doc, null, 2);
+  if (out) {
+    writeFileSync(out, json + "\n");
+    console.log(`✔ compiled ${specPath} → ${out}`);
+  } else {
+    console.log(json);
+  }
+  process.exit(0);
+}
+
+if (command === "diff") {
+  const [pathA, pathB] = [process.argv[3], process.argv[4]];
+  if (!pathA || !pathB) {
+    console.error("usage: journey-cli diff <module-a> <module-b>");
+    process.exit(1);
+  }
+  const a = (await loadJourney(pathA)).project;
+  const b = (await loadJourney(pathB)).project;
+  const lines: string[] = [];
+  if (a.title !== b.title) lines.push(`title: "${a.title}" → "${b.title}"`);
+  const sections = ["worlds", "content", "anchors", "beats", "routes", "skins"] as const;
+  for (const section of sections) {
+    const byId = (items: { id: string }[]) => new Map(items.map((i) => [i.id, i]));
+    const mapA = byId(a[section]);
+    const mapB = byId(b[section]);
+    for (const [id, item] of mapB) {
+      const prev = mapA.get(id);
+      if (!prev) {
+        lines.push(`+ ${section}/${id}`);
+      } else if (JSON.stringify(prev) !== JSON.stringify(item)) {
+        const fields = Object.keys({ ...prev, ...item }).filter(
+          (k) =>
+            JSON.stringify((prev as Record<string, unknown>)[k]) !==
+            JSON.stringify((item as Record<string, unknown>)[k])
+        );
+        lines.push(`~ ${section}/${id} (${fields.join(", ")})`);
+      }
+    }
+    for (const id of mapA.keys())
+      if (!mapB.has(id)) lines.push(`- ${section}/${id}`);
+  }
+  console.log(
+    lines.length
+      ? lines.join("\n")
+      : "no semantic differences (the compiled documents are identical)"
+  );
+  process.exit(0);
+}
+
 const journeyModule = process.argv[3] ?? "src/journey/project.ts";
-if (!existsSync(journeyModule)) {
-  console.error(`journey module not found: ${resolve(journeyModule)}`);
-  process.exit(1);
-}
-const { journey } = (await import(
-  pathToFileURL(resolve(journeyModule)).href
-)) as { journey: ProjectIndex };
-if (!journey?.project) {
-  console.error(`${journeyModule} does not export \`journey\` (defineJourney output)`);
-  process.exit(1);
-}
+const journey = await loadJourney(journeyModule);
 
 if (command === "validate") {
   // journey is built through defineJourney, which already threw on any

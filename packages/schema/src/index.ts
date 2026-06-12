@@ -49,6 +49,8 @@ export type Station = z.infer<typeof stationSchema>;
  * fits the envelope in view, scaled by `padding`.
  */
 export interface CameraIntentSpec {
+  /** One-line meaning, for humans and for AI grounding menus. */
+  description?: string;
   /** Multiplier on the fit distance (1 = envelope exactly fills the view). */
   padding: number;
   fov?: number;
@@ -77,6 +79,14 @@ export interface WorldTemplate {
   cameraIntents?: Record<string, CameraIntentSpec>;
   /** Named fixed framings, referenced by beats and portal routes. */
   poses?: Record<string, CameraPose>;
+  /** Defaults the spec compiler uses when an Authoring Spec only names
+   *  the template: display name, scale, and the art-directed ambience.
+   *  Keeps colors and atmosphere out of AI's hands. */
+  defaults?: {
+    name: string;
+    unitScale: World["unitScale"];
+    ambience: World["ambience"];
+  };
 }
 
 export const worldSchema = z.object({
@@ -266,6 +276,98 @@ export function manimVideoSrc(contentId: string): string {
 
 export const transitionKindSchema = z.enum(["cut", "dolly", "fly", "portal"]);
 export type TransitionKind = z.infer<typeof transitionKindSchema>;
+
+/**
+ * The Authoring Spec — Layer B of the layered input model. The declarative
+ * *intent* format AI emits and humans tweak: one scene per presentable
+ * moment, stations and intents by name, content inline, no coordinates,
+ * no ids to wire up. The spec compiler (compileSpec) expands it into an
+ * authored document; defineJourney resolves geometry from there.
+ *
+ * Deliberately narrower than the document: only content kinds that need
+ * no external assets (text, formula, inline chart data), so a generated
+ * spec always renders. Media and manim content enter at the document
+ * layer, where asset files exist to reference.
+ */
+
+export const specContentSchema = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("text"),
+    title: z.string().optional(),
+    body: z.string(),
+  }),
+  z.object({
+    kind: z.literal("formula"),
+    latex: z.string(),
+    /** Spoken-math description (becomes the document's fallbackText). */
+    spoken: z.string(),
+  }),
+  z.object({
+    kind: z.literal("chart"),
+    data: chartDataSchema,
+    /** One-sentence reading of the chart (becomes fallbackText). */
+    summary: z.string(),
+  }),
+]);
+export type SpecContent = z.infer<typeof specContentSchema>;
+
+export const sceneSpecSchema = z.object({
+  /** Kebab-case scene id; the compiler derives c-/a-/b-/s- ids from it. */
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+  title: z.string(),
+  /** World template id this scene plays in. */
+  world: z.string(),
+  /** Station name published by that world's template. */
+  station: z.string(),
+  content: specContentSchema,
+  /** Skin kind; omit for the content kind's default. */
+  skin: skinKindSchema.optional(),
+  /** Camera intent or template pose name (default read-close). */
+  camera: z.string().optional(),
+  role: anchorSchema.shape.semanticRole.optional(),
+  /** Display name for the anchor (defaults to the title). */
+  place: z.string().optional(),
+  narrate: z.string().optional(),
+  notes: z.string().optional(),
+  arrive: transitionKindSchema.exclude(["portal"]).optional(),
+  /** Locked scenes survive regeneration verbatim. */
+  locked: z.boolean().optional(),
+});
+export type SceneSpec = z.infer<typeof sceneSpecSchema>;
+
+export const authoringSpecSchema = z.object({
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+  title: z.string(),
+  /** World template ids, in narrative order. Display name, scale, and
+   *  ambience come from each template's defaults. */
+  worlds: z.array(z.string()).min(1),
+  scenes: z.array(sceneSpecSchema).min(1),
+  /** Scale portals between scenes; dive/emerge are template pose names. */
+  portals: z
+    .array(
+      z.object({
+        from: z.string(),
+        to: z.string(),
+        label: z.string(),
+        dive: z.string().optional(),
+        emerge: z.string().optional(),
+      })
+    )
+    .default([]),
+  /** Improvisation edges for the presenter. */
+  branches: z
+    .array(
+      z.object({
+        from: z.string(),
+        to: z.string(),
+        label: z.string(),
+        kind: z.enum(["branch", "return"]).default("branch"),
+      })
+    )
+    .default([]),
+});
+export type AuthoringSpec = z.infer<typeof authoringSpecSchema>;
+export type AuthoringSpecInput = z.input<typeof authoringSpecSchema>;
 
 export const beatSchema = z.object({
   id: z.string(),

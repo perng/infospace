@@ -19,7 +19,9 @@ export function EtchedGlassSkin({
   const width = param(params, "width", 5);
   const height = param(params, "height", 3);
   const color = param(params, "color", GLOW);
-  const reveal = useReveal(active, 1.4);
+  // Idle low: several glass slabs can share a void view (AI-generated
+  // talks especially), and inactive formulas must not compete.
+  const reveal = useReveal(active, 1.4, 0.08);
   const formula = useFormulaGeometry(latex);
   const glyphMats = useRef<(THREE.MeshBasicMaterial | null)[]>([]);
   const barMat = useRef<THREE.MeshBasicMaterial>(null);

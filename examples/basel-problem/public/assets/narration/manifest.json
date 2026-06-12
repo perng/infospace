@@ -1,0 +1,2260 @@
+{
+  "b-coefficient-comparison": {
+    "durationMs": 21901,
+    "engine": "kokoro-onnx",
+    "marks": [],
+    "scriptHash": "6007cbb6c7c7ec86",
+    "segments": [
+      {
+        "endMs": 21781,
+        "startMs": 0,
+        "text": "Multiply the infinite factors only far enough to read the x squared term. From the product, that coefficient is the negative sum of one over pi squared, one over four pi squared, one over nine pi squared, and onward. From the power series, the same coefficient is negative one sixth. The unknown Basel sum has appeared inside a coefficient."
+      }
+    ],
+    "speed": 1.0,
+    "voice": "af_heart",
+    "words": [
+      {
+        "endMs": 574,
+        "startMs": 0,
+        "text": "Multiply"
+      },
+      {
+        "endMs": 830,
+        "startMs": 574,
+        "text": "the"
+      },
+      {
+        "endMs": 1405,
+        "startMs": 830,
+        "text": "infinite"
+      },
+      {
+        "endMs": 1916,
+        "startMs": 1405,
+        "text": "factors"
+      },
+      {
+        "endMs": 2235,
+        "startMs": 1916,
+        "text": "only"
+      },
+      {
+        "endMs": 2491,
+        "startMs": 2235,
+        "text": "far"
+      },
+      {
+        "endMs": 2938,
+        "startMs": 2491,
+        "text": "enough"
+      },
+      {
+        "endMs": 3129,
+        "startMs": 2938,
+        "text": "to"
+      },
+      {
+        "endMs": 3449,
+        "startMs": 3129,
+        "text": "read"
+      },
+      {
+        "endMs": 3704,
+        "startMs": 3449,
+        "text": "the"
+      },
+      {
+        "endMs": 3832,
+        "startMs": 3704,
+        "text": "x"
+      },
+      {
+        "endMs": 4343,
+        "startMs": 3832,
+        "text": "squared"
+      },
+      {
+        "endMs": 4726,
+        "startMs": 4343,
+        "text": "term."
+      },
+      {
+        "endMs": 5046,
+        "startMs": 4726,
+        "text": "From"
+      },
+      {
+        "endMs": 5301,
+        "startMs": 5046,
+        "text": "the"
+      },
+      {
+        "endMs": 5876,
+        "startMs": 5301,
+        "text": "product,"
+      },
+      {
+        "endMs": 6195,
+        "startMs": 5876,
+        "text": "that"
+      },
+      {
+        "endMs": 6962,
+        "startMs": 6195,
+        "text": "coefficient"
+      },
+      {
+        "endMs": 7153,
+        "startMs": 6962,
+        "text": "is"
+      },
+      {
+        "endMs": 7409,
+        "startMs": 7153,
+        "text": "the"
+      },
+      {
+        "endMs": 7984,
+        "startMs": 7409,
+        "text": "negative"
+      },
+      {
+        "endMs": 8239,
+        "startMs": 7984,
+        "text": "sum"
+      },
+      {
+        "endMs": 8431,
+        "startMs": 8239,
+        "text": "of"
+      },
+      {
+        "endMs": 8686,
+        "startMs": 8431,
+        "text": "one"
+      },
+      {
+        "endMs": 9006,
+        "startMs": 8686,
+        "text": "over"
+      },
+      {
+        "endMs": 9197,
+        "startMs": 9006,
+        "text": "pi"
+      },
+      {
+        "endMs": 9772,
+        "startMs": 9197,
+        "text": "squared,"
+      },
+      {
+        "endMs": 10028,
+        "startMs": 9772,
+        "text": "one"
+      },
+      {
+        "endMs": 10347,
+        "startMs": 10028,
+        "text": "over"
+      },
+      {
+        "endMs": 10666,
+        "startMs": 10347,
+        "text": "four"
+      },
+      {
+        "endMs": 10858,
+        "startMs": 10666,
+        "text": "pi"
+      },
+      {
+        "endMs": 11433,
+        "startMs": 10858,
+        "text": "squared,"
+      },
+      {
+        "endMs": 11688,
+        "startMs": 11433,
+        "text": "one"
+      },
+      {
+        "endMs": 12008,
+        "startMs": 11688,
+        "text": "over"
+      },
+      {
+        "endMs": 12327,
+        "startMs": 12008,
+        "text": "nine"
+      },
+      {
+        "endMs": 12519,
+        "startMs": 12327,
+        "text": "pi"
+      },
+      {
+        "endMs": 13094,
+        "startMs": 12519,
+        "text": "squared,"
+      },
+      {
+        "endMs": 13349,
+        "startMs": 13094,
+        "text": "and"
+      },
+      {
+        "endMs": 13860,
+        "startMs": 13349,
+        "text": "onward."
+      },
+      {
+        "endMs": 14180,
+        "startMs": 13860,
+        "text": "From"
+      },
+      {
+        "endMs": 14435,
+        "startMs": 14180,
+        "text": "the"
+      },
+      {
+        "endMs": 14818,
+        "startMs": 14435,
+        "text": "power"
+      },
+      {
+        "endMs": 15329,
+        "startMs": 14818,
+        "text": "series,"
+      },
+      {
+        "endMs": 15585,
+        "startMs": 15329,
+        "text": "the"
+      },
+      {
+        "endMs": 15904,
+        "startMs": 15585,
+        "text": "same"
+      },
+      {
+        "endMs": 16671,
+        "startMs": 15904,
+        "text": "coefficient"
+      },
+      {
+        "endMs": 16862,
+        "startMs": 16671,
+        "text": "is"
+      },
+      {
+        "endMs": 17437,
+        "startMs": 16862,
+        "text": "negative"
+      },
+      {
+        "endMs": 17693,
+        "startMs": 17437,
+        "text": "one"
+      },
+      {
+        "endMs": 18140,
+        "startMs": 17693,
+        "text": "sixth."
+      },
+      {
+        "endMs": 18395,
+        "startMs": 18140,
+        "text": "The"
+      },
+      {
+        "endMs": 18906,
+        "startMs": 18395,
+        "text": "unknown"
+      },
+      {
+        "endMs": 19289,
+        "startMs": 18906,
+        "text": "Basel"
+      },
+      {
+        "endMs": 19545,
+        "startMs": 19289,
+        "text": "sum"
+      },
+      {
+        "endMs": 19800,
+        "startMs": 19545,
+        "text": "has"
+      },
+      {
+        "endMs": 20375,
+        "startMs": 19800,
+        "text": "appeared"
+      },
+      {
+        "endMs": 20822,
+        "startMs": 20375,
+        "text": "inside"
+      },
+      {
+        "endMs": 20950,
+        "startMs": 20822,
+        "text": "a"
+      },
+      {
+        "endMs": 21780,
+        "startMs": 20950,
+        "text": "coefficient."
+      }
+    ]
+  },
+  "b-convergence-is-not-enough": {
+    "durationMs": 15650,
+    "engine": "kokoro-onnx",
+    "marks": [],
+    "scriptHash": "20a5e735376f1b09",
+    "segments": [
+      {
+        "endMs": 15530,
+        "startMs": 0,
+        "text": "First, this infinite sum really does converge. A simple integral comparison shows that after the first term, the remaining area is bounded. So the answer exists, and it is less than two. But existence is not the same thing as knowing the number."
+      }
+    ],
+    "speed": 1.0,
+    "voice": "af_heart",
+    "words": [
+      {
+        "endMs": 441,
+        "startMs": 0,
+        "text": "First,"
+      },
+      {
+        "endMs": 757,
+        "startMs": 441,
+        "text": "this"
+      },
+      {
+        "endMs": 1325,
+        "startMs": 757,
+        "text": "infinite"
+      },
+      {
+        "endMs": 1578,
+        "startMs": 1325,
+        "text": "sum"
+      },
+      {
+        "endMs": 2020,
+        "startMs": 1578,
+        "text": "really"
+      },
+      {
+        "endMs": 2335,
+        "startMs": 2020,
+        "text": "does"
+      },
+      {
+        "endMs": 2967,
+        "startMs": 2335,
+        "text": "converge."
+      },
+      {
+        "endMs": 3093,
+        "startMs": 2967,
+        "text": "A"
+      },
+      {
+        "endMs": 3535,
+        "startMs": 3093,
+        "text": "simple"
+      },
+      {
+        "endMs": 4103,
+        "startMs": 3535,
+        "text": "integral"
+      },
+      {
+        "endMs": 4797,
+        "startMs": 4103,
+        "text": "comparison"
+      },
+      {
+        "endMs": 5176,
+        "startMs": 4797,
+        "text": "shows"
+      },
+      {
+        "endMs": 5492,
+        "startMs": 5176,
+        "text": "that"
+      },
+      {
+        "endMs": 5871,
+        "startMs": 5492,
+        "text": "after"
+      },
+      {
+        "endMs": 6123,
+        "startMs": 5871,
+        "text": "the"
+      },
+      {
+        "endMs": 6502,
+        "startMs": 6123,
+        "text": "first"
+      },
+      {
+        "endMs": 6881,
+        "startMs": 6502,
+        "text": "term,"
+      },
+      {
+        "endMs": 7133,
+        "startMs": 6881,
+        "text": "the"
+      },
+      {
+        "endMs": 7765,
+        "startMs": 7133,
+        "text": "remaining"
+      },
+      {
+        "endMs": 8080,
+        "startMs": 7765,
+        "text": "area"
+      },
+      {
+        "endMs": 8270,
+        "startMs": 8080,
+        "text": "is"
+      },
+      {
+        "endMs": 8838,
+        "startMs": 8270,
+        "text": "bounded."
+      },
+      {
+        "endMs": 9027,
+        "startMs": 8838,
+        "text": "So"
+      },
+      {
+        "endMs": 9280,
+        "startMs": 9027,
+        "text": "the"
+      },
+      {
+        "endMs": 9722,
+        "startMs": 9280,
+        "text": "answer"
+      },
+      {
+        "endMs": 10227,
+        "startMs": 9722,
+        "text": "exists,"
+      },
+      {
+        "endMs": 10479,
+        "startMs": 10227,
+        "text": "and"
+      },
+      {
+        "endMs": 10668,
+        "startMs": 10479,
+        "text": "it"
+      },
+      {
+        "endMs": 10858,
+        "startMs": 10668,
+        "text": "is"
+      },
+      {
+        "endMs": 11174,
+        "startMs": 10858,
+        "text": "less"
+      },
+      {
+        "endMs": 11489,
+        "startMs": 11174,
+        "text": "than"
+      },
+      {
+        "endMs": 11805,
+        "startMs": 11489,
+        "text": "two."
+      },
+      {
+        "endMs": 12057,
+        "startMs": 11805,
+        "text": "But"
+      },
+      {
+        "endMs": 12689,
+        "startMs": 12057,
+        "text": "existence"
+      },
+      {
+        "endMs": 12878,
+        "startMs": 12689,
+        "text": "is"
+      },
+      {
+        "endMs": 13131,
+        "startMs": 12878,
+        "text": "not"
+      },
+      {
+        "endMs": 13383,
+        "startMs": 13131,
+        "text": "the"
+      },
+      {
+        "endMs": 13699,
+        "startMs": 13383,
+        "text": "same"
+      },
+      {
+        "endMs": 14078,
+        "startMs": 13699,
+        "text": "thing"
+      },
+      {
+        "endMs": 14267,
+        "startMs": 14078,
+        "text": "as"
+      },
+      {
+        "endMs": 14772,
+        "startMs": 14267,
+        "text": "knowing"
+      },
+      {
+        "endMs": 15024,
+        "startMs": 14772,
+        "text": "the"
+      },
+      {
+        "endMs": 15529,
+        "startMs": 15024,
+        "text": "number."
+      }
+    ]
+  },
+  "b-doorway-through-board": {
+    "durationMs": 17720,
+    "engine": "kokoro-onnx",
+    "marks": [],
+    "scriptHash": "0f7a43ed70a82d18",
+    "segments": [
+      {
+        "endMs": 17600,
+        "startMs": 0,
+        "text": "The lecture hall has taken us as far as ordinary summation can go. Euler's next move is bold enough to feel like stepping through the board itself. He will compare a familiar power series with a shadowy infinite product. The calculation is daring, but the clue it reveals is unmistakable."
+      }
+    ],
+    "speed": 1.0,
+    "voice": "af_heart",
+    "words": [
+      {
+        "endMs": 243,
+        "startMs": 0,
+        "text": "The"
+      },
+      {
+        "endMs": 730,
+        "startMs": 243,
+        "text": "lecture"
+      },
+      {
+        "endMs": 1035,
+        "startMs": 730,
+        "text": "hall"
+      },
+      {
+        "endMs": 1278,
+        "startMs": 1035,
+        "text": "has"
+      },
+      {
+        "endMs": 1644,
+        "startMs": 1278,
+        "text": "taken"
+      },
+      {
+        "endMs": 1826,
+        "startMs": 1644,
+        "text": "us"
+      },
+      {
+        "endMs": 2009,
+        "startMs": 1826,
+        "text": "as"
+      },
+      {
+        "endMs": 2253,
+        "startMs": 2009,
+        "text": "far"
+      },
+      {
+        "endMs": 2435,
+        "startMs": 2253,
+        "text": "as"
+      },
+      {
+        "endMs": 2984,
+        "startMs": 2435,
+        "text": "ordinary"
+      },
+      {
+        "endMs": 3593,
+        "startMs": 2984,
+        "text": "summation"
+      },
+      {
+        "endMs": 3836,
+        "startMs": 3593,
+        "text": "can"
+      },
+      {
+        "endMs": 4080,
+        "startMs": 3836,
+        "text": "go."
+      },
+      {
+        "endMs": 4567,
+        "startMs": 4080,
+        "text": "Euler's"
+      },
+      {
+        "endMs": 4871,
+        "startMs": 4567,
+        "text": "next"
+      },
+      {
+        "endMs": 5176,
+        "startMs": 4871,
+        "text": "move"
+      },
+      {
+        "endMs": 5359,
+        "startMs": 5176,
+        "text": "is"
+      },
+      {
+        "endMs": 5663,
+        "startMs": 5359,
+        "text": "bold"
+      },
+      {
+        "endMs": 6089,
+        "startMs": 5663,
+        "text": "enough"
+      },
+      {
+        "endMs": 6272,
+        "startMs": 6089,
+        "text": "to"
+      },
+      {
+        "endMs": 6577,
+        "startMs": 6272,
+        "text": "feel"
+      },
+      {
+        "endMs": 6881,
+        "startMs": 6577,
+        "text": "like"
+      },
+      {
+        "endMs": 7429,
+        "startMs": 6881,
+        "text": "stepping"
+      },
+      {
+        "endMs": 7916,
+        "startMs": 7429,
+        "text": "through"
+      },
+      {
+        "endMs": 8160,
+        "startMs": 7916,
+        "text": "the"
+      },
+      {
+        "endMs": 8525,
+        "startMs": 8160,
+        "text": "board"
+      },
+      {
+        "endMs": 9013,
+        "startMs": 8525,
+        "text": "itself."
+      },
+      {
+        "endMs": 9195,
+        "startMs": 9013,
+        "text": "He"
+      },
+      {
+        "endMs": 9500,
+        "startMs": 9195,
+        "text": "will"
+      },
+      {
+        "endMs": 9987,
+        "startMs": 9500,
+        "text": "compare"
+      },
+      {
+        "endMs": 10109,
+        "startMs": 9987,
+        "text": "a"
+      },
+      {
+        "endMs": 10657,
+        "startMs": 10109,
+        "text": "familiar"
+      },
+      {
+        "endMs": 11022,
+        "startMs": 10657,
+        "text": "power"
+      },
+      {
+        "endMs": 11449,
+        "startMs": 11022,
+        "text": "series"
+      },
+      {
+        "endMs": 11753,
+        "startMs": 11449,
+        "text": "with"
+      },
+      {
+        "endMs": 11875,
+        "startMs": 11753,
+        "text": "a"
+      },
+      {
+        "endMs": 12362,
+        "startMs": 11875,
+        "text": "shadowy"
+      },
+      {
+        "endMs": 12910,
+        "startMs": 12362,
+        "text": "infinite"
+      },
+      {
+        "endMs": 13458,
+        "startMs": 12910,
+        "text": "product."
+      },
+      {
+        "endMs": 13702,
+        "startMs": 13458,
+        "text": "The"
+      },
+      {
+        "endMs": 14433,
+        "startMs": 13702,
+        "text": "calculation"
+      },
+      {
+        "endMs": 14615,
+        "startMs": 14433,
+        "text": "is"
+      },
+      {
+        "endMs": 15103,
+        "startMs": 14615,
+        "text": "daring,"
+      },
+      {
+        "endMs": 15346,
+        "startMs": 15103,
+        "text": "but"
+      },
+      {
+        "endMs": 15590,
+        "startMs": 15346,
+        "text": "the"
+      },
+      {
+        "endMs": 15894,
+        "startMs": 15590,
+        "text": "clue"
+      },
+      {
+        "endMs": 16077,
+        "startMs": 15894,
+        "text": "it"
+      },
+      {
+        "endMs": 16564,
+        "startMs": 16077,
+        "text": "reveals"
+      },
+      {
+        "endMs": 16747,
+        "startMs": 16564,
+        "text": "is"
+      },
+      {
+        "endMs": 17600,
+        "startMs": 16747,
+        "text": "unmistakable."
+      }
+    ]
+  },
+  "b-opening-question": {
+    "durationMs": 15800,
+    "engine": "kokoro-onnx",
+    "marks": [],
+    "scriptHash": "4e6c029880e3f28a",
+    "segments": [
+      {
+        "endMs": 15680,
+        "startMs": 0,
+        "text": "We begin with a question that looks harmless. Add one, then one fourth, then one ninth, then one sixteenth, and keep going forever. The terms are shrinking, but the sum is still a mystery. This is the Basel problem, and tonight we follow Euler to its answer."
+      }
+    ],
+    "speed": 1.0,
+    "voice": "af_heart",
+    "words": [
+      {
+        "endMs": 181,
+        "startMs": 0,
+        "text": "We"
+      },
+      {
+        "endMs": 544,
+        "startMs": 181,
+        "text": "begin"
+      },
+      {
+        "endMs": 847,
+        "startMs": 544,
+        "text": "with"
+      },
+      {
+        "endMs": 968,
+        "startMs": 847,
+        "text": "a"
+      },
+      {
+        "endMs": 1513,
+        "startMs": 968,
+        "text": "question"
+      },
+      {
+        "endMs": 1816,
+        "startMs": 1513,
+        "text": "that"
+      },
+      {
+        "endMs": 2179,
+        "startMs": 1816,
+        "text": "looks"
+      },
+      {
+        "endMs": 2784,
+        "startMs": 2179,
+        "text": "harmless."
+      },
+      {
+        "endMs": 3027,
+        "startMs": 2784,
+        "text": "Add"
+      },
+      {
+        "endMs": 3329,
+        "startMs": 3027,
+        "text": "one,"
+      },
+      {
+        "endMs": 3632,
+        "startMs": 3329,
+        "text": "then"
+      },
+      {
+        "endMs": 3874,
+        "startMs": 3632,
+        "text": "one"
+      },
+      {
+        "endMs": 4358,
+        "startMs": 3874,
+        "text": "fourth,"
+      },
+      {
+        "endMs": 4661,
+        "startMs": 4358,
+        "text": "then"
+      },
+      {
+        "endMs": 4903,
+        "startMs": 4661,
+        "text": "one"
+      },
+      {
+        "endMs": 5327,
+        "startMs": 4903,
+        "text": "ninth,"
+      },
+      {
+        "endMs": 5630,
+        "startMs": 5327,
+        "text": "then"
+      },
+      {
+        "endMs": 5872,
+        "startMs": 5630,
+        "text": "one"
+      },
+      {
+        "endMs": 6538,
+        "startMs": 5872,
+        "text": "sixteenth,"
+      },
+      {
+        "endMs": 6780,
+        "startMs": 6538,
+        "text": "and"
+      },
+      {
+        "endMs": 7083,
+        "startMs": 6780,
+        "text": "keep"
+      },
+      {
+        "endMs": 7446,
+        "startMs": 7083,
+        "text": "going"
+      },
+      {
+        "endMs": 7991,
+        "startMs": 7446,
+        "text": "forever."
+      },
+      {
+        "endMs": 8233,
+        "startMs": 7991,
+        "text": "The"
+      },
+      {
+        "endMs": 8596,
+        "startMs": 8233,
+        "text": "terms"
+      },
+      {
+        "endMs": 8838,
+        "startMs": 8596,
+        "text": "are"
+      },
+      {
+        "endMs": 9504,
+        "startMs": 8838,
+        "text": "shrinking,"
+      },
+      {
+        "endMs": 9747,
+        "startMs": 9504,
+        "text": "but"
+      },
+      {
+        "endMs": 9989,
+        "startMs": 9747,
+        "text": "the"
+      },
+      {
+        "endMs": 10231,
+        "startMs": 9989,
+        "text": "sum"
+      },
+      {
+        "endMs": 10412,
+        "startMs": 10231,
+        "text": "is"
+      },
+      {
+        "endMs": 10776,
+        "startMs": 10412,
+        "text": "still"
+      },
+      {
+        "endMs": 10897,
+        "startMs": 10776,
+        "text": "a"
+      },
+      {
+        "endMs": 11442,
+        "startMs": 10897,
+        "text": "mystery."
+      },
+      {
+        "endMs": 11744,
+        "startMs": 11442,
+        "text": "This"
+      },
+      {
+        "endMs": 11926,
+        "startMs": 11744,
+        "text": "is"
+      },
+      {
+        "endMs": 12168,
+        "startMs": 11926,
+        "text": "the"
+      },
+      {
+        "endMs": 12531,
+        "startMs": 12168,
+        "text": "Basel"
+      },
+      {
+        "endMs": 13076,
+        "startMs": 12531,
+        "text": "problem,"
+      },
+      {
+        "endMs": 13318,
+        "startMs": 13076,
+        "text": "and"
+      },
+      {
+        "endMs": 13803,
+        "startMs": 13318,
+        "text": "tonight"
+      },
+      {
+        "endMs": 13984,
+        "startMs": 13803,
+        "text": "we"
+      },
+      {
+        "endMs": 14408,
+        "startMs": 13984,
+        "text": "follow"
+      },
+      {
+        "endMs": 14771,
+        "startMs": 14408,
+        "text": "Euler"
+      },
+      {
+        "endMs": 14953,
+        "startMs": 14771,
+        "text": "to"
+      },
+      {
+        "endMs": 15195,
+        "startMs": 14953,
+        "text": "its"
+      },
+      {
+        "endMs": 15680,
+        "startMs": 15195,
+        "text": "answer."
+      }
+    ]
+  },
+  "b-painfully-slow": {
+    "durationMs": 15949,
+    "engine": "kokoro-onnx",
+    "marks": [],
+    "scriptHash": "724fea53a81711d2",
+    "segments": [
+      {
+        "endMs": 15829,
+        "startMs": 0,
+        "text": "Direct calculation gives us a trail of approximations. The first few terms move quickly, but then the progress becomes painfully slow. Even after one hundred terms, the answer is still not fully visible. Euler needed a way to see the limit all at once."
+      }
+    ],
+    "speed": 1.0,
+    "voice": "af_heart",
+    "words": [
+      {
+        "endMs": 437,
+        "startMs": 0,
+        "text": "Direct"
+      },
+      {
+        "endMs": 1188,
+        "startMs": 437,
+        "text": "calculation"
+      },
+      {
+        "endMs": 1564,
+        "startMs": 1188,
+        "text": "gives"
+      },
+      {
+        "endMs": 1751,
+        "startMs": 1564,
+        "text": "us"
+      },
+      {
+        "endMs": 1876,
+        "startMs": 1751,
+        "text": "a"
+      },
+      {
+        "endMs": 2252,
+        "startMs": 1876,
+        "text": "trail"
+      },
+      {
+        "endMs": 2440,
+        "startMs": 2252,
+        "text": "of"
+      },
+      {
+        "endMs": 3441,
+        "startMs": 2440,
+        "text": "approximations."
+      },
+      {
+        "endMs": 3691,
+        "startMs": 3441,
+        "text": "The"
+      },
+      {
+        "endMs": 4066,
+        "startMs": 3691,
+        "text": "first"
+      },
+      {
+        "endMs": 4317,
+        "startMs": 4066,
+        "text": "few"
+      },
+      {
+        "endMs": 4692,
+        "startMs": 4317,
+        "text": "terms"
+      },
+      {
+        "endMs": 5005,
+        "startMs": 4692,
+        "text": "move"
+      },
+      {
+        "endMs": 5568,
+        "startMs": 5005,
+        "text": "quickly,"
+      },
+      {
+        "endMs": 5818,
+        "startMs": 5568,
+        "text": "but"
+      },
+      {
+        "endMs": 6131,
+        "startMs": 5818,
+        "text": "then"
+      },
+      {
+        "endMs": 6381,
+        "startMs": 6131,
+        "text": "the"
+      },
+      {
+        "endMs": 6944,
+        "startMs": 6381,
+        "text": "progress"
+      },
+      {
+        "endMs": 7445,
+        "startMs": 6944,
+        "text": "becomes"
+      },
+      {
+        "endMs": 8070,
+        "startMs": 7445,
+        "text": "painfully"
+      },
+      {
+        "endMs": 8446,
+        "startMs": 8070,
+        "text": "slow."
+      },
+      {
+        "endMs": 8759,
+        "startMs": 8446,
+        "text": "Even"
+      },
+      {
+        "endMs": 9134,
+        "startMs": 8759,
+        "text": "after"
+      },
+      {
+        "endMs": 9384,
+        "startMs": 9134,
+        "text": "one"
+      },
+      {
+        "endMs": 9885,
+        "startMs": 9384,
+        "text": "hundred"
+      },
+      {
+        "endMs": 10323,
+        "startMs": 9885,
+        "text": "terms,"
+      },
+      {
+        "endMs": 10573,
+        "startMs": 10323,
+        "text": "the"
+      },
+      {
+        "endMs": 11011,
+        "startMs": 10573,
+        "text": "answer"
+      },
+      {
+        "endMs": 11199,
+        "startMs": 11011,
+        "text": "is"
+      },
+      {
+        "endMs": 11574,
+        "startMs": 11199,
+        "text": "still"
+      },
+      {
+        "endMs": 11824,
+        "startMs": 11574,
+        "text": "not"
+      },
+      {
+        "endMs": 12200,
+        "startMs": 11824,
+        "text": "fully"
+      },
+      {
+        "endMs": 12763,
+        "startMs": 12200,
+        "text": "visible."
+      },
+      {
+        "endMs": 13138,
+        "startMs": 12763,
+        "text": "Euler"
+      },
+      {
+        "endMs": 13576,
+        "startMs": 13138,
+        "text": "needed"
+      },
+      {
+        "endMs": 13701,
+        "startMs": 13576,
+        "text": "a"
+      },
+      {
+        "endMs": 13952,
+        "startMs": 13701,
+        "text": "way"
+      },
+      {
+        "endMs": 14139,
+        "startMs": 13952,
+        "text": "to"
+      },
+      {
+        "endMs": 14390,
+        "startMs": 14139,
+        "text": "see"
+      },
+      {
+        "endMs": 14640,
+        "startMs": 14390,
+        "text": "the"
+      },
+      {
+        "endMs": 15015,
+        "startMs": 14640,
+        "text": "limit"
+      },
+      {
+        "endMs": 15265,
+        "startMs": 15015,
+        "text": "all"
+      },
+      {
+        "endMs": 15453,
+        "startMs": 15265,
+        "text": "at"
+      },
+      {
+        "endMs": 15829,
+        "startMs": 15453,
+        "text": "once."
+      }
+    ]
+  },
+  "b-power-series-side": {
+    "durationMs": 16333,
+    "engine": "kokoro-onnx",
+    "marks": [],
+    "scriptHash": "dc1566d43163ec5f",
+    "segments": [
+      {
+        "endMs": 16213,
+        "startMs": 0,
+        "text": "The same function also has a power series known from calculus. Divide the sine series by x, and the coefficient of x squared is negative one sixth. This coefficient is the hinge of the whole argument. Euler now has two descriptions of one object."
+      }
+    ],
+    "speed": 1.0,
+    "voice": "af_heart",
+    "words": [
+      {
+        "endMs": 262,
+        "startMs": 0,
+        "text": "The"
+      },
+      {
+        "endMs": 590,
+        "startMs": 262,
+        "text": "same"
+      },
+      {
+        "endMs": 1181,
+        "startMs": 590,
+        "text": "function"
+      },
+      {
+        "endMs": 1509,
+        "startMs": 1181,
+        "text": "also"
+      },
+      {
+        "endMs": 1772,
+        "startMs": 1509,
+        "text": "has"
+      },
+      {
+        "endMs": 1903,
+        "startMs": 1772,
+        "text": "a"
+      },
+      {
+        "endMs": 2297,
+        "startMs": 1903,
+        "text": "power"
+      },
+      {
+        "endMs": 2756,
+        "startMs": 2297,
+        "text": "series"
+      },
+      {
+        "endMs": 3150,
+        "startMs": 2756,
+        "text": "known"
+      },
+      {
+        "endMs": 3478,
+        "startMs": 3150,
+        "text": "from"
+      },
+      {
+        "endMs": 4135,
+        "startMs": 3478,
+        "text": "calculus."
+      },
+      {
+        "endMs": 4594,
+        "startMs": 4135,
+        "text": "Divide"
+      },
+      {
+        "endMs": 4857,
+        "startMs": 4594,
+        "text": "the"
+      },
+      {
+        "endMs": 5185,
+        "startMs": 4857,
+        "text": "sine"
+      },
+      {
+        "endMs": 5645,
+        "startMs": 5185,
+        "text": "series"
+      },
+      {
+        "endMs": 5841,
+        "startMs": 5645,
+        "text": "by"
+      },
+      {
+        "endMs": 6038,
+        "startMs": 5841,
+        "text": "x,"
+      },
+      {
+        "endMs": 6301,
+        "startMs": 6038,
+        "text": "and"
+      },
+      {
+        "endMs": 6563,
+        "startMs": 6301,
+        "text": "the"
+      },
+      {
+        "endMs": 7351,
+        "startMs": 6563,
+        "text": "coefficient"
+      },
+      {
+        "endMs": 7548,
+        "startMs": 7351,
+        "text": "of"
+      },
+      {
+        "endMs": 7679,
+        "startMs": 7548,
+        "text": "x"
+      },
+      {
+        "endMs": 8204,
+        "startMs": 7679,
+        "text": "squared"
+      },
+      {
+        "endMs": 8401,
+        "startMs": 8204,
+        "text": "is"
+      },
+      {
+        "endMs": 8992,
+        "startMs": 8401,
+        "text": "negative"
+      },
+      {
+        "endMs": 9255,
+        "startMs": 8992,
+        "text": "one"
+      },
+      {
+        "endMs": 9714,
+        "startMs": 9255,
+        "text": "sixth."
+      },
+      {
+        "endMs": 10042,
+        "startMs": 9714,
+        "text": "This"
+      },
+      {
+        "endMs": 10830,
+        "startMs": 10042,
+        "text": "coefficient"
+      },
+      {
+        "endMs": 11027,
+        "startMs": 10830,
+        "text": "is"
+      },
+      {
+        "endMs": 11290,
+        "startMs": 11027,
+        "text": "the"
+      },
+      {
+        "endMs": 11683,
+        "startMs": 11290,
+        "text": "hinge"
+      },
+      {
+        "endMs": 11880,
+        "startMs": 11683,
+        "text": "of"
+      },
+      {
+        "endMs": 12143,
+        "startMs": 11880,
+        "text": "the"
+      },
+      {
+        "endMs": 12537,
+        "startMs": 12143,
+        "text": "whole"
+      },
+      {
+        "endMs": 13193,
+        "startMs": 12537,
+        "text": "argument."
+      },
+      {
+        "endMs": 13587,
+        "startMs": 13193,
+        "text": "Euler"
+      },
+      {
+        "endMs": 13849,
+        "startMs": 13587,
+        "text": "now"
+      },
+      {
+        "endMs": 14112,
+        "startMs": 13849,
+        "text": "has"
+      },
+      {
+        "endMs": 14375,
+        "startMs": 14112,
+        "text": "two"
+      },
+      {
+        "endMs": 15228,
+        "startMs": 14375,
+        "text": "descriptions"
+      },
+      {
+        "endMs": 15425,
+        "startMs": 15228,
+        "text": "of"
+      },
+      {
+        "endMs": 15687,
+        "startMs": 15425,
+        "text": "one"
+      },
+      {
+        "endMs": 16212,
+        "startMs": 15687,
+        "text": "object."
+      }
+    ]
+  },
+  "b-reveal-answer": {
+    "durationMs": 14968,
+    "engine": "kokoro-onnx",
+    "marks": [],
+    "scriptHash": "0a8d09a48a9d5b80",
+    "segments": [
+      {
+        "endMs": 14848,
+        "startMs": 0,
+        "text": "Now cancel the minus signs and multiply by pi squared. The answer is not a decimal reached by patient addition. It is pi squared over six. A sum over square numbers has secretly been governed by the geometry of the circle."
+      }
+    ],
+    "speed": 1.0,
+    "voice": "af_heart",
+    "words": [
+      {
+        "endMs": 266,
+        "startMs": 0,
+        "text": "Now"
+      },
+      {
+        "endMs": 732,
+        "startMs": 266,
+        "text": "cancel"
+      },
+      {
+        "endMs": 998,
+        "startMs": 732,
+        "text": "the"
+      },
+      {
+        "endMs": 1398,
+        "startMs": 998,
+        "text": "minus"
+      },
+      {
+        "endMs": 1797,
+        "startMs": 1398,
+        "text": "signs"
+      },
+      {
+        "endMs": 2064,
+        "startMs": 1797,
+        "text": "and"
+      },
+      {
+        "endMs": 2663,
+        "startMs": 2064,
+        "text": "multiply"
+      },
+      {
+        "endMs": 2863,
+        "startMs": 2663,
+        "text": "by"
+      },
+      {
+        "endMs": 3062,
+        "startMs": 2863,
+        "text": "pi"
+      },
+      {
+        "endMs": 3662,
+        "startMs": 3062,
+        "text": "squared."
+      },
+      {
+        "endMs": 3928,
+        "startMs": 3662,
+        "text": "The"
+      },
+      {
+        "endMs": 4394,
+        "startMs": 3928,
+        "text": "answer"
+      },
+      {
+        "endMs": 4594,
+        "startMs": 4394,
+        "text": "is"
+      },
+      {
+        "endMs": 4860,
+        "startMs": 4594,
+        "text": "not"
+      },
+      {
+        "endMs": 4993,
+        "startMs": 4860,
+        "text": "a"
+      },
+      {
+        "endMs": 5526,
+        "startMs": 4993,
+        "text": "decimal"
+      },
+      {
+        "endMs": 6059,
+        "startMs": 5526,
+        "text": "reached"
+      },
+      {
+        "endMs": 6258,
+        "startMs": 6059,
+        "text": "by"
+      },
+      {
+        "endMs": 6791,
+        "startMs": 6258,
+        "text": "patient"
+      },
+      {
+        "endMs": 7457,
+        "startMs": 6791,
+        "text": "addition."
+      },
+      {
+        "endMs": 7657,
+        "startMs": 7457,
+        "text": "It"
+      },
+      {
+        "endMs": 7856,
+        "startMs": 7657,
+        "text": "is"
+      },
+      {
+        "endMs": 8056,
+        "startMs": 7856,
+        "text": "pi"
+      },
+      {
+        "endMs": 8589,
+        "startMs": 8056,
+        "text": "squared"
+      },
+      {
+        "endMs": 8922,
+        "startMs": 8589,
+        "text": "over"
+      },
+      {
+        "endMs": 9255,
+        "startMs": 8922,
+        "text": "six."
+      },
+      {
+        "endMs": 9388,
+        "startMs": 9255,
+        "text": "A"
+      },
+      {
+        "endMs": 9654,
+        "startMs": 9388,
+        "text": "sum"
+      },
+      {
+        "endMs": 9987,
+        "startMs": 9654,
+        "text": "over"
+      },
+      {
+        "endMs": 10453,
+        "startMs": 9987,
+        "text": "square"
+      },
+      {
+        "endMs": 10986,
+        "startMs": 10453,
+        "text": "numbers"
+      },
+      {
+        "endMs": 11252,
+        "startMs": 10986,
+        "text": "has"
+      },
+      {
+        "endMs": 11851,
+        "startMs": 11252,
+        "text": "secretly"
+      },
+      {
+        "endMs": 12184,
+        "startMs": 11851,
+        "text": "been"
+      },
+      {
+        "endMs": 12783,
+        "startMs": 12184,
+        "text": "governed"
+      },
+      {
+        "endMs": 12983,
+        "startMs": 12783,
+        "text": "by"
+      },
+      {
+        "endMs": 13250,
+        "startMs": 12983,
+        "text": "the"
+      },
+      {
+        "endMs": 13849,
+        "startMs": 13250,
+        "text": "geometry"
+      },
+      {
+        "endMs": 14049,
+        "startMs": 13849,
+        "text": "of"
+      },
+      {
+        "endMs": 14315,
+        "startMs": 14049,
+        "text": "the"
+      },
+      {
+        "endMs": 14848,
+        "startMs": 14315,
+        "text": "circle."
+      }
+    ]
+  },
+  "b-road-to-zeta": {
+    "durationMs": 17720,
+    "engine": "kokoro-onnx",
+    "marks": [],
+    "scriptHash": "9abe7f7fa35971a8",
+    "segments": [
+      {
+        "endMs": 17600,
+        "startMs": 0,
+        "text": "Euler did more than solve a famous sum. He revealed that infinite series, trigonometric functions, and the primes could belong to one story. The modern zeta function grows from this soil. The tour ends at a gate, with the blackboard behind us and a much larger mathematics ahead."
+      }
+    ],
+    "speed": 1.0,
+    "voice": "af_heart",
+    "words": [
+      {
+        "endMs": 377,
+        "startMs": 0,
+        "text": "Euler"
+      },
+      {
+        "endMs": 628,
+        "startMs": 377,
+        "text": "did"
+      },
+      {
+        "endMs": 942,
+        "startMs": 628,
+        "text": "more"
+      },
+      {
+        "endMs": 1257,
+        "startMs": 942,
+        "text": "than"
+      },
+      {
+        "endMs": 1634,
+        "startMs": 1257,
+        "text": "solve"
+      },
+      {
+        "endMs": 1760,
+        "startMs": 1634,
+        "text": "a"
+      },
+      {
+        "endMs": 2200,
+        "startMs": 1760,
+        "text": "famous"
+      },
+      {
+        "endMs": 2514,
+        "startMs": 2200,
+        "text": "sum."
+      },
+      {
+        "endMs": 2702,
+        "startMs": 2514,
+        "text": "He"
+      },
+      {
+        "endMs": 3268,
+        "startMs": 2702,
+        "text": "revealed"
+      },
+      {
+        "endMs": 3582,
+        "startMs": 3268,
+        "text": "that"
+      },
+      {
+        "endMs": 4148,
+        "startMs": 3582,
+        "text": "infinite"
+      },
+      {
+        "endMs": 4651,
+        "startMs": 4148,
+        "text": "series,"
+      },
+      {
+        "endMs": 5531,
+        "startMs": 4651,
+        "text": "trigonometric"
+      },
+      {
+        "endMs": 6222,
+        "startMs": 5531,
+        "text": "functions,"
+      },
+      {
+        "endMs": 6474,
+        "startMs": 6222,
+        "text": "and"
+      },
+      {
+        "endMs": 6725,
+        "startMs": 6474,
+        "text": "the"
+      },
+      {
+        "endMs": 7165,
+        "startMs": 6725,
+        "text": "primes"
+      },
+      {
+        "endMs": 7542,
+        "startMs": 7165,
+        "text": "could"
+      },
+      {
+        "endMs": 7982,
+        "startMs": 7542,
+        "text": "belong"
+      },
+      {
+        "endMs": 8171,
+        "startMs": 7982,
+        "text": "to"
+      },
+      {
+        "endMs": 8422,
+        "startMs": 8171,
+        "text": "one"
+      },
+      {
+        "endMs": 8862,
+        "startMs": 8422,
+        "text": "story."
+      },
+      {
+        "endMs": 9114,
+        "startMs": 8862,
+        "text": "The"
+      },
+      {
+        "endMs": 9554,
+        "startMs": 9114,
+        "text": "modern"
+      },
+      {
+        "endMs": 9868,
+        "startMs": 9554,
+        "text": "zeta"
+      },
+      {
+        "endMs": 10434,
+        "startMs": 9868,
+        "text": "function"
+      },
+      {
+        "endMs": 10811,
+        "startMs": 10434,
+        "text": "grows"
+      },
+      {
+        "endMs": 11125,
+        "startMs": 10811,
+        "text": "from"
+      },
+      {
+        "endMs": 11439,
+        "startMs": 11125,
+        "text": "this"
+      },
+      {
+        "endMs": 11817,
+        "startMs": 11439,
+        "text": "soil."
+      },
+      {
+        "endMs": 12068,
+        "startMs": 11817,
+        "text": "The"
+      },
+      {
+        "endMs": 12382,
+        "startMs": 12068,
+        "text": "tour"
+      },
+      {
+        "endMs": 12697,
+        "startMs": 12382,
+        "text": "ends"
+      },
+      {
+        "endMs": 12885,
+        "startMs": 12697,
+        "text": "at"
+      },
+      {
+        "endMs": 13011,
+        "startMs": 12885,
+        "text": "a"
+      },
+      {
+        "endMs": 13388,
+        "startMs": 13011,
+        "text": "gate,"
+      },
+      {
+        "endMs": 13702,
+        "startMs": 13388,
+        "text": "with"
+      },
+      {
+        "endMs": 13954,
+        "startMs": 13702,
+        "text": "the"
+      },
+      {
+        "endMs": 14645,
+        "startMs": 13954,
+        "text": "blackboard"
+      },
+      {
+        "endMs": 15085,
+        "startMs": 14645,
+        "text": "behind"
+      },
+      {
+        "endMs": 15274,
+        "startMs": 15085,
+        "text": "us"
+      },
+      {
+        "endMs": 15525,
+        "startMs": 15274,
+        "text": "and"
+      },
+      {
+        "endMs": 15651,
+        "startMs": 15525,
+        "text": "a"
+      },
+      {
+        "endMs": 15965,
+        "startMs": 15651,
+        "text": "much"
+      },
+      {
+        "endMs": 16405,
+        "startMs": 15965,
+        "text": "larger"
+      },
+      {
+        "endMs": 17159,
+        "startMs": 16405,
+        "text": "mathematics"
+      },
+      {
+        "endMs": 17599,
+        "startMs": 17159,
+        "text": "ahead."
+      }
+    ]
+  },
+  "b-sine-as-product": {
+    "durationMs": 17186,
+    "engine": "kokoro-onnx",
+    "marks": [],
+    "scriptHash": "638640f3e6add8cf",
+    "segments": [
+      {
+        "endMs": 17066,
+        "startMs": 0,
+        "text": "In the void, roots become architecture. The function sine x over x is zero at plus and minus pi, plus and minus two pi, plus and minus three pi, and so on. Euler imagined it as an infinite polynomial whose factors remember exactly those zeros."
+      }
+    ],
+    "speed": 1.0,
+    "voice": "af_heart",
+    "words": [
+      {
+        "endMs": 209,
+        "startMs": 0,
+        "text": "In"
+      },
+      {
+        "endMs": 489,
+        "startMs": 209,
+        "text": "the"
+      },
+      {
+        "endMs": 909,
+        "startMs": 489,
+        "text": "void,"
+      },
+      {
+        "endMs": 1328,
+        "startMs": 909,
+        "text": "roots"
+      },
+      {
+        "endMs": 1818,
+        "startMs": 1328,
+        "text": "become"
+      },
+      {
+        "endMs": 2797,
+        "startMs": 1818,
+        "text": "architecture."
+      },
+      {
+        "endMs": 3077,
+        "startMs": 2797,
+        "text": "The"
+      },
+      {
+        "endMs": 3706,
+        "startMs": 3077,
+        "text": "function"
+      },
+      {
+        "endMs": 4056,
+        "startMs": 3706,
+        "text": "sine"
+      },
+      {
+        "endMs": 4196,
+        "startMs": 4056,
+        "text": "x"
+      },
+      {
+        "endMs": 4546,
+        "startMs": 4196,
+        "text": "over"
+      },
+      {
+        "endMs": 4686,
+        "startMs": 4546,
+        "text": "x"
+      },
+      {
+        "endMs": 4895,
+        "startMs": 4686,
+        "text": "is"
+      },
+      {
+        "endMs": 5245,
+        "startMs": 4895,
+        "text": "zero"
+      },
+      {
+        "endMs": 5455,
+        "startMs": 5245,
+        "text": "at"
+      },
+      {
+        "endMs": 5805,
+        "startMs": 5455,
+        "text": "plus"
+      },
+      {
+        "endMs": 6085,
+        "startMs": 5805,
+        "text": "and"
+      },
+      {
+        "endMs": 6504,
+        "startMs": 6085,
+        "text": "minus"
+      },
+      {
+        "endMs": 6784,
+        "startMs": 6504,
+        "text": "pi,"
+      },
+      {
+        "endMs": 7134,
+        "startMs": 6784,
+        "text": "plus"
+      },
+      {
+        "endMs": 7413,
+        "startMs": 7134,
+        "text": "and"
+      },
+      {
+        "endMs": 7833,
+        "startMs": 7413,
+        "text": "minus"
+      },
+      {
+        "endMs": 8113,
+        "startMs": 7833,
+        "text": "two"
+      },
+      {
+        "endMs": 8393,
+        "startMs": 8113,
+        "text": "pi,"
+      },
+      {
+        "endMs": 8742,
+        "startMs": 8393,
+        "text": "plus"
+      },
+      {
+        "endMs": 9022,
+        "startMs": 8742,
+        "text": "and"
+      },
+      {
+        "endMs": 9442,
+        "startMs": 9022,
+        "text": "minus"
+      },
+      {
+        "endMs": 9861,
+        "startMs": 9442,
+        "text": "three"
+      },
+      {
+        "endMs": 10141,
+        "startMs": 9861,
+        "text": "pi,"
+      },
+      {
+        "endMs": 10421,
+        "startMs": 10141,
+        "text": "and"
+      },
+      {
+        "endMs": 10631,
+        "startMs": 10421,
+        "text": "so"
+      },
+      {
+        "endMs": 10911,
+        "startMs": 10631,
+        "text": "on."
+      },
+      {
+        "endMs": 11330,
+        "startMs": 10911,
+        "text": "Euler"
+      },
+      {
+        "endMs": 11960,
+        "startMs": 11330,
+        "text": "imagined"
+      },
+      {
+        "endMs": 12170,
+        "startMs": 11960,
+        "text": "it"
+      },
+      {
+        "endMs": 12379,
+        "startMs": 12170,
+        "text": "as"
+      },
+      {
+        "endMs": 12589,
+        "startMs": 12379,
+        "text": "an"
+      },
+      {
+        "endMs": 13219,
+        "startMs": 12589,
+        "text": "infinite"
+      },
+      {
+        "endMs": 13988,
+        "startMs": 13219,
+        "text": "polynomial"
+      },
+      {
+        "endMs": 14408,
+        "startMs": 13988,
+        "text": "whose"
+      },
+      {
+        "endMs": 14967,
+        "startMs": 14408,
+        "text": "factors"
+      },
+      {
+        "endMs": 15597,
+        "startMs": 14967,
+        "text": "remember"
+      },
+      {
+        "endMs": 16156,
+        "startMs": 15597,
+        "text": "exactly"
+      },
+      {
+        "endMs": 16576,
+        "startMs": 16156,
+        "text": "those"
+      },
+      {
+        "endMs": 17066,
+        "startMs": 16576,
+        "text": "zeros."
+      }
+    ]
+  }
+}

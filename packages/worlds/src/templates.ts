@@ -27,6 +27,17 @@ const HALF = Math.PI / 2;
  *  bays are numbered front (high z) to back on each wall. */
 export const AtriumTemplate: WorldTemplate = {
   id: "atrium",
+  defaults: {
+    name: "The Atrium of Linear Maps",
+    unitScale: "human",
+    ambience: {
+      background: "#070a14",
+      fogColor: "#0a0c16",
+      fogNear: 30,
+      fogFar: 110,
+      accent: "#6f86c8",
+    },
+  },
   stations: {
     "entry.tablet": {
       position: [0, 2.7, 23],
@@ -103,6 +114,17 @@ export const AtriumTemplate: WorldTemplate = {
 /** The spectral interior far below the atrium — inside the decomposition. */
 export const SpectralTemplate: WorldTemplate = {
   id: "spectral",
+  defaults: {
+    name: "Inside the Decomposition",
+    unitScale: "micro",
+    ambience: {
+      background: "#040a1c",
+      fogColor: "#08142e",
+      fogNear: 25,
+      fogFar: 120,
+      accent: "#5db4ff",
+    },
+  },
   stations: {
     "arrival.overlook": {
       position: [0, DEEP_Y + 6, 24],
@@ -150,6 +172,17 @@ export const SpectralTemplate: WorldTemplate = {
  *  not scenery. The portal dives straight into the center board. */
 export const LectureHallTemplate: WorldTemplate = {
   id: "lecture-hall",
+  defaults: {
+    name: "The Evening Lecture Hall",
+    unitScale: "human",
+    ambience: {
+      background: "#171310",
+      fogColor: "#13100c",
+      fogNear: 18,
+      fogFar: 64,
+      accent: "#d9a85c",
+    },
+  },
   stations: {
     "board.left": {
       position: [BOARD_X[0], BOARD_Y, HALL_FRONT_Z + 0.3],
@@ -188,6 +221,17 @@ export const LectureHallTemplate: WorldTemplate = {
 /** The math void: dark weightless space where mathematics glows. */
 export const MathVoidTemplate: WorldTemplate = {
   id: "math-void",
+  defaults: {
+    name: "The Math Void",
+    unitScale: "macro",
+    ambience: {
+      background: "#05060f",
+      fogColor: "#0a0f26",
+      fogNear: 30,
+      fogFar: 140,
+      accent: "#7d8cff",
+    },
+  },
   stations: {
     "plinth.identity": {
       position: VOID_PLINTH,

@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@spatial-present/core": "*",
-    "@spatial-present/schema": "*"
+    "@spatial-present/schema": "*",
+    "@spatial-present/worlds": "^0.1.0",
+    "yaml": "^2.9.0"
   },
   "devDependencies": {
     "@types/node": "^24.12.3"

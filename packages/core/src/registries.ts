@@ -80,14 +80,37 @@ export const defaultSkinFor: Record<ContentKind, SkinKind> = {
  * hand-tuned cinematography of the reference journeys.
  */
 export const builtinCameraIntents: Record<string, CameraIntentSpec> = {
-  /** Square-on, close enough to read body text comfortably. */
-  "read-close": { padding: 1.7, fov: 52, lift: -0.04, targetDrop: 0.3 },
-  /** Steps back and looks past the content into the world behind it. */
-  "wide-establishing": { padding: 2.1, fov: 58, lift: 0.05, targetPush: 1.5 },
-  /** Off-axis three-quarter view for charts and objects. */
-  "orbit-focus": { padding: 1.9, fov: 55, azimuth: 0.32, lift: 0.15 },
-  /** From low ground, gazing up at content overhead. */
-  "sky-gaze": { padding: 2.3, fov: 60, lift: -0.38 },
-  /** Slightly below floating text, looking up at it. */
-  "quote-gaze": { padding: 1.8, fov: 55, lift: -0.2 },
+  "read-close": {
+    description: "square-on, close enough to read body text comfortably",
+    padding: 1.7,
+    fov: 52,
+    lift: -0.04,
+    targetDrop: 0.3,
+  },
+  "wide-establishing": {
+    description: "steps back and looks past the content into the world behind it",
+    padding: 2.1,
+    fov: 58,
+    lift: 0.05,
+    targetPush: 1.5,
+  },
+  "orbit-focus": {
+    description: "off-axis three-quarter view for charts and objects",
+    padding: 1.9,
+    fov: 55,
+    azimuth: 0.32,
+    lift: 0.15,
+  },
+  "sky-gaze": {
+    description: "from low ground, gazing up at content overhead",
+    padding: 2.3,
+    fov: 60,
+    lift: -0.38,
+  },
+  "quote-gaze": {
+    description: "slightly below floating text, looking up at it",
+    padding: 1.8,
+    fov: 55,
+    lift: -0.2,
+  },
 };

@@ -1,5 +1,6 @@
 export { defineJourney, type JourneyOptions } from "./defineJourney";
 export { resolveStations, resolveSkins } from "./layoutSolver";
+export { compileSpec } from "./specCompiler";
 export { planCameras, autoRoute } from "./cameraPlanner";
 export {
   builtinCameraIntents,

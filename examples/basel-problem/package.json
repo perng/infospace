@@ -1,0 +1,39 @@
+{
+  "name": "basel-problem",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "AI-generated example: the journey was produced from brief.md by the M5 generator (talk.spec.yaml is the Layer B artifact; document.json the compiled authored document).",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "generate": "tsx ../../packages/cli/src/generate-journey.ts --brief brief.md --worlds lecture-hall,math-void --out .",
+    "generate:regen": "tsx ../../packages/cli/src/generate-journey.ts --brief brief.md --worlds lecture-hall,math-void --out . --regen",
+    "spec:compile": "tsx ../../packages/cli/src/journey-cli.ts spec-compile talk.spec.yaml src/journey/document.json",
+    "validate": "tsx ../../packages/cli/src/journey-cli.ts validate src/journey/project.ts",
+    "outline": "tsx ../../packages/cli/src/journey-cli.ts outline src/journey/project.ts",
+    "resolve": "tsx ../../packages/cli/src/journey-cli.ts resolve src/journey/project.ts",
+    "diff": "tsx ../../packages/cli/src/journey-cli.ts diff",
+    "narration": "tsx ../../packages/cli/src/journey-cli.ts narration src/journey/project.ts",
+    "narration:render": "python3 ../../packages/cli/generate-narration.py src/journey/project.ts"
+  },
+  "dependencies": {
+    "@spatial-present/core": "*",
+    "@spatial-present/renderer": "*",
+    "@spatial-present/schema": "*",
+    "@spatial-present/worlds": "*",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.184.1",
+    "@vitejs/plugin-react": "^6.0.1",
+    "tsx": "^4.22.4",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.12"
+  }
+}

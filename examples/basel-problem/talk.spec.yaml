@@ -1,0 +1,225 @@
+# Generated Authoring Spec (Layer B) — edit freely; scenes marked
+# `locked: true` survive --regen verbatim. Recompile with:
+#   npm run spec:compile
+id: basel-night-lecture
+title: Basel Night Lecture
+worlds:
+  - lecture-hall
+  - math-void
+scenes:
+  - id: opening-question
+    title: What Is This Sum
+    world: lecture-hall
+    station: board.left
+    content:
+      kind: text
+      title: The Basel problem
+      body: |
+        What number is hiding behind this sum?
+
+        1 + 1/4 + 1/9 + 1/16 + ...
+
+        In 1734, nobody in Europe knew.
+    skin: chalkboard
+    camera: read-close
+    role: chapter
+    narrate: >
+      We begin with a question that looks harmless. Add one, then one fourth,
+      then one ninth, then one sixteenth, and keep going forever. The terms are
+      shrinking, but the sum is still a mystery. This is the Basel problem, and
+      tonight we follow Euler to its answer.
+    notes: State the problem before naming the method.
+  - id: convergence-is-not-enough
+    title: The Sum Settles Down
+    world: lecture-hall
+    station: board.center
+    content:
+      kind: formula
+      latex: \sum_{n=1}^{\infty} \frac{1}{n^{2}} \leq 1 + \int_{1}^{\infty}
+        \frac{1}{x^{2}}\,dx = 2
+      spoken: the sum from n equals one to infinity of one over n squared is at most
+        one plus the integral from one to infinity of one over x squared dx,
+        which equals two
+    skin: chalkboard
+    camera: read-close
+    role: detail
+    narrate: >
+      First, this infinite sum really does converge. A simple integral
+      comparison shows that after the first term, the remaining area is bounded.
+      So the answer exists, and it is less than two. But existence is not the
+      same thing as knowing the number.
+    notes: Emphasize rigor before the dramatic leap.
+  - id: painfully-slow
+    title: Slow Partial Sums
+    world: lecture-hall
+    station: board.right
+    content:
+      kind: chart
+      data:
+        type: bar
+        title: Partial sums of 1/n^2
+        unit: value
+        series:
+          - label: N=1
+            value: 1
+          - label: N=2
+            value: 1.25
+          - label: N=5
+            value: 1.46361
+          - label: N=10
+            value: 1.54977
+          - label: N=50
+            value: 1.62513
+          - label: N=100
+            value: 1.63498
+          - label: limit
+            value: 1.64493
+      summary: The partial sums climb quickly at first, then creep toward about one
+        point six four four nine.
+    skin: hologram
+    camera: orbit-focus
+    role: chart
+    narrate: >
+      Direct calculation gives us a trail of approximations. The first few terms
+      move quickly, but then the progress becomes painfully slow. Even after one
+      hundred terms, the answer is still not fully visible. Euler needed a way
+      to see the limit all at once.
+    notes: Let the chart make the slowness tangible.
+  - id: doorway-through-board
+    title: Through the Board
+    world: lecture-hall
+    station: wall.west
+    content:
+      kind: text
+      title: The risky idea
+      body: |
+        Leave arithmetic behind.
+
+        Euler will treat a function as if it were an infinite polynomial,
+        then listen to its roots.
+    skin: cloudText
+    camera: wide-establishing
+    role: portal
+    narrate: >
+      The lecture hall has taken us as far as ordinary summation can go. Euler's
+      next move is bold enough to feel like stepping through the board itself.
+      He will compare a familiar power series with a shadowy infinite product.
+      The calculation is daring, but the clue it reveals is unmistakable.
+    notes: Transition from standard estimates to Euler's formal argument.
+  - id: sine-as-product
+    title: Sine Has Known Zeros
+    world: math-void
+    station: plinth.identity
+    content:
+      kind: formula
+      latex: \frac{\sin x}{x} =
+        \left(1-\frac{x^{2}}{\pi^{2}}\right)\left(1-\frac{x^{2}}{4\pi^{2}}\right)\left(1-\frac{x^{2}}{9\pi^{2}}\right)\cdots
+      spoken: sine x over x equals one minus x squared over pi squared times one minus
+        x squared over four pi squared times one minus x squared over nine pi
+        squared and so on
+    skin: etchedGlass
+    camera: quote-gaze
+    role: detail
+    narrate: >
+      In the void, roots become architecture. The function sine x over x is zero
+      at plus and minus pi, plus and minus two pi, plus and minus three pi, and
+      so on. Euler imagined it as an infinite polynomial whose factors remember
+      exactly those zeros.
+    notes: Connect each factor to the roots of sine.
+  - id: power-series-side
+    title: The Ordinary Expansion
+    world: math-void
+    station: gallery.west
+    content:
+      kind: formula
+      latex: \frac{\sin x}{x} = 1 - \frac{x^{2}}{3!} + \frac{x^{4}}{5!} - \cdots
+      spoken: sine x over x equals one minus x squared over three factorial plus x to
+        the fourth over five factorial minus and so on
+    skin: etchedGlass
+    camera: read-close
+    role: detail
+    narrate: >
+      The same function also has a power series known from calculus. Divide the
+      sine series by x, and the coefficient of x squared is negative one sixth.
+      This coefficient is the hinge of the whole argument. Euler now has two
+      descriptions of one object.
+    notes: Prepare for comparing the x squared coefficient.
+  - id: coefficient-comparison
+    title: Reading The Coefficient
+    world: math-void
+    station: circle.overlook
+    content:
+      kind: formula
+      latex: \text{coefficient of }x^{2}:\quad
+        -\left(\frac{1}{\pi^{2}}+\frac{1}{4\pi^{2}}+\frac{1}{9\pi^{2}}+\cdots\right)
+        = -\frac{1}{6}
+      spoken: the coefficient of x squared is minus the quantity one over pi squared
+        plus one over four pi squared plus one over nine pi squared and so on,
+        and this equals minus one sixth
+    skin: etchedGlass
+    camera: read-close
+    role: detail
+    narrate: >
+      Multiply the infinite factors only far enough to read the x squared term.
+      From the product, that coefficient is the negative sum of one over pi
+      squared, one over four pi squared, one over nine pi squared, and onward.
+      From the power series, the same coefficient is negative one sixth. The
+      unknown Basel sum has appeared inside a coefficient.
+    notes: Make clear that only the x squared term is being compared.
+  - id: reveal-answer
+    locked: true
+    title: Pi Squared Over Six
+    world: math-void
+    station: screen.theatre
+    content:
+      kind: formula
+      latex: \sum_{n=1}^{\infty} \frac{1}{n^{2}} = \frac{\pi^{2}}{6}
+      spoken: the sum from n equals one to infinity of one over n squared equals pi
+        squared over six
+    skin: etchedGlass
+    camera: wide-establishing
+    role: chapter
+    narrate: >
+      Now cancel the minus signs and multiply by pi squared. The answer is not a
+      decimal reached by patient addition. It is pi squared over six. A sum over
+      square numbers has secretly been governed by the geometry of the circle.
+    notes: Let this scene be the dramatic peak.
+  - id: road-to-zeta
+    title: Beyond Basel
+    world: math-void
+    station: gate.return
+    content:
+      kind: text
+      title: From Euler to zeta
+      body: |
+        Euler's answer became one point on a larger map.
+
+        zeta(2) = pi^2/6
+        zeta(s) = 1 + 1/2^s + 1/3^s + 1/4^s + ...
+
+        The Basel problem opened a road from infinite series to prime numbers,
+        complex functions, and eventually Riemann's zeta function.
+    skin: cloudText
+    camera: quote-gaze
+    role: detail
+    narrate: >
+      Euler did more than solve a famous sum. He revealed that infinite series,
+      trigonometric functions, and the primes could belong to one story. The
+      modern zeta function grows from this soil. The tour ends at a gate, with
+      the blackboard behind us and a much larger mathematics ahead.
+    notes: Close by tying Euler's computation to the zeta function and Riemann.
+portals:
+  - from: doorway-through-board
+    to: sine-as-product
+    label: Step through the board
+    dive: board-dive
+    emerge: void-emerge
+branches:
+  - from: opening-question
+    to: painfully-slow
+    label: Jump to the evidence
+    kind: branch
+  - from: sine-as-product
+    to: reveal-answer
+    label: Skip to the reveal
+    kind: branch

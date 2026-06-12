@@ -170,11 +170,13 @@ Shipped in M2 as data tables in `@spatial-present/core` (`skinCapabilities`, `de
 
 Shipped in M2: `defineJourney` is now the compiler pipeline (solver → skin resolver → auto-router → camera planner), the canonical document keeps `station`/`cameraIntent` as provenance for re-flow, templates also publish **named poses** for portal dives, and the SVD example compiles from zero coordinates (`journey-cli validate` reports coverage; `resolve` dumps the canonical document).
 
-### 4.4 AI generator service
+### 4.4 AI generator service — ✅ done (M5)
 - A prompt → **Authoring Spec** model call, grounded with the registries (so it can only reference real worlds/skins/stations) and the JSON Schema (structured output).
 - **Spec → document compiler** runs the solver/resolver/planner, then `validateGraph`. Invalid output is repaired or rejected, never rendered.
 - **Provenance**: store the prompt, model, and settings on generated nodes; support **locking** hand-tuned nodes so regeneration leaves them alone (per design.md's AI constraints).
 - **Semantic diff**: show what changed at the document level, not pixels.
+
+Shipped in M5 as `generate-journey` (CLI job, engine = locally authenticated Claude Code or Codex CLI, pluggable like TTS engines), `compileSpec` in core, and `journey-cli spec-compile`/`diff`. The spec format lives in `@spatial-present/schema` (`authoringSpecSchema`); world templates publish `defaults` (name, scale, ambience) so generated specs only name templates. One validate-and-repair round; provenance in a `talk.provenance.json` sidecar (per-node provenance inside the document is future work); `locked: true` scenes survive `--regen` verbatim. Proof: `examples/basel-problem`, generated from a one-paragraph brief.
 
 ### 4.5 Content ingestion
 Parsers that turn real source material into primitives: MDX/Markdown → `text`; CSV/JSON → `chart`/`table`; `.tex`/Markdown-math → `formula` **(math)**; images/video → media; **`.py` Manim scene → `manim` clip (math)**.
@@ -279,7 +281,7 @@ Manim is a **Python, offline renderer** — it cannot run in the browser. So int
 | **M2 — Registries + layout solver + camera planner** ✅ shipped | stations, named camera intents, auto-routing; positionless example document | **AI authoring becomes possible** (no hand coordinates) |
 | **M3 — Math primitives** ✅ shipped | `formula` (MathJax SVG→glyph geometry, spoken fallback) + `chalkboard`/`etchedGlass` skins; `math-void` + `lecture-hall` world templates; `examples/math-primer` | static math talks hand/SDK-authored |
 | **M4 — Asset pipeline + Manim** ✅ shipped | `manim-render` job (transparent VP9, auto cuepoints via a `Scene.play` hook), `projection` skin, stepwise reveal (next-press or narration `[mark:step]` cues), `tts-narrate` timestamps | **animated math**; generated-art caching |
-| **M5 — AI generator** | prompt → Authoring Spec → document, grounded by registries + schema; provenance + locking + semantic diff | the "describe it and get a presentation" experience |
+| **M5 — AI generator** ✅ shipped | brief → Authoring Spec → document, grounded by registries; repair loop; provenance sidecar; locking; semantic diff CLI | the "describe it and get a presentation" experience |
 | **M6 — Visual editor** | direct manipulation over the same document | the approachable third path |
 
 **Most leverage for your goal:** M2 (auto-layout/auto-framing) is the true unlock for AI authoring; M3–M4 deliver the math/Manim capability you specifically need. M5 ties prompts to it. M1 should come first because it makes the rest tractable.
